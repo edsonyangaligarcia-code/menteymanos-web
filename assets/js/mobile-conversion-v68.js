@@ -195,13 +195,13 @@
                 const card = el.closest("div");
                 const maybeP = card ? card.parentElement.querySelector("p, div") : null;
                 if (maybeP && norm(maybeP.textContent).length < 180) {
-                    maybeP.textContent = "Incluye ING 1, ING 2, ING 3, ING 4, ING 5, ING 6 e ING 7 en un solo acceso.";
+                    maybeP.textContent = "Elige la opción que mejor se adapte a lo que necesitas.";
                 }
 
                 if (card && !card.parentElement.querySelector(".vipDetailV68")) {
                     const detail = document.createElement("div");
                     detail.className = "vipDetailV68";
-                    detail.textContent = "Incluye toda la Línea ING: Planos, expedientes, BIM, coordinación, obra, AutoCAD y cálculo estructural.";
+                    detail.textContent = "";
                     card.parentElement.appendChild(detail);
                 }
             }
@@ -370,3 +370,4 @@
     }
 
 })();
+

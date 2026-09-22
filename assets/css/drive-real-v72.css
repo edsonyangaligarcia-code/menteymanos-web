@@ -1,0 +1,239 @@
+﻿/* =========================================================
+   MENTE & MANOS - DRIVE REAL V7.2
+   Solo ajustes visuales del explorador
+   ========================================================= */
+
+:root {
+    --drive-bg: #f8f9fa;
+    --drive-panel: #ffffff;
+    --drive-border: #dadce0;
+    --drive-border-soft: #e8eaed;
+    --drive-text: #202124;
+    --drive-muted: #5f6368;
+    --drive-blue: #1a73e8;
+    --drive-blue-soft: #e8f0fe;
+    --drive-folder: #5f6368;
+    --drive-folder-tab: #80868b;
+}
+
+/* Sección clara */
+#contenido.seccionOscura {
+    background: #f8f9fa !important;
+    color: var(--drive-text) !important;
+}
+
+#contenido .tituloSeccion span {
+    color: var(--drive-blue) !important;
+}
+
+#contenido .tituloSeccion h2 {
+    color: var(--drive-text) !important;
+}
+
+#contenido .tituloSeccion p {
+    color: var(--drive-muted) !important;
+}
+
+/* Buscador */
+#contenido .buscador input,
+#buscarArchivo {
+    background: #ffffff !important;
+    color: var(--drive-text) !important;
+    border: 1px solid var(--drive-border) !important;
+    box-shadow: none !important;
+}
+
+#buscarArchivo::placeholder {
+    color: #80868b !important;
+}
+
+/* Estadísticas */
+#contenido .arbolStats,
+#contenido .arbolStats strong {
+    color: var(--drive-text) !important;
+}
+
+#contenido .arbolStats {
+    background: transparent !important;
+    border: 0 !important;
+}
+
+/* Atrás / Adelante */
+#contenido .arbolBotones {
+    display: flex !important;
+    gap: 8px !important;
+    background: transparent !important;
+    padding: 0 !important;
+}
+
+#contenido .arbolBoton,
+#contenido .navDriveBtn {
+    min-width: 104px !important;
+    height: 42px !important;
+    padding: 0 14px !important;
+
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 7px !important;
+
+    border: 1px solid var(--drive-border) !important;
+    border-radius: 10px !important;
+
+    background: #ffffff !important;
+    color: var(--drive-text) !important;
+
+    font-weight: 600 !important;
+    box-shadow: 0 1px 2px rgba(60,64,67,.08) !important;
+}
+
+#contenido .arbolBoton:hover:not(:disabled),
+#contenido .navDriveBtn:hover:not(:disabled) {
+    background: #f1f3f4 !important;
+    border-color: #c7cacf !important;
+}
+
+#contenido .arbolBoton:disabled,
+#contenido .navDriveBtn:disabled {
+    opacity: .48 !important;
+    color: #9aa0a6 !important;
+}
+
+#contenido .navFlecha,
+#contenido .arbolBoton .icono,
+#contenido .navDriveBtn .icono {
+    color: var(--drive-blue) !important;
+    font-size: 17px !important;
+}
+
+/* Breadcrumb */
+#contenido .rutaArbolDrive {
+    background: #ffffff !important;
+    border: 1px solid var(--drive-border) !important;
+    box-shadow: none !important;
+}
+
+#contenido .crumbDrive {
+    background: transparent !important;
+    color: var(--drive-blue) !important;
+    border: 0 !important;
+}
+
+#contenido .crumbDrive.actual {
+    background: var(--drive-blue-soft) !important;
+    color: #174ea6 !important;
+}
+
+#contenido .crumbSeparador {
+    color: #9aa0a6 !important;
+}
+
+/* Caja del visor */
+#contenido .visorArchivos {
+    background: var(--drive-panel) !important;
+    border: 1px solid var(--drive-border) !important;
+    border-radius: 14px !important;
+    box-shadow: none !important;
+}
+
+/* Cabecera */
+#contenido .driveHeader {
+    background: #f8f9fa !important;
+    color: var(--drive-muted) !important;
+    border-bottom: 1px solid var(--drive-border) !important;
+}
+
+/* Filas */
+#contenido .driveRow,
+#contenido button.driveRow {
+    background: #ffffff !important;
+    color: var(--drive-text) !important;
+    border-bottom: 1px solid var(--drive-border-soft) !important;
+}
+
+#contenido .driveRow:hover,
+#contenido button.driveRow:hover {
+    background: #f8f9fa !important;
+}
+
+/* Nombre */
+#contenido .driveNombre,
+#contenido .driveNombre strong,
+#contenido .driveFolderRow .driveNombre,
+#contenido .driveFileRow .driveNombre {
+    color: var(--drive-text) !important;
+    font-weight: 500 !important;
+}
+
+/* Columnas */
+#contenido .driveTipo,
+#contenido .driveCantidad {
+    color: var(--drive-muted) !important;
+}
+
+/* Carpeta gris tipo Drive */
+#contenido .driveFolderIcon {
+    width: 25px !important;
+    height: 18px !important;
+    border-radius: 3px !important;
+    background: var(--drive-folder) !important;
+    box-shadow: none !important;
+}
+
+#contenido .driveFolderIcon::before {
+    background: var(--drive-folder-tab) !important;
+}
+
+/* Archivos: azul tipo Drive */
+#contenido .driveFileBadge {
+    background: var(--drive-blue-soft) !important;
+    color: var(--drive-blue) !important;
+    border: 1px solid #d2e3fc !important;
+}
+
+/* Flecha para entrar */
+#contenido .driveEntrar {
+    color: var(--drive-blue) !important;
+}
+
+#contenido .driveFolderRow .driveEntrar {
+    background: transparent !important;
+    color: var(--drive-blue) !important;
+}
+
+#contenido .driveFolderRow:hover .driveEntrar {
+    background: var(--drive-blue-soft) !important;
+}
+
+/* Nota eliminada */
+#contenido .nota {
+    display: none !important;
+}
+
+/* Nota de galería eliminada */
+.mediaV54Nota {
+    display: none !important;
+}
+
+@media (max-width: 720px) {
+
+    #contenido .arbolMeta {
+        align-items: flex-end !important;
+    }
+
+    #contenido .arbolBotones {
+        width: 100% !important;
+    }
+
+    #contenido .arbolBoton,
+    #contenido .navDriveBtn {
+        flex: 1 1 0 !important;
+        min-width: 0 !important;
+        height: 42px !important;
+    }
+
+    #contenido .driveHeader,
+    #contenido .driveRow {
+        background: #ffffff !important;
+    }
+}

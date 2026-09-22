@@ -144,7 +144,7 @@
 
         const d = document.createElement("div");
         d.className = "vipDetailV68";
-        d.textContent = "Incluye ING 1, ING 2, ING 3, ING 4, ING 5, ING 6 e ING 7 en un solo acceso.";
+        d.textContent = "Elige la opción que mejor se adapte a lo que necesitas.";
         parent.appendChild(d);
     }
 
@@ -162,3 +162,4 @@
         init();
     }
 })();
+

@@ -1,0 +1,51 @@
+﻿html.mobileConversionV68 .driveLikeV701 {
+  background:#f7faff !important;
+  color:#1f1f1f !important;
+  border:1px solid #d7e3f4 !important;
+  box-shadow:0 12px 28px rgba(26,115,232,.08) !important;
+}
+html.mobileConversionV68 .driveLikeV701 h1,
+html.mobileConversionV68 .driveLikeV701 h2,
+html.mobileConversionV68 .driveLikeV701 h3,
+html.mobileConversionV68 .driveLikeV701 h4 { color:#174ea6 !important; }
+html.mobileConversionV68 .driveLikeV701 p,
+html.mobileConversionV68 .driveLikeV701 small { color:#5f6368 !important; }
+html.mobileConversionV68 .driveLikeV701 input[type="text"],
+html.mobileConversionV68 .driveLikeV701 input[type="search"] {
+  background:#fff !important;
+  color:#1f1f1f !important;
+  border:1px solid #d7e3f4 !important;
+}
+html.mobileConversionV68 .driveLikeV701 table { background:#fff !important; border:1px solid #d7e3f4 !important; }
+html.mobileConversionV68 .driveLikeV701 thead th { background:#e8f0fe !important; color:#36598b !important; }
+html.mobileConversionV68 .driveLikeV701 tbody tr,
+html.mobileConversionV68 .driveLikeV701 tbody td,
+html.mobileConversionV68 .driveLikeV701 .folderRowV701,
+html.mobileConversionV68 .driveLikeV701 .folderRowV701 td {
+  background:#fff !important;
+  color:#1f1f1f !important;
+  border-top:1px solid #ebf1fb !important;
+}
+html.mobileConversionV68 .driveLikeV701 tbody tr:hover td { background:#f5f9ff !important; }
+html.mobileConversionV68 .driveLikeV701 .folderNameV701,
+html.mobileConversionV68 .driveLikeV701 .folderNameV701 * { color:#1f1f1f !important; font-weight:600 !important; }
+html.mobileConversionV68 .driveLikeV701 .folderIconV701 {
+  display:inline-flex; align-items:center; justify-content:center;
+  width:30px; height:24px; min-width:30px; margin-right:10px;
+  border-radius:7px; background:#e8f0fe !important; border:1px solid #d2e3fc !important;
+  color:#1a73e8 !important; font-size:15px; line-height:1;
+}
+html.mobileConversionV68 .driveLikeV701 .firstColWrapV701 { display:inline-flex; align-items:center; color:#1f1f1f !important; }
+html.mobileConversionV68 .driveLikeV701 .navBtnV701 {
+  background:#fff !important; color:#1a73e8 !important; border:1px solid #d7e3f4 !important;
+  min-height:42px !important; min-width:118px !important; border-radius:12px !important;
+}
+html.mobileConversionV68 .driveLikeV701 a,
+html.mobileConversionV68 .driveLikeV701 [class*="orange"],
+html.mobileConversionV68 .driveLikeV701 [class*="yellow"],
+html.mobileConversionV68 .driveLikeV701 [class*="accent"] { color:#1a73e8 !important; }
+@media (max-width:768px) {
+  html.mobileConversionV68 .driveLikeV701 { padding:12px !important; }
+  html.mobileConversionV68 .driveLikeV701 .driveNavWrapV701 { display:flex !important; gap:10px !important; justify-content:space-between !important; }
+  html.mobileConversionV68 .driveLikeV701 .driveNavWrapV701 .navBtnV701 { flex:1 1 0 !important; min-width:calc(50% - 5px) !important; }
+}

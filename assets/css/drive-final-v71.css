@@ -1,0 +1,268 @@
+﻿/* =========================================================
+   MENTE & MANOS - DRIVE FINAL V7.1
+   Esta hoja usa selectores reales del visor:
+   .visorArchivos, .driveRow, .driveFolderRow, etc.
+   ========================================================= */
+
+:root {
+    --mm71-bg: #f8fafd;
+    --mm71-white: #ffffff;
+    --mm71-text: #202124;
+    --mm71-sub: #5f6368;
+    --mm71-border: #dadce0;
+    --mm71-border-soft: #e8eaed;
+    --mm71-blue: #1a73e8;
+    --mm71-blue-dark: #174ea6;
+    --mm71-blue-soft: #e8f0fe;
+    --mm71-blue-soft-2: #d2e3fc;
+}
+
+/* ---------------------------------------------------------
+   CONTENEDOR COMPLETO "EXPLORA LO QUE INCLUYE"
+   --------------------------------------------------------- */
+
+#contenido,
+#contenido.driveLikeV68 {
+    background: var(--mm71-bg) !important;
+    color: var(--mm71-text) !important;
+    border-color: var(--mm71-border) !important;
+}
+
+#contenido .tituloSeccion > span {
+    color: var(--mm71-blue) !important;
+}
+
+#contenido .tituloSeccion h2,
+#contenido #tituloArbolProducto {
+    color: var(--mm71-text) !important;
+}
+
+#contenido .tituloSeccion p,
+#contenido .nota {
+    color: var(--mm71-sub) !important;
+}
+
+/* ---------------------------------------------------------
+   BUSCADOR
+   --------------------------------------------------------- */
+
+#contenido .buscador input,
+#contenido #buscarArchivo {
+    background: var(--mm71-white) !important;
+    color: var(--mm71-text) !important;
+    border: 1px solid var(--mm71-border) !important;
+    box-shadow: none !important;
+}
+
+#contenido #buscarArchivo::placeholder {
+    color: #80868b !important;
+}
+
+/* ---------------------------------------------------------
+   ESTADISTICAS Y NAVEGACION
+   --------------------------------------------------------- */
+
+#contenido .arbolStats {
+    background: var(--mm71-blue-soft) !important;
+    border: 1px solid var(--mm71-blue-soft-2) !important;
+    color: var(--mm71-text) !important;
+}
+
+#contenido .arbolStats strong,
+#contenido .arbolStats span,
+#contenido .arbolStats div {
+    color: var(--mm71-blue-dark) !important;
+}
+
+#contenido .arbolBotones {
+    gap: 8px !important;
+}
+
+#contenido .arbolBoton,
+#contenido #expandirArbol,
+#contenido #contraerArbol,
+#contenido .navBtnV68 {
+    min-width: 112px !important;
+    min-height: 42px !important;
+    padding: 8px 13px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 7px !important;
+    background: var(--mm71-white) !important;
+    color: var(--mm71-blue) !important;
+    border: 1px solid var(--mm71-border) !important;
+    border-radius: 10px !important;
+    box-shadow: none !important;
+}
+
+#contenido .arbolBoton:hover,
+#contenido #expandirArbol:hover,
+#contenido #contraerArbol:hover {
+    background: var(--mm71-blue-soft) !important;
+    border-color: var(--mm71-blue-soft-2) !important;
+}
+
+#contenido .arbolBoton:disabled,
+#contenido #expandirArbol:disabled,
+#contenido #contraerArbol:disabled {
+    opacity: .45 !important;
+}
+
+/* ---------------------------------------------------------
+   BREADCRUMB TIPO DRIVE
+   --------------------------------------------------------- */
+
+#contenido .rutaArbolDrive {
+    background: var(--mm71-white) !important;
+    border: 1px solid var(--mm71-border) !important;
+    color: var(--mm71-sub) !important;
+    box-shadow: none !important;
+}
+
+#contenido .crumbDrive {
+    background: transparent !important;
+    color: var(--mm71-sub) !important;
+    border: 0 !important;
+}
+
+#contenido .crumbDrive:hover {
+    background: var(--mm71-blue-soft) !important;
+    color: var(--mm71-blue-dark) !important;
+}
+
+#contenido .crumbDrive.actual {
+    background: var(--mm71-blue-soft) !important;
+    color: var(--mm71-blue-dark) !important;
+}
+
+#contenido .crumbSeparador {
+    color: #9aa0a6 !important;
+}
+
+/* ---------------------------------------------------------
+   VISOR: BLANCO REAL, NO NEGRO
+   --------------------------------------------------------- */
+
+#contenido .visorArchivos,
+#contenido #visorArchivos {
+    background: var(--mm71-white) !important;
+    border: 1px solid var(--mm71-border) !important;
+    color: var(--mm71-text) !important;
+    box-shadow: none !important;
+}
+
+#contenido .driveHeader {
+    background: var(--mm71-bg) !important;
+    color: var(--mm71-sub) !important;
+    border-bottom: 1px solid var(--mm71-border) !important;
+}
+
+/* IMPORTANTE: estas son las filas reales que genera arboles.js */
+#contenido .driveRow,
+#contenido button.driveRow,
+#contenido .driveFolderRow,
+#contenido .driveFileRow {
+    background: var(--mm71-white) !important;
+    color: var(--mm71-text) !important;
+    border-bottom: 1px solid var(--mm71-border-soft) !important;
+    box-shadow: none !important;
+}
+
+#contenido .driveRow:hover,
+#contenido button.driveRow:hover,
+#contenido .driveFolderRow:hover,
+#contenido .driveFileRow:hover {
+    background: #f5f9ff !important;
+}
+
+#contenido .driveNombre,
+#contenido .driveFolderRow .driveNombre,
+#contenido .driveFileRow .driveNombre {
+    color: var(--mm71-text) !important;
+}
+
+#contenido .driveNombre small,
+#contenido .drivePath {
+    color: var(--mm71-sub) !important;
+}
+
+#contenido .driveTipo,
+#contenido .driveCantidad {
+    color: var(--mm71-sub) !important;
+}
+
+/* ---------------------------------------------------------
+   CARPETA: QUITAMOS AMARILLO Y USAMOS AZUL TIPO DRIVE
+   --------------------------------------------------------- */
+
+#contenido .driveFolderIcon {
+    background: #5f8ee4 !important;
+    border: 0 !important;
+    box-shadow: none !important;
+}
+
+#contenido .driveFolderIcon::before {
+    background: #7baaf7 !important;
+}
+
+#contenido .driveFolderRow .driveEntrar {
+    background: var(--mm71-blue-soft) !important;
+    color: var(--mm71-blue) !important;
+}
+
+#contenido .driveFolderRow:hover .driveEntrar {
+    background: var(--mm71-blue-soft-2) !important;
+    color: var(--mm71-blue-dark) !important;
+}
+
+/* Archivos: badge claro para que no vuelva a verse negro */
+#contenido .driveFileBadge {
+    background: var(--mm71-blue-soft) !important;
+    color: var(--mm71-blue-dark) !important;
+    border: 1px solid var(--mm71-blue-soft-2) !important;
+}
+
+#contenido .driveEmpty,
+#contenido .driveEmpty * {
+    color: var(--mm71-sub) !important;
+}
+
+/* Cualquier resto naranja/amarillo del visor se lleva a azul */
+#contenido .driveEntrar,
+#contenido .navFlecha,
+#contenido a {
+    color: var(--mm71-blue) !important;
+}
+
+/* ---------------------------------------------------------
+   MOVIL
+   --------------------------------------------------------- */
+
+@media (max-width: 720px) {
+    #contenido {
+        padding-left: 12px !important;
+        padding-right: 12px !important;
+    }
+
+    #contenido .arbolMeta {
+        gap: 8px !important;
+    }
+
+    #contenido .arbolBotones {
+        width: 100% !important;
+        display: grid !important;
+        grid-template-columns: 1fr 1fr !important;
+    }
+
+    #contenido .arbolBoton,
+    #contenido #expandirArbol,
+    #contenido #contraerArbol {
+        width: 100% !important;
+        min-width: 0 !important;
+    }
+
+    #contenido .driveRow {
+        min-height: 50px !important;
+    }
+}
