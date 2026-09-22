@@ -1,0 +1,165 @@
+﻿/* =========================================================
+   MENTE & MANOS - MOBILE CONVERSION V6.9
+   Ajustes finos para celular y explorador tipo Drive
+   ========================================================= */
+
+:root {
+    --v69-drive-bg: #f8fbff;
+    --v69-drive-surface: #ffffff;
+    --v69-drive-border: #d7e3f4;
+    --v69-drive-border-soft: #edf2fb;
+    --v69-drive-text: #1f1f1f;
+    --v69-drive-sub: #5f6368;
+    --v69-drive-blue: #1a73e8;
+    --v69-drive-blue-soft: #e8f0fe;
+    --v69-drive-folder: #1a73e8;
+    --v69-drive-folder-soft: #f5f9ff;
+}
+
+html.mobileConversionV68 .driveLikeV68 {
+    background: var(--v69-drive-bg) !important;
+    color: var(--v69-drive-text) !important;
+    border: 1px solid var(--v69-drive-border) !important;
+    box-shadow: 0 10px 28px rgba(26,115,232,.08) !important;
+}
+
+html.mobileConversionV68 .driveLikeV68 * {
+    color: inherit;
+}
+
+html.mobileConversionV68 .driveLikeV68 h1,
+html.mobileConversionV68 .driveLikeV68 h2,
+html.mobileConversionV68 .driveLikeV68 h3,
+html.mobileConversionV68 .driveLikeV68 h4 {
+    color: #174ea6 !important;
+}
+
+html.mobileConversionV68 .driveLikeV68 p,
+html.mobileConversionV68 .driveLikeV68 small,
+html.mobileConversionV68 .driveLikeV68 .muted,
+html.mobileConversionV68 .driveLikeV68 .subtle {
+    color: var(--v69-drive-sub) !important;
+}
+
+html.mobileConversionV68 .driveLikeV68 input[type="text"],
+html.mobileConversionV68 .driveLikeV68 input[type="search"] {
+    background: #fff !important;
+    color: var(--v69-drive-text) !important;
+    border: 1px solid var(--v69-drive-border) !important;
+    box-shadow: none !important;
+}
+
+html.mobileConversionV68 .driveLikeV68 table,
+html.mobileConversionV68 .driveLikeV68 .driveLikeTableV68 {
+    background: #fff !important;
+    border: 1px solid var(--v69-drive-border) !important;
+}
+
+html.mobileConversionV68 .driveLikeV68 thead th {
+    background: var(--v69-drive-blue-soft) !important;
+    color: #36598b !important;
+}
+
+html.mobileConversionV68 .driveLikeV68 tbody td {
+    background: #fff !important;
+    color: #22364f !important;
+    border-top: 1px solid var(--v69-drive-border-soft) !important;
+}
+
+html.mobileConversionV68 .driveLikeV68 tbody tr:hover td {
+    background: #f7faff !important;
+}
+
+html.mobileConversionV68 .driveLikeV68 .navBtnV68 {
+    background: #fff !important;
+    color: var(--v69-drive-blue) !important;
+    border: 1px solid var(--v69-drive-border) !important;
+    min-height: 42px !important;
+    min-width: 118px !important;
+}
+
+html.mobileConversionV68 .driveLikeV68 .navBtnV68[disabled],
+html.mobileConversionV68 .driveLikeV68 .navBtnV68.desactivadoV68 {
+    opacity: .55 !important;
+}
+
+html.mobileConversionV68 .driveLikeV68 .folderV69,
+html.mobileConversionV68 .driveLikeV68 .folderV69 td,
+html.mobileConversionV68 .driveLikeV68 .folderV69 * {
+    color: #1f1f1f !important;
+}
+
+html.mobileConversionV68 .driveLikeV68 .folderV69 {
+    background: #fff !important;
+}
+
+html.mobileConversionV68 .driveLikeV68 .folderIconV69 {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 22px;
+    margin-right: 10px;
+    border-radius: 6px;
+    background: var(--v69-drive-folder-soft) !important;
+    color: var(--v69-drive-folder) !important;
+    border: 1px solid #dbe7ff !important;
+    font-size: 14px;
+    line-height: 1;
+    vertical-align: middle;
+}
+
+html.mobileConversionV68 .driveLikeV68 .firstColDriveV69 {
+    display: inline-flex;
+    align-items: center;
+    gap: 0;
+    color: #1f1f1f !important;
+    font-weight: 600;
+}
+
+html.mobileConversionV68 .driveLikeV68 .blueActionV69,
+html.mobileConversionV68 .driveLikeV68 .includeButtonV68,
+html.mobileConversionV68 .driveLikeV68 a,
+html.mobileConversionV68 .driveLikeV68 button.linkLike {
+    color: var(--v69-drive-blue) !important;
+}
+
+html.mobileConversionV68 .offerJumpTargetV69 {
+    scroll-margin-top: 110px;
+}
+
+html.mobileConversionV68 .selectionGuideV69 {
+    margin: 10px 0 14px 0;
+    padding: 12px 14px;
+    border-radius: 14px;
+    background: rgba(26,115,232,.08);
+    border: 1px solid rgba(26,115,232,.18);
+    color: #dcecff;
+    font-size: 13px;
+    line-height: 1.45;
+}
+
+html.mobileConversionV68 .selectionGuideV69 strong {
+    color: #fff;
+}
+
+@media (max-width: 768px) {
+    html.mobileConversionV68 .driveLikeV68 {
+        padding: 12px !important;
+    }
+
+    html.mobileConversionV68 .driveLikeV68 .driveNavWrapV68 {
+        display: flex !important;
+        justify-content: space-between !important;
+        gap: 10px !important;
+    }
+
+    html.mobileConversionV68 .driveLikeV68 .navBtnV68 {
+        flex: 1 1 0;
+        min-width: calc(50% - 5px) !important;
+    }
+
+    html.mobileConversionV68 .selectionGuideV69 {
+        font-size: 12.5px;
+    }
+}
