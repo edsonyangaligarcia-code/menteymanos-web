@@ -267,8 +267,26 @@ function iniciar() {
     const parametros = new URLSearchParams(window.location.search);
     const productoURL = parametros.get("producto");
 
-    if (productoURL && productos[productoURL]) {
-        productoActual = productoURL;
+    const coincidenciaRuta =
+        window.location.pathname.match(
+            /\/(ing1|ing3|ing7)(?:\/index\.html|\/)?$/i
+        );
+
+    const productoRuta =
+        coincidenciaRuta
+            ? coincidenciaRuta[1].toLowerCase()
+            : null;
+
+    const productoInicial =
+        productoURL && productos[productoURL]
+            ? productoURL
+            : productoRuta;
+
+    if (
+        productoInicial &&
+        productos[productoInicial]
+    ) {
+        productoActual = productoInicial;
     }
 
     selector.value = productoActual;
@@ -1289,6 +1307,9 @@ document.addEventListener(
 
 
 iniciar();
+
+
+
 
 
 

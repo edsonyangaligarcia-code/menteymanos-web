@@ -1,0 +1,20 @@
+﻿/* =========================================================
+   MENTE & MANOS - RUTAS DIRECTAS V10.0
+   ========================================================= */
+
+body.rutaProductoDirecta #selectorProducto {
+    display: none !important;
+}
+
+body.rutaProductoDirecta .header {
+    justify-content: flex-start !important;
+}
+
+/*
+   En rutas /ing1/, /ing3/, /ing7/ no mostramos controles
+   que sugieran que el cliente puede cambiar el producto.
+*/
+body.rutaProductoDirecta [data-selector-producto],
+body.rutaProductoDirecta .selectorProductoExtra {
+    display: none !important;
+}
