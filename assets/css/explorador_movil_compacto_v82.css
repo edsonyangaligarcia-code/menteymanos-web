@@ -1,0 +1,219 @@
+﻿/* =========================================================
+   EXPLORADOR MÓVIL COMPACTO V8.2
+   ========================================================= */
+
+@media (max-width: 760px) {
+
+    /* Sección principal del explorador */
+    .mm-explorer-compact-section,
+    .mm-explorer-compact-section .driveRealV72,
+    .mm-explorer-compact-section .driveRealCompactV77 {
+        padding-top: 16px !important;
+        padding-bottom: 14px !important;
+    }
+
+    .mm-explorer-compact-section {
+        margin-top: 8px !important;
+    }
+
+    .mm-explorer-compact-section h1,
+    .mm-explorer-compact-section h2 {
+        font-size: 26px !important;
+        line-height: 1.1 !important;
+        margin: 0 0 12px !important;
+    }
+
+    .mm-explorer-compact-section .eyebrow,
+    .mm-explorer-compact-section .kicker,
+    .mm-explorer-compact-section .sectionEyebrow {
+        margin-bottom: 6px !important;
+        font-size: 12px !important;
+        letter-spacing: .12em !important;
+    }
+
+    /* Oculta espacios / textos extra en móvil si quedaron vacíos */
+    .mm-explorer-compact-section .mm-help-note:empty,
+    .mm-explorer-compact-section .mm-explorer-note:empty {
+        display: none !important;
+    }
+
+    /* Buscador */
+    .mm-explorer-compact-section input[type="search"],
+    .mm-explorer-compact-section input[type="text"],
+    .mm-explorer-compact-section input[placeholder*="Buscar archivo"],
+    .mm-explorer-compact-section input[placeholder*="Buscar archivo o carpeta"] {
+        min-height: 44px !important;
+        height: 44px !important;
+        padding: 10px 14px !important;
+        font-size: 15px !important;
+        border-radius: 14px !important;
+        margin-bottom: 8px !important;
+    }
+
+    /* Título del producto y contador */
+    .mm-explorer-compact-section .mm-explorer-title,
+    .mm-explorer-compact-section .driveTitle,
+    .mm-explorer-compact-section .driveHeaderTitle {
+        font-size: 17px !important;
+        line-height: 1.2 !important;
+        margin-bottom: 2px !important;
+    }
+
+    .mm-explorer-compact-section .mm-explorer-stats,
+    .mm-explorer-compact-section .driveStats,
+    .mm-explorer-compact-section .driveHeaderStats {
+        font-size: 13px !important;
+        line-height: 1.25 !important;
+        margin-bottom: 8px !important;
+    }
+
+    /* Navegación atrás / adelante */
+    .mm-explorer-nav,
+    .mm-explorer-nav-compact {
+        display: grid !important;
+        grid-template-columns: 1fr 1fr !important;
+        gap: 8px !important;
+        margin: 8px 0 10px !important;
+        width: 100% !important;
+    }
+
+    .mm-explorer-nav button,
+    .mm-explorer-nav a,
+    .mm-explorer-nav-compact button,
+    .mm-explorer-nav-compact a {
+        min-height: 42px !important;
+        height: 42px !important;
+        padding: 8px 10px !important;
+        border-radius: 14px !important;
+        font-size: 14px !important;
+        font-weight: 700 !important;
+    }
+
+    /* Migas / breadcrumb */
+    .mm-explorer-breadcrumb,
+    .mm-explorer-breadcrumb-wrap,
+    .mm-explorer-pill,
+    .mm-explorer-path {
+        margin: 6px 0 10px !important;
+        min-height: auto !important;
+    }
+
+    .mm-explorer-breadcrumb .chip,
+    .mm-explorer-pill,
+    .mm-explorer-path span {
+        font-size: 13px !important;
+        padding: 8px 12px !important;
+        border-radius: 12px !important;
+    }
+
+    /* Contenedor de tabla/listado */
+    .mm-explorer-table-wrap,
+    .mm-explorer-list-wrap,
+    .mm-explorer-drive-wrap,
+    .mm-explorer-table {
+        border-radius: 16px !important;
+        overflow: hidden !important;
+    }
+
+    /* Encabezado de tabla */
+    .mm-explorer-compact-section table thead th {
+        padding: 10px 8px !important;
+        font-size: 11px !important;
+        line-height: 1.1 !important;
+    }
+
+    /* Filas */
+    .mm-explorer-compact-section table tbody td {
+        padding: 11px 8px !important;
+        font-size: 13px !important;
+        line-height: 1.28 !important;
+        vertical-align: middle !important;
+    }
+
+    /* Primera columna más compacta */
+    .mm-explorer-compact-section table tbody td:first-child {
+        padding-left: 12px !important;
+    }
+
+    /* Nombre de archivo/carpeta */
+    .mm-explorer-compact-section .archivoNombre,
+    .mm-explorer-compact-section .itemNombre,
+    .mm-explorer-compact-section .driveItemName,
+    .mm-explorer-compact-section td:first-child strong,
+    .mm-explorer-compact-section td:first-child span,
+    .mm-explorer-compact-section td:first-child a {
+        font-size: 13px !important;
+        line-height: 1.25 !important;
+    }
+
+    /* Íconos */
+    .mm-explorer-compact-section svg,
+    .mm-explorer-compact-section .folderIcon,
+    .mm-explorer-compact-section .fileIcon,
+    .mm-explorer-compact-section img.folderIcon,
+    .mm-explorer-compact-section img.fileIcon {
+        width: 18px !important;
+        height: 18px !important;
+    }
+
+    /* Flecha de entrar */
+    .mm-explorer-compact-section .goIcon,
+    .mm-explorer-compact-section .enterIcon,
+    .mm-explorer-compact-section .rowChevron {
+        width: 16px !important;
+        height: 16px !important;
+    }
+
+    /* Reduce espacios entre bloques */
+    .mm-explorer-compact-section .bloque,
+    .mm-explorer-compact-section .card,
+    .mm-explorer-compact-section .panel {
+        margin-bottom: 8px !important;
+    }
+
+    /* CTA flotante "Elegir oferta" un poco más contenido */
+    .botonFlotanteOferta,
+    .floatingOfferBtn,
+    .ctaFlotanteOferta {
+        min-height: 52px !important;
+        padding: 10px 18px !important;
+        border-radius: 999px !important;
+        font-size: 15px !important;
+    }
+}
+
+/* Móviles muy pequeños */
+@media (max-width: 430px) {
+
+    .mm-explorer-compact-section h1,
+    .mm-explorer-compact-section h2 {
+        font-size: 24px !important;
+        margin-bottom: 10px !important;
+    }
+
+    .mm-explorer-compact-section input[type="search"],
+    .mm-explorer-compact-section input[type="text"],
+    .mm-explorer-compact-section input[placeholder*="Buscar archivo"],
+    .mm-explorer-compact-section input[placeholder*="Buscar archivo o carpeta"] {
+        height: 42px !important;
+        min-height: 42px !important;
+        font-size: 14px !important;
+    }
+
+    .mm-explorer-compact-section table thead th {
+        padding: 9px 6px !important;
+        font-size: 10px !important;
+    }
+
+    .mm-explorer-compact-section table tbody td {
+        padding: 10px 6px !important;
+        font-size: 12px !important;
+    }
+
+    .mm-explorer-compact-section td:nth-child(2),
+    .mm-explorer-compact-section th:nth-child(2),
+    .mm-explorer-compact-section td:nth-child(3),
+    .mm-explorer-compact-section th:nth-child(3) {
+        font-size: 11px !important;
+    }
+}

@@ -1,0 +1,308 @@
+﻿/* =========================================================
+   EXPLORADOR MÓVIL ULTRA COMPACTO V8.3
+   ========================================================= */
+
+/* Solo para la sección del explorador */
+.mm-explorer-ultra-compact * {
+    box-sizing: border-box;
+}
+
+@media (max-width: 820px) {
+    .mm-explorer-ultra-compact {
+        padding-top: 14px !important;
+        padding-bottom: 10px !important;
+        margin-top: 6px !important;
+    }
+
+    .mm-explorer-ultra-compact h1,
+    .mm-explorer-ultra-compact h2 {
+        font-size: 34px !important;
+        line-height: 1.02 !important;
+        margin: 0 0 10px !important;
+        letter-spacing: -0.02em !important;
+    }
+
+    .mm-explorer-ultra-compact .eyebrow,
+    .mm-explorer-ultra-compact .kicker,
+    .mm-explorer-ultra-compact .sectionEyebrow {
+        margin-bottom: 4px !important;
+        font-size: 12px !important;
+        line-height: 1 !important;
+    }
+}
+
+@media (max-width: 760px) {
+
+    /* Reduce el alto de toda la sección */
+    .mm-explorer-ultra-compact {
+        padding-top: 10px !important;
+        padding-bottom: 6px !important;
+        margin-top: 4px !important;
+    }
+
+    /* Título */
+    .mm-explorer-ultra-compact h1,
+    .mm-explorer-ultra-compact h2 {
+        font-size: 24px !important;
+        line-height: 1.02 !important;
+        margin: 0 0 8px !important;
+        letter-spacing: -0.02em !important;
+    }
+
+    /* Subtítulos / etiquetas */
+    .mm-explorer-ultra-compact .eyebrow,
+    .mm-explorer-ultra-compact .kicker,
+    .mm-explorer-ultra-compact .sectionEyebrow {
+        margin-bottom: 3px !important;
+        font-size: 11px !important;
+        letter-spacing: .12em !important;
+    }
+
+    /* Quitar cualquier párrafo explicativo largo si quedó vacío o sobra */
+    .mm-explorer-ultra-compact p:empty,
+    .mm-explorer-ultra-compact .mm-note:empty,
+    .mm-explorer-ultra-compact .mm-help-note:empty {
+        display: none !important;
+    }
+
+    /* Buscador */
+    .mm-explorer-ultra-compact input[type="search"],
+    .mm-explorer-ultra-compact input[type="text"],
+    .mm-explorer-ultra-compact input[placeholder*="Buscar archivo"],
+    .mm-explorer-ultra-compact input[placeholder*="Buscar archivo o carpeta"] {
+        min-height: 38px !important;
+        height: 38px !important;
+        padding: 8px 12px !important;
+        font-size: 14px !important;
+        border-radius: 12px !important;
+        margin: 0 0 6px !important;
+    }
+
+    /* Título del producto y estadísticas */
+    .mm-explorer-ultra-compact .mm-explorer-title,
+    .mm-explorer-ultra-compact .driveTitle,
+    .mm-explorer-ultra-compact .driveHeaderTitle {
+        font-size: 15px !important;
+        line-height: 1.15 !important;
+        margin: 0 0 1px !important;
+    }
+
+    .mm-explorer-ultra-compact .mm-explorer-stats,
+    .mm-explorer-ultra-compact .driveStats,
+    .mm-explorer-ultra-compact .driveHeaderStats {
+        font-size: 12px !important;
+        line-height: 1.15 !important;
+        margin: 0 0 6px !important;
+    }
+
+    /* El bloque del header interno se pega más */
+    .mm-explorer-ultra-compact .mm-explorer-header,
+    .mm-explorer-ultra-compact .driveHeader,
+    .mm-explorer-ultra-compact .driveTopInfo {
+        gap: 4px !important;
+        margin-bottom: 6px !important;
+    }
+
+    /* Botones atrás / adelante */
+    .mm-explorer-ultra-compact .mm-explorer-nav {
+        display: grid !important;
+        grid-template-columns: 1fr 1fr !important;
+        gap: 6px !important;
+        margin: 4px 0 6px !important;
+        width: 100% !important;
+    }
+
+    .mm-explorer-ultra-compact .mm-explorer-nav button,
+    .mm-explorer-ultra-compact .mm-explorer-nav a {
+        min-height: 36px !important;
+        height: 36px !important;
+        padding: 6px 8px !important;
+        border-radius: 12px !important;
+        font-size: 13px !important;
+        font-weight: 700 !important;
+    }
+
+    /* Caja de breadcrumb / chip ING */
+    .mm-explorer-ultra-compact .mm-explorer-breadcrumb,
+    .mm-explorer-ultra-compact .mm-explorer-path,
+    .mm-explorer-ultra-compact .mm-explorer-chipline {
+        margin: 4px 0 6px !important;
+    }
+
+    .mm-explorer-ultra-compact .mm-explorer-breadcrumb .chip,
+    .mm-explorer-ultra-compact .mm-explorer-path span,
+    .mm-explorer-ultra-compact .mm-explorer-chipline span {
+        display: inline-flex !important;
+        align-items: center !important;
+        min-height: 30px !important;
+        padding: 5px 10px !important;
+        border-radius: 10px !important;
+        font-size: 12px !important;
+    }
+
+    /* Contenedor principal */
+    .mm-explorer-ultra-compact .mm-explorer-table-wrap,
+    .mm-explorer-ultra-compact .mm-explorer-list-wrap,
+    .mm-explorer-ultra-compact .mm-explorer-drive-wrap,
+    .mm-explorer-ultra-compact .mm-explorer-table {
+        border-radius: 14px !important;
+        overflow: hidden !important;
+    }
+
+    /* Tabla */
+    .mm-explorer-ultra-compact table {
+        margin-top: 0 !important;
+    }
+
+    .mm-explorer-ultra-compact table thead th {
+        padding: 8px 6px !important;
+        font-size: 10px !important;
+        line-height: 1.05 !important;
+    }
+
+    .mm-explorer-ultra-compact table tbody td {
+        padding: 8px 6px !important;
+        font-size: 12px !important;
+        line-height: 1.18 !important;
+        vertical-align: middle !important;
+    }
+
+    .mm-explorer-ultra-compact table tbody tr {
+        min-height: 44px !important;
+    }
+
+    .mm-explorer-ultra-compact table tbody td:first-child {
+        padding-left: 10px !important;
+    }
+
+    /* Nombre de carpetas/archivos más apretado */
+    .mm-explorer-ultra-compact .archivoNombre,
+    .mm-explorer-ultra-compact .itemNombre,
+    .mm-explorer-ultra-compact .driveItemName,
+    .mm-explorer-ultra-compact td:first-child strong,
+    .mm-explorer-ultra-compact td:first-child span,
+    .mm-explorer-ultra-compact td:first-child a {
+        font-size: 11.8px !important;
+        line-height: 1.12 !important;
+        font-weight: 600 !important;
+        word-break: break-word !important;
+    }
+
+    /* Íconos más pequeños */
+    .mm-explorer-ultra-compact svg,
+    .mm-explorer-ultra-compact .folderIcon,
+    .mm-explorer-ultra-compact .fileIcon,
+    .mm-explorer-ultra-compact img.folderIcon,
+    .mm-explorer-ultra-compact img.fileIcon {
+        width: 16px !important;
+        height: 16px !important;
+        min-width: 16px !important;
+        min-height: 16px !important;
+    }
+
+    /* Flecha de navegación por fila */
+    .mm-explorer-ultra-compact .goIcon,
+    .mm-explorer-ultra-compact .enterIcon,
+    .mm-explorer-ultra-compact .rowChevron {
+        width: 14px !important;
+        height: 14px !important;
+    }
+
+    /* Compacta cualquier card/panel interno */
+    .mm-explorer-ultra-compact .card,
+    .mm-explorer-ultra-compact .panel,
+    .mm-explorer-ultra-compact .bloque {
+        margin-bottom: 6px !important;
+        padding-top: 0 !important;
+        padding-bottom: 0 !important;
+    }
+
+    /* Reduce el padding general de paneles blancos del drive */
+    .mm-explorer-ultra-compact > div,
+    .mm-explorer-ultra-compact section > div {
+        gap: 6px !important;
+    }
+
+    /* CTA flotante más pequeño */
+    .botonFlotanteOferta,
+    .floatingOfferBtn,
+    .ctaFlotanteOferta {
+        min-height: 48px !important;
+        padding: 10px 16px !important;
+        border-radius: 999px !important;
+        font-size: 14px !important;
+        box-shadow: 0 8px 20px rgba(0,0,0,.18) !important;
+    }
+}
+
+@media (max-width: 430px) {
+
+    .mm-explorer-ultra-compact {
+        padding-top: 8px !important;
+        padding-bottom: 4px !important;
+    }
+
+    .mm-explorer-ultra-compact h1,
+    .mm-explorer-ultra-compact h2 {
+        font-size: 20px !important;
+        line-height: 1.02 !important;
+        margin-bottom: 6px !important;
+    }
+
+    .mm-explorer-ultra-compact input[type="search"],
+    .mm-explorer-ultra-compact input[type="text"],
+    .mm-explorer-ultra-compact input[placeholder*="Buscar archivo"],
+    .mm-explorer-ultra-compact input[placeholder*="Buscar archivo o carpeta"] {
+        height: 36px !important;
+        min-height: 36px !important;
+        padding: 7px 10px !important;
+        font-size: 13px !important;
+        margin-bottom: 5px !important;
+    }
+
+    .mm-explorer-ultra-compact .mm-explorer-title,
+    .mm-explorer-ultra-compact .driveTitle,
+    .mm-explorer-ultra-compact .driveHeaderTitle {
+        font-size: 14px !important;
+    }
+
+    .mm-explorer-ultra-compact .mm-explorer-stats,
+    .mm-explorer-ultra-compact .driveStats,
+    .mm-explorer-ultra-compact .driveHeaderStats {
+        font-size: 11px !important;
+    }
+
+    .mm-explorer-ultra-compact .mm-explorer-nav button,
+    .mm-explorer-ultra-compact .mm-explorer-nav a {
+        height: 34px !important;
+        min-height: 34px !important;
+        font-size: 12px !important;
+    }
+
+    .mm-explorer-ultra-compact table thead th {
+        padding: 7px 5px !important;
+        font-size: 9px !important;
+    }
+
+    .mm-explorer-ultra-compact table tbody td {
+        padding: 7px 5px !important;
+        font-size: 11px !important;
+    }
+
+    .mm-explorer-ultra-compact .archivoNombre,
+    .mm-explorer-ultra-compact .itemNombre,
+    .mm-explorer-ultra-compact .driveItemName,
+    .mm-explorer-ultra-compact td:first-child strong,
+    .mm-explorer-ultra-compact td:first-child span,
+    .mm-explorer-ultra-compact td:first-child a {
+        font-size: 11px !important;
+        line-height: 1.08 !important;
+    }
+
+    .mm-explorer-ultra-compact td:nth-child(2),
+    .mm-explorer-ultra-compact th:nth-child(2),
+    .mm-explorer-ultra-compact td:nth-child(3),
+    .mm-explorer-ultra-compact th:nth-child(3) {
+        font-size: 10px !important;
+    }
+}
