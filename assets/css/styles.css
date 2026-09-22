@@ -1,0 +1,3325 @@
+﻿:root {
+    --fondo: #06111f;
+    --panel: #0d1d2e;
+    --panel2: #10243a;
+    --texto: #f7f9fc;
+    --texto2: #9fb3ca;
+    --naranja: #ff8a00;
+    --naranja2: #ffa733;
+    --azul: #0c3d75;
+    --borde: #294158;
+    --verde: #25d366;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    font-family: "Segoe UI", Arial, sans-serif;
+    background: var(--fondo);
+    color: var(--texto);
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    padding: 10px 18px;
+    background: rgba(6,17,31,.95);
+    border-bottom: 1px solid var(--borde);
+    backdrop-filter: blur(12px);
+}
+
+.marca {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+}
+
+.logoBox {
+    width: 48px;
+    height: 48px;
+    flex: 0 0 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    border-radius: 13px;
+    background: white;
+    border: 1px solid rgba(255,255,255,.12);
+}
+
+.logoBox img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.marcaTexto {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.05;
+}
+
+.marcaTexto strong {
+    font-size: 15px;
+    letter-spacing: .5px;
+}
+
+.marcaTexto b {
+    color: var(--naranja);
+}
+
+.marcaTexto small {
+    margin-top: 5px;
+    color: var(--texto2);
+    font-size: 10px;
+    letter-spacing: .8px;
+}
+
+.header select {
+    max-width: 160px;
+    padding: 9px 11px;
+    border-radius: 10px;
+    border: 1px solid var(--borde);
+    background: var(--panel);
+    color: white;
+}
+
+main {
+    max-width: 1000px;
+    margin: auto;
+}
+
+.hero {
+    text-align: center;
+    padding: 55px 20px 30px;
+}
+
+.badge {
+    display: inline-block;
+    padding: 7px 13px;
+    border-radius: 50px;
+    background: rgba(255,138,0,.11);
+    color: var(--naranja2);
+    border: 1px solid rgba(255,138,0,.45);
+    font-weight: 900;
+}
+
+h1 {
+    max-width: 850px;
+    margin: 20px auto 15px;
+    font-size: clamp(36px,8vw,65px);
+    line-height: 1;
+}
+
+.descripcion {
+    max-width: 720px;
+    margin: auto;
+    color: var(--texto2);
+    font-size: 18px;
+    line-height: 1.6;
+}
+
+.video-placeholder {
+    min-height: 330px;
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    border: 1px dashed #60758c;
+    border-radius: 22px;
+    background:
+        radial-gradient(circle at 80% 20%, rgba(255,138,0,.14), transparent 25%),
+        linear-gradient(135deg,#0c1b2c,#102d4d);
+}
+
+.video-placeholder .play {
+    color: var(--naranja);
+    font-size: 45px;
+}
+
+.video-placeholder span {
+    color: var(--texto2);
+}
+
+.beneficios {
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.beneficio {
+    text-align: left;
+    padding: 15px;
+    border-radius: 14px;
+    border: 1px solid var(--borde);
+    background: var(--panel);
+}
+
+.beneficio::before {
+    content: "✓";
+    color: var(--naranja);
+    font-weight: 900;
+    margin-right: 8px;
+}
+
+.botonesHero {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 22px;
+}
+
+.btn {
+    border: none;
+    border-radius: 12px;
+    padding: 14px 18px;
+    font-size: 15px;
+    font-weight: 900;
+    cursor: pointer;
+}
+
+.btnPrincipal {
+    background: var(--naranja);
+    color: #1d0d00;
+}
+
+.btnSecundario {
+    background: var(--panel);
+    color: white;
+    border: 1px solid var(--borde);
+}
+
+.btnNegro {
+    background: #02070d;
+    color: white;
+    border: 1px solid var(--borde);
+}
+
+.seccion {
+    padding: 60px 20px;
+}
+
+.seccionOscura {
+    background: #081725;
+    border-top: 1px solid #172b40;
+    border-bottom: 1px solid #172b40;
+}
+
+.tituloSeccion span {
+    color: var(--naranja);
+    font-size: 12px;
+    font-weight: 900;
+    letter-spacing: 2px;
+}
+
+.tituloSeccion h2 {
+    margin: 8px 0;
+    font-size: clamp(29px,6vw,43px);
+}
+
+.tituloSeccion p {
+    max-width: 720px;
+    color: var(--texto2);
+    line-height: 1.6;
+}
+
+.galeria {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 12px;
+    margin-top: 25px;
+}
+
+.foto-placeholder {
+    aspect-ratio: 4/3;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 16px;
+    border: 1px dashed #60758c;
+    color: #91a6bd;
+    background: #101d2c;
+    font-weight: bold;
+}
+
+.buscador {
+    margin: 25px 0 12px;
+}
+
+.buscador input {
+    width: 100%;
+    padding: 15px;
+    border-radius: 12px;
+    background: var(--fondo);
+    color: white;
+    border: 1px solid var(--borde);
+    font-size: 16px;
+}
+
+.visorArchivos {
+    max-height: 520px;
+    overflow: auto;
+    padding: 12px;
+    border-radius: 16px;
+    border: 1px solid var(--borde);
+    background: #07101b;
+}
+
+.carpeta,
+.archivo {
+    padding: 9px 10px;
+    white-space: pre-wrap;
+}
+
+.carpeta {
+    font-weight: bold;
+}
+
+.archivo {
+    color: #c4d1df;
+}
+
+.nota {
+    color: var(--texto2);
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.ofertas {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 14px;
+    margin-top: 25px;
+}
+
+.oferta {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding: 21px;
+    border-radius: 19px;
+    background: var(--panel);
+    border: 1px solid var(--borde);
+    transition: .2s ease;
+}
+
+.ofertaRecomendada .recomendado {
+    position: absolute;
+    top: -11px;
+    right: 18px;
+    padding: 6px 10px;
+    border-radius: 50px;
+    background: #14283e;
+    color: var(--naranja2);
+    border: 1px solid rgba(255,138,0,.35);
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: .5px;
+}
+
+.ofertaSeleccionada {
+    border: 2px solid var(--verde);
+    box-shadow: 0 0 0 4px rgba(37,211,102,.08);
+}
+
+.ofertaSeleccionada::after {
+    content: "ELEGIDA";
+    position: absolute;
+    top: -11px;
+    left: 18px;
+    padding: 6px 10px;
+    border-radius: 50px;
+    background: var(--verde);
+    color: #04230f;
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: .6px;
+}
+
+.ofertaSeleccionada .btn {
+    background: var(--verde);
+    color: #04230f;
+    border-color: var(--verde);
+}
+
+.cabeceraOferta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+}
+
+.cabeceraOferta span {
+    color: var(--naranja2);
+    font-size: 12px;
+    font-weight: 900;
+}
+
+.cabeceraOferta strong {
+    font-size: 22px;
+}
+
+.oferta h3 {
+    margin: 25px 0 5px;
+}
+
+.oferta p {
+    flex: 1;
+    color: var(--texto2);
+    line-height: 1.5;
+}
+
+.oferta .btn {
+    width: 100%;
+    margin-top: 12px;
+}
+
+.configurador {
+    margin-top: 25px;
+    padding: 22px;
+    border-radius: 18px;
+    background: #0c1a29;
+    border: 1px solid var(--borde);
+}
+
+.oculto {
+    display: none !important;
+}
+
+.listaAdicionales {
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    gap: 10px;
+    margin-top: 18px;
+}
+
+.adicional {
+    display: flex;
+    gap: 10px;
+    padding: 14px;
+    cursor: pointer;
+    border-radius: 13px;
+    border: 1px solid var(--borde);
+    background: #091522;
+}
+
+.adicional small {
+    display: block;
+    margin-top: 5px;
+    color: var(--texto2);
+    line-height: 1.35;
+}
+
+.resumenPedido {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    padding-top: 18px;
+    margin-top: 18px;
+    border-top: 1px solid var(--borde);
+}
+
+.resumenPedido small {
+    display: block;
+    color: var(--texto2);
+    font-size: 11px;
+}
+
+.resumenPedido strong {
+    display: block;
+    margin-top: 5px;
+}
+
+.btnWhatsapp {
+    width: 100%;
+    margin-top: 18px;
+    background: var(--verde);
+    color: #05220f;
+}
+
+.btnWhatsapp:disabled {
+    opacity: .4;
+    cursor: not-allowed;
+}
+
+
+/* ---------- VIP FULL ---------- */
+
+.detalleVip {
+    margin-top: 30px;
+    padding: 28px;
+    border-radius: 24px;
+    border: 1px solid rgba(255,138,0,.4);
+    background:
+        radial-gradient(circle at 100% 0%, rgba(255,138,0,.14), transparent 27%),
+        linear-gradient(145deg,#0d1b2c,#091421);
+}
+
+.vipCabecera {
+    max-width: 780px;
+}
+
+.vipMini {
+    color: var(--naranja2);
+    font-size: 12px;
+    font-weight: 900;
+    letter-spacing: 1.7px;
+}
+
+.vipCabecera h2 {
+    margin: 9px 0 10px;
+    font-size: clamp(30px,6vw,45px);
+    line-height: 1.05;
+}
+
+.vipCabecera p {
+    color: var(--texto2);
+    line-height: 1.65;
+}
+
+.vipPrecio {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 16px 0 22px;
+    border-bottom: 1px solid var(--borde);
+}
+
+.vipPrecio span {
+    font-weight: 800;
+}
+
+.vipPrecio strong {
+    color: var(--naranja2);
+    font-size: 30px;
+}
+
+.temarioVip {
+    margin-top: 18px;
+}
+
+.temarioVip details {
+    border: 1px solid var(--borde);
+    border-radius: 14px;
+    margin: 9px 0;
+    overflow: hidden;
+    background: rgba(5,14,24,.45);
+}
+
+.temarioVip summary {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    padding: 16px;
+    cursor: pointer;
+    font-weight: 800;
+}
+
+.numeroIng {
+    min-width: 52px;
+    padding: 5px 8px;
+    border-radius: 7px;
+    background: rgba(255,138,0,.12);
+    color: var(--naranja2);
+    font-size: 11px;
+    text-align: center;
+}
+
+.detalleContenido {
+    padding: 0 18px 17px;
+    color: var(--texto2);
+}
+
+.detalleContenido ul {
+    margin: 4px 0 0;
+    padding-left: 20px;
+    line-height: 1.65;
+}
+
+.vipCierre {
+    margin-top: 22px;
+    padding: 20px;
+    border-radius: 15px;
+    background: #07111c;
+    border: 1px solid var(--borde);
+}
+
+.vipCierre > strong {
+    font-size: 19px;
+}
+
+.vipCierre p {
+    color: var(--texto2);
+    line-height: 1.55;
+}
+
+.preguntas details {
+    padding: 18px 0;
+    border-top: 1px solid var(--borde);
+}
+
+.preguntas summary {
+    cursor: pointer;
+    font-weight: 800;
+}
+
+.preguntas p {
+    color: var(--texto2);
+    line-height: 1.6;
+}
+
+.whatsappFlotante {
+    position: fixed;
+    right: 18px;
+    bottom: 18px;
+    z-index: 100;
+    padding: 13px 18px;
+    border-radius: 50px;
+    background: var(--verde);
+    color: #05220f;
+    font-weight: 900;
+    box-shadow: 0 10px 30px rgba(0,0,0,.35);
+}
+
+footer {
+    padding: 35px 20px 85px;
+    border-top: 1px solid var(--borde);
+}
+
+.footerMarca {
+    max-width: 1000px;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    color: var(--texto2);
+}
+
+.footerMarca img {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 12px;
+    background: white;
+}
+
+.footerMarca strong {
+    color: white;
+}
+
+.footerMarca p {
+    margin: 4px 0 0;
+    font-size: 12px;
+}
+
+@media (max-width: 720px) {
+    .beneficios,
+    .galeria,
+    .ofertas,
+    .listaAdicionales {
+        grid-template-columns: 1fr;
+    }
+
+    .video-placeholder {
+        min-height: 220px;
+    }
+
+    .header {
+        padding: 9px 11px;
+    }
+
+    .marcaTexto small {
+        display: none;
+    }
+
+    .marcaTexto strong {
+        font-size: 12px;
+    }
+
+    .logoBox {
+        width: 42px;
+        height: 42px;
+        flex-basis: 42px;
+    }
+
+    .header select {
+        max-width: 105px;
+    }
+
+    .detalleVip {
+        padding: 20px 14px;
+    }
+
+    .vipPrecio {
+        align-items: center;
+    }
+
+    .vipPrecio strong {
+        font-size: 25px;
+    }
+}
+
+/* === V3 FICHAS ING START === */
+
+.listaAdicionales { align-items: start; }
+
+.adicionalWrap {
+    border: 1px solid var(--borde);
+    border-radius: 15px;
+    background: #091522;
+    overflow: hidden;
+    transition: border-color .2s ease, box-shadow .2s ease;
+}
+
+.adicionalWrap.seleccionado {
+    border-color: var(--verde);
+    box-shadow: 0 0 0 3px rgba(37,211,102,.08);
+}
+
+.adicionalWrap .adicional {
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    padding-bottom: 10px;
+}
+
+.adicionalWrap.seleccionado .adicional strong { color: #74e99e; }
+
+.adicionalInfoBar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    padding: 0 14px 13px 43px;
+}
+
+.verIncluye {
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: var(--naranja2);
+    font-weight: 800;
+    cursor: pointer;
+    font-size: 13px;
+}
+
+.estadoSeleccion {
+    color: var(--verde);
+    font-size: 11px;
+    font-weight: 900;
+    letter-spacing: .4px;
+}
+
+.fichaAdicional {
+    padding: 17px;
+    border-top: 1px solid var(--borde);
+    background:
+        radial-gradient(circle at 100% 0%, rgba(255,138,0,.08), transparent 35%),
+        #07121f;
+}
+
+.fichaAdicional .fichaEtiqueta {
+    display: inline-block;
+    margin-bottom: 7px;
+    color: var(--naranja2);
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: 1px;
+}
+
+.fichaAdicional h4 {
+    margin: 0 0 8px;
+    font-size: 18px;
+}
+
+.fichaPromesa {
+    margin: 0 0 12px;
+    color: var(--texto2);
+    line-height: 1.55;
+}
+
+.fichaAdicional ul {
+    margin: 8px 0 14px;
+    padding-left: 20px;
+    color: #d7e1eb;
+    line-height: 1.55;
+}
+
+.paraQuien {
+    margin: 12px 0;
+    padding: 11px 12px;
+    border-radius: 10px;
+    background: rgba(255,138,0,.07);
+    color: var(--texto2);
+    line-height: 1.45;
+    font-size: 13px;
+}
+
+.paraQuien strong { color: var(--naranja2); }
+
+.accionesFicha {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 9px;
+    margin-top: 13px;
+}
+
+.seleccionarFicha {
+    background: var(--verde);
+    color: #04230f;
+}
+
+.explorarFicha {
+    background: #102238;
+    color: white;
+    border: 1px solid var(--borde);
+}
+
+.miniExplorer {
+    margin-top: 13px;
+    padding: 13px;
+    border: 1px solid var(--borde);
+    border-radius: 11px;
+    background: #040d17;
+}
+
+.miniExplorerCabecera {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.miniExplorerCabecera strong { font-size: 13px; }
+.miniExplorerCabecera span { color: var(--texto2); font-size: 11px; }
+
+.muestraLinea {
+    padding: 7px 8px;
+    border-radius: 7px;
+    color: #c7d5e4;
+    font-family: Consolas, "Courier New", monospace;
+    font-size: 12px;
+    line-height: 1.35;
+}
+
+.muestraLinea:nth-child(even) { background: rgba(255,255,255,.025); }
+
+.muestraAviso {
+    margin: 10px 0 0;
+    color: var(--texto2);
+    font-size: 11px;
+    line-height: 1.4;
+}
+
+.mensajeLimite {
+    grid-column: 1 / -1;
+    margin: 2px 0 0;
+    padding: 10px 12px;
+    border: 1px solid rgba(255,138,0,.35);
+    border-radius: 10px;
+    background: rgba(255,138,0,.08);
+    color: #ffd19d;
+    font-size: 12px;
+}
+
+.recomendacionMini {
+    display: inline-block;
+    margin-top: 5px;
+    color: var(--naranja2);
+    font-size: 11px;
+    font-weight: 800;
+}
+
+@media (max-width: 720px) {
+    .accionesFicha { grid-template-columns: 1fr; }
+    .adicionalInfoBar { padding-left: 43px; }
+}
+
+/* === V3 FICHAS ING END === */
+
+
+/* === V4 ARBOL REAL START === */
+
+.arbolMeta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin: 12px 0;
+}
+
+.arbolStats {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.arbolStats strong {
+    font-size: 14px;
+}
+
+.arbolStats span {
+    color: var(--texto2);
+    font-size: 12px;
+}
+
+.arbolBotones {
+    display: flex;
+    gap: 7px;
+}
+
+.arbolBoton {
+    border: 1px solid var(--borde);
+    border-radius: 9px;
+    background: #0d1d2e;
+    color: #dbe7f3;
+    padding: 8px 11px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.filtrosArbol {
+    display: flex;
+    gap: 7px;
+    flex-wrap: wrap;
+    margin-bottom: 12px;
+}
+
+.filtroArbol {
+    border: 1px solid var(--borde);
+    border-radius: 999px;
+    padding: 7px 11px;
+    background: transparent;
+    color: var(--texto2);
+    cursor: pointer;
+    font-size: 11px;
+    font-weight: 800;
+}
+
+.filtroArbol.activo {
+    border-color: rgba(255,138,0,.55);
+    background: rgba(255,138,0,.10);
+    color: var(--naranja2);
+}
+
+.visorArchivos {
+    padding: 8px;
+    max-height: 650px;
+}
+
+.treeFolderReal {
+    border-bottom: 1px solid rgba(41,65,88,.35);
+}
+
+.treeFolderReal:last-child {
+    border-bottom: 0;
+}
+
+.treeFolderReal > summary {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    min-height: 43px;
+    padding: 7px 9px;
+    border-radius: 8px;
+    cursor: pointer;
+    list-style: none;
+    user-select: none;
+}
+
+.treeFolderReal > summary::-webkit-details-marker {
+    display: none;
+}
+
+.treeFolderReal > summary:hover {
+    background: rgba(255,255,255,.035);
+}
+
+.treeChevron {
+    width: 7px;
+    height: 7px;
+    border-right: 2px solid #8297ad;
+    border-bottom: 2px solid #8297ad;
+    transform: rotate(-45deg);
+    transition: transform .15s ease;
+    flex: 0 0 7px;
+}
+
+.treeFolderReal[open] > summary .treeChevron {
+    transform: rotate(45deg);
+}
+
+.treeFolderIcon {
+    position: relative;
+    width: 19px;
+    height: 14px;
+    flex: 0 0 19px;
+    border-radius: 3px;
+    background: #d38a20;
+}
+
+.treeFolderIcon::before {
+    content: "";
+    position: absolute;
+    width: 8px;
+    height: 4px;
+    left: 1px;
+    top: -3px;
+    border-radius: 2px 2px 0 0;
+    background: #f1aa3e;
+}
+
+.treeFolderName {
+    min-width: 0;
+    flex: 1;
+    overflow-wrap: anywhere;
+    font-weight: 700;
+    color: #edf4fb;
+}
+
+.treeFolderCount {
+    flex: 0 0 auto;
+    min-width: 25px;
+    padding: 3px 7px;
+    border-radius: 999px;
+    background: rgba(255,255,255,.045);
+    color: #849ab1;
+    font-size: 10px;
+    text-align: center;
+}
+
+.treeChildrenReal {
+    margin-left: 18px;
+    padding-left: 12px;
+    border-left: 1px solid rgba(86,112,139,.30);
+}
+
+.treeFileReal {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    min-height: 38px;
+    padding: 5px 8px;
+    border-radius: 7px;
+}
+
+.treeFileReal:hover {
+    background: rgba(255,255,255,.025);
+}
+
+.treeFileBadge {
+    flex: 0 0 43px;
+    padding: 4px 5px;
+    border-radius: 5px;
+    background: #112840;
+    color: #8eb8df;
+    font-family: Consolas, monospace;
+    font-size: 9px;
+    font-weight: 900;
+    text-align: center;
+}
+
+.treeFileName {
+    min-width: 0;
+    color: #c6d5e4;
+    font-size: 13px;
+    overflow-wrap: anywhere;
+}
+
+.arbolVacio {
+    min-height: 160px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 7px;
+    padding: 30px;
+    text-align: center;
+    color: var(--texto2);
+}
+
+.arbolVacio strong {
+    color: white;
+}
+
+@media (max-width: 720px) {
+
+    .arbolMeta {
+        align-items: flex-start;
+    }
+
+    .arbolBotones {
+        width: 100%;
+    }
+
+    .arbolBoton {
+        flex: 1;
+    }
+
+    .treeChildrenReal {
+        margin-left: 8px;
+        padding-left: 7px;
+    }
+
+    .treeFolderReal > summary {
+        padding-left: 5px;
+    }
+
+}
+
+/* === V4 ARBOL REAL END === */
+
+
+/* === AJUSTE V4.1 === */
+
+/*
+   Las fichas de adicionales son informativas.
+   El explorador completo vive únicamente
+   en "Explora el contenido de ING X".
+*/
+
+.accionesFicha,
+.miniExplorer {
+    display: none !important;
+}
+
+/* === FIN AJUSTE V4.1 === */
+
+
+/* === V4.2 DRIVE START === */
+
+.rutaArbolDrive {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 5px;
+    min-height: 42px;
+    margin: 4px 0 10px;
+    padding: 8px 11px;
+    border: 1px solid var(--borde);
+    border-radius: 11px;
+    background: rgba(5,14,24,.50);
+}
+
+.crumbDrive {
+    border: 0;
+    border-radius: 7px;
+    padding: 6px 8px;
+    background: transparent;
+    color: #afc2d5;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 750;
+}
+
+.crumbDrive:hover {
+    background: rgba(255,255,255,.05);
+    color: white;
+}
+
+.crumbDrive.actual {
+    color: var(--naranja2);
+}
+
+.crumbSeparador {
+    color: #526981;
+    font-size: 17px;
+}
+
+.arbolBoton:disabled {
+    opacity: .35;
+    cursor: default;
+}
+
+.visorArchivos {
+    padding: 0;
+    overflow: auto;
+    background: #07111d;
+}
+
+.driveHeader,
+.driveRow {
+    display: grid;
+    grid-template-columns: 38px minmax(260px,1fr) 105px 105px 24px;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+}
+
+.driveHeader {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    min-height: 38px;
+    padding: 0 13px;
+    border-bottom: 1px solid var(--borde);
+    background: #0a1827;
+    color: #7f96ad;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: .5px;
+    text-transform: uppercase;
+}
+
+.driveRow {
+    min-height: 47px;
+    padding: 6px 13px;
+    border: 0;
+    border-bottom: 1px solid rgba(41,65,88,.34);
+    background: transparent;
+    color: white;
+    text-align: left;
+}
+
+button.driveRow {
+    font: inherit;
+    cursor: pointer;
+}
+
+.driveRow:hover {
+    background: rgba(255,255,255,.035);
+}
+
+.driveFolderRow {
+    width: 100%;
+}
+
+.driveFolderIcon {
+    position: relative;
+    display: block;
+    width: 25px;
+    height: 18px;
+    border-radius: 3px;
+    background: #dd9125;
+}
+
+.driveFolderIcon::before {
+    content: "";
+    position: absolute;
+    left: 1px;
+    top: -4px;
+    width: 11px;
+    height: 5px;
+    border-radius: 3px 3px 0 0;
+    background: #f7ae42;
+}
+
+.driveFileBadge {
+    width: 35px;
+    padding: 5px 3px;
+    border-radius: 5px;
+    background: #112b45;
+    color: #98c1e8;
+    font-family: Consolas, monospace;
+    font-size: 8px;
+    font-weight: 900;
+    text-align: center;
+}
+
+.driveNombre {
+    min-width: 0;
+    overflow-wrap: anywhere;
+    color: #e7eef6;
+    font-size: 13px;
+    font-weight: 650;
+}
+
+.drivePath {
+    display: block;
+    margin-top: 4px;
+    color: #748ba1;
+    font-size: 10px;
+    font-weight: 500;
+}
+
+.driveTipo {
+    color: #8da3b8;
+    font-size: 11px;
+}
+
+.driveCantidad {
+    color: #7c92a8;
+    font-size: 10px;
+}
+
+.driveEntrar {
+    color: var(--naranja2);
+    font-size: 24px;
+    text-align: right;
+}
+
+.driveEntrar.vacio {
+    visibility: hidden;
+}
+
+.driveEmpty {
+    min-height: 220px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    padding: 35px;
+    color: var(--texto2);
+    text-align: center;
+}
+
+.driveEmpty strong {
+    color: white;
+}
+
+@media (max-width: 720px) {
+
+    .driveHeader,
+    .driveRow {
+        grid-template-columns: 33px minmax(180px,1fr) 23px;
+    }
+
+    .driveHeader span:nth-child(3),
+    .driveHeader span:nth-child(4),
+    .driveTipo,
+    .driveCantidad {
+        display: none;
+    }
+
+    .driveHeader {
+        padding-left: 10px;
+    }
+
+    .driveRow {
+        padding-left: 10px;
+        padding-right: 9px;
+    }
+
+    .rutaArbolDrive {
+        overflow-x: auto;
+        flex-wrap: nowrap;
+    }
+
+    .crumbDrive {
+        white-space: nowrap;
+    }
+
+}
+
+/* === V4.2 DRIVE END === */
+
+
+/* === V4.3 NAV START === */
+
+/*
+   Ya no usamos filtros por extensión.
+*/
+#filtrosArbol {
+    display: none !important;
+}
+
+
+/*
+   Navegación más parecida a un explorador:
+   Atrás / Adelante.
+*/
+.arbolBotones {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 4px;
+    border: 1px solid var(--borde);
+    border-radius: 12px;
+    background: rgba(5,14,24,.48);
+}
+
+.navDriveBtn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    min-width: 104px;
+    min-height: 38px;
+    border: 0 !important;
+    border-radius: 9px !important;
+    background: transparent !important;
+    color: #dce8f4 !important;
+    transition:
+        background .16s ease,
+        color .16s ease,
+        transform .16s ease;
+}
+
+.navDriveBtn:hover:not(:disabled) {
+    background: rgba(255,255,255,.065) !important;
+    color: white !important;
+}
+
+.navDriveBtn:active:not(:disabled) {
+    transform: scale(.97);
+}
+
+.navDriveBtn:disabled {
+    opacity: .28 !important;
+    cursor: default !important;
+}
+
+.navFlecha {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: rgba(255,138,0,.11);
+    color: var(--naranja2);
+    font-size: 17px;
+    font-weight: 900;
+}
+
+
+/*
+   La ruta queda justo debajo de las estadísticas.
+   "ING 1" funciona como Inicio.
+*/
+.rutaArbolDrive {
+    margin-top: 9px;
+    margin-bottom: 12px;
+}
+
+
+/*
+   Un poquito más de aire porque ahora la
+   lista es el protagonista.
+*/
+.visorArchivos {
+    margin-top: 0;
+}
+
+
+/*
+   Hacemos más evidente que las carpetas
+   sí son navegables.
+*/
+.driveFolderRow .driveEntrar {
+    width: 25px;
+    height: 25px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    justify-self: end;
+    border-radius: 50%;
+    background: rgba(255,138,0,.09);
+    color: var(--naranja2);
+    font-size: 20px;
+    transition: background .16s ease;
+}
+
+.driveFolderRow:hover .driveEntrar {
+    background: rgba(255,138,0,.18);
+}
+
+
+@media (max-width: 720px) {
+
+    .arbolBotones {
+        width: auto;
+    }
+
+    .navDriveBtn {
+        min-width: 46px;
+        width: 46px;
+        padding: 5px !important;
+    }
+
+    .navDriveBtn > span:not(.navFlecha) {
+        display: none;
+    }
+
+    .navFlecha {
+        background: transparent;
+        width: 30px;
+        height: 30px;
+        font-size: 22px;
+    }
+}
+
+/* === V4.3 NAV END === */
+
+
+/* === V5 MEDIA START === */
+
+.mediaProducto {
+    margin-top: 30px;
+    border: 1px solid var(--borde);
+    border-radius: 22px;
+    overflow: hidden;
+    background:
+        radial-gradient(circle at 90% 10%, rgba(255,138,0,.10), transparent 30%),
+        #081522;
+}
+
+.demoVideoTexto {
+    padding: 24px 24px 8px;
+    text-align: left;
+}
+
+.demoVideoTexto > span {
+    color: var(--naranja2);
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: 1.6px;
+}
+
+.demoVideoTexto h3 {
+    margin: 6px 0 6px;
+    font-size: 24px;
+}
+
+.demoVideoTexto p {
+    margin: 0;
+    color: var(--texto2);
+    line-height: 1.5;
+}
+
+.videoRealWrap {
+    min-height: 400px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 18px 20px 25px;
+    background:
+        linear-gradient(
+            180deg,
+            rgba(9,23,38,.25),
+            rgba(2,8,15,.75)
+        );
+}
+
+.videoReal {
+    display: block;
+    width: auto;
+    max-width: min(100%, 420px);
+    max-height: 640px;
+    border-radius: 15px;
+    background: black;
+    box-shadow: 0 16px 45px rgba(0,0,0,.35);
+}
+
+.mediaPendiente {
+    min-height: 330px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 9px;
+    padding: 30px;
+    text-align: center;
+}
+
+.mediaPendienteIcono {
+    color: var(--naranja2);
+    font-size: 40px;
+}
+
+.mediaPendiente small {
+    max-width: 400px;
+    color: var(--texto2);
+    line-height: 1.5;
+}
+
+.galeriaProducto {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0,1fr));
+    gap: 14px;
+    margin-top: 25px;
+}
+
+.laminaProducto {
+    overflow: hidden;
+    padding: 0;
+    border: 1px solid var(--borde);
+    border-radius: 17px;
+    background: #0b1928;
+    color: white;
+    text-align: left;
+    cursor: zoom-in;
+    transition:
+        transform .18s ease,
+        border-color .18s ease,
+        box-shadow .18s ease;
+}
+
+.laminaProducto:hover {
+    transform: translateY(-2px);
+    border-color: rgba(255,138,0,.48);
+    box-shadow: 0 12px 32px rgba(0,0,0,.20);
+}
+
+.laminaImagenWrap {
+    position: relative;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    background: white;
+}
+
+.laminaImagenWrap img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: contain;
+    background: white;
+}
+
+.ampliarLamina {
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    padding: 6px 9px;
+    border-radius: 999px;
+    background: rgba(4,13,22,.87);
+    color: white;
+    font-size: 10px;
+    font-weight: 850;
+    opacity: 0;
+    transform: translateY(4px);
+    transition: .18s ease;
+}
+
+.laminaProducto:hover .ampliarLamina {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.laminaTexto {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding: 14px 15px 16px;
+}
+
+.laminaTexto strong {
+    color: white;
+    font-size: 15px;
+}
+
+.laminaTexto span {
+    color: var(--texto2);
+    font-size: 12px;
+    line-height: 1.45;
+}
+
+.notaGaleria {
+    margin-top: 13px;
+    color: var(--texto2);
+    font-size: 11px;
+    line-height: 1.5;
+}
+
+.galeriaPendiente {
+    grid-column: 1 / -1;
+    min-height: 180px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 30px;
+    border: 1px dashed var(--borde);
+    border-radius: 16px;
+    color: var(--texto2);
+    text-align: center;
+}
+
+
+/* LIGHTBOX */
+
+.sinScroll {
+    overflow: hidden;
+}
+
+.lightboxMedia {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 13px;
+    padding: 25px;
+    background: rgba(1,7,13,.94);
+    backdrop-filter: blur(8px);
+}
+
+.lightboxMedia img {
+    display: block;
+    max-width: min(96vw, 1500px);
+    max-height: 82vh;
+    object-fit: contain;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 20px 70px rgba(0,0,0,.55);
+}
+
+.cerrarLightbox {
+    position: fixed;
+    top: 18px;
+    right: 21px;
+    width: 44px;
+    height: 44px;
+    border: 1px solid rgba(255,255,255,.20);
+    border-radius: 50%;
+    background: rgba(8,20,33,.92);
+    color: white;
+    cursor: pointer;
+    font-size: 29px;
+    line-height: 1;
+}
+
+.captionLightbox {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    max-width: 800px;
+    text-align: center;
+}
+
+.captionLightbox strong {
+    font-size: 16px;
+}
+
+.captionLightbox span {
+    color: #9fb3ca;
+    font-size: 12px;
+}
+
+
+@media (max-width: 720px) {
+
+    .galeriaProducto {
+        grid-template-columns: 1fr;
+    }
+
+    .demoVideoTexto {
+        padding: 19px 17px 5px;
+    }
+
+    .demoVideoTexto h3 {
+        font-size: 21px;
+    }
+
+    .videoRealWrap {
+        min-height: 300px;
+        padding: 14px 12px 18px;
+    }
+
+    .videoReal {
+        max-width: min(100%, 370px);
+        max-height: 68vh;
+    }
+
+    .ampliarLamina {
+        opacity: 1;
+        transform: none;
+    }
+
+    .lightboxMedia {
+        padding: 12px;
+    }
+
+    .lightboxMedia img {
+        max-width: 98vw;
+        max-height: 78vh;
+    }
+}
+
+/* === V5 MEDIA END === */
+
+
+/* === REPARACION V4.5 START === */
+
+#filtrosArbol {
+    display: none !important;
+}
+
+.navDriveBtn {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+}
+
+.navDriveBtn:disabled {
+    opacity: .3;
+    cursor: default;
+}
+
+.drivePath {
+    display: block;
+    margin-top: 4px;
+    color: #748ba1;
+    font-size: 10px;
+    font-weight: 500;
+}
+
+/* === REPARACION V4.5 END === */
+
+
+/* === V4.6 FINAL START === */
+
+#filtrosArbol {
+    display: none !important;
+}
+
+.navDriveBtn {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+}
+
+.navDriveBtn:disabled {
+    opacity: .30 !important;
+    cursor: default !important;
+}
+
+.drivePath {
+    display: block;
+    margin-top: 4px;
+    color: #748ba1;
+    font-size: 10px;
+    font-weight: 500;
+}
+
+/* === V4.6 FINAL END === */
+
+
+
+
+
+/* === ING7 V4.7 START === */
+
+.driveRestrictedRow {
+    background:
+        linear-gradient(
+            90deg,
+            rgba(255,138,0,.035),
+            rgba(255,138,0,.012)
+        );
+}
+
+.driveRestrictedRow:hover {
+    border-color:
+        rgba(255,138,0,.35);
+}
+
+.driveRestrictedIcon {
+    width: 27px;
+    min-width: 27px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    opacity: .88;
+}
+
+.restrictedTag {
+    display: block;
+    margin-top: 4px;
+    color: #ff9c28;
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: .5px;
+    text-transform: uppercase;
+}
+
+.driveRestrictedEmpty {
+    min-height: 230px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    padding: 30px;
+    text-align: center;
+}
+
+.driveRestrictedEmpty strong {
+    font-size: 17px;
+    color: #fff;
+}
+
+.driveRestrictedEmpty span {
+    max-width: 620px;
+    color: var(--texto2);
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.driveRestrictedBigIcon {
+    width: 46px;
+    height: 46px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(255,138,0,.32);
+    border-radius: 50%;
+    background: rgba(255,138,0,.08);
+    font-size: 20px;
+}
+
+/* === ING7 V4.7 END === */
+
+
+/* === AUDITORIA V5.3 START === */
+
+/*
+   Los medios reales usan .mediaProducto.
+   Estos selectores pertenecen a versiones antiguas
+   y no deben volver a aparecer.
+*/
+.media-placeholder,
+.video-placeholder {
+    display: none !important;
+}
+
+/* Evitar que etiquetas legacy vacías ocupen espacio */
+.media-placeholder:empty,
+.video-placeholder:empty {
+    display: none !important;
+}
+
+/* === AUDITORIA V5.3 END === */
+
+
+/* === MEDIA V5.4 START === */
+
+/*
+    Ocultamos los renderers legacy.
+    La nueva sección V5.4 es completamente independiente.
+*/
+#mediaProducto,
+#galeriaProducto,
+#notaGaleria,
+.media-placeholder,
+.video-placeholder,
+.mediaCarga {
+    display: none !important;
+}
+
+
+.mediaDemoV54 {
+    width: min(1000px, calc(100% - 36px));
+    margin: 0 auto;
+    padding: 70px 0 65px;
+}
+
+
+.mediaV54Encabezado {
+    max-width: 720px;
+    margin-bottom: 25px;
+}
+
+
+.mediaV54Eyebrow {
+    display: inline-block;
+    margin-bottom: 7px;
+    color: #ff8a00;
+    font-size: 11px;
+    font-weight: 900;
+    letter-spacing: 1.7px;
+}
+
+
+.mediaV54Encabezado h2 {
+    margin: 0 0 9px;
+    color: #f5f7fb;
+    font-size: clamp(30px, 4vw, 45px);
+    line-height: 1.08;
+}
+
+
+.mediaV54Encabezado p {
+    max-width: 680px;
+    margin: 0;
+    color: #9fb3ca;
+    font-size: 15px;
+    line-height: 1.55;
+}
+
+
+.mediaV54Grid {
+    display: grid;
+    grid-template-columns: minmax(270px, .78fr) minmax(0, 1.22fr);
+    gap: 18px;
+    align-items: start;
+}
+
+
+.mediaV54VideoWrap {
+    min-height: 430px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 15px;
+    overflow: hidden;
+    border: 1px solid #294158;
+    border-radius: 19px;
+    background:
+        radial-gradient(
+            circle at 50% 15%,
+            rgba(255,138,0,.08),
+            transparent 36%
+        ),
+        #07131f;
+}
+
+
+.mediaV54Video {
+    display: block;
+    width: auto;
+    max-width: 100%;
+    max-height: 620px;
+    border-radius: 13px;
+    background: #000;
+}
+
+
+.mediaV54Galeria {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+}
+
+
+.mediaV54Card {
+    overflow: hidden;
+    padding: 0;
+    border: 1px solid #294158;
+    border-radius: 16px;
+    background: #0b1928;
+    color: #fff;
+    text-align: left;
+    cursor: zoom-in;
+    transition:
+        border-color .18s ease,
+        transform .18s ease,
+        box-shadow .18s ease;
+}
+
+
+.mediaV54Card:hover {
+    transform: translateY(-2px);
+    border-color: rgba(255,138,0,.52);
+    box-shadow: 0 15px 36px rgba(0,0,0,.20);
+}
+
+
+.mediaV54ImgWrap {
+    position: relative;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    background: #fff;
+}
+
+
+.mediaV54ImgWrap img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: contain;
+    background: #fff;
+}
+
+
+.mediaV54Zoom {
+    position: absolute;
+    right: 9px;
+    bottom: 9px;
+    padding: 6px 9px;
+    border-radius: 999px;
+    background: rgba(5,14,24,.88);
+    color: #fff;
+    font-size: 10px;
+    font-weight: 800;
+}
+
+
+.mediaV54CardTexto {
+    min-height: 88px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 13px 14px 15px;
+}
+
+
+.mediaV54CardTexto strong {
+    color: #fff;
+    font-size: 14px;
+}
+
+
+.mediaV54CardTexto span {
+    color: #9fb3ca;
+    font-size: 11px;
+    line-height: 1.45;
+}
+
+
+.mediaV54Nota {
+    margin: 13px 0 0;
+    color: #829ab2;
+    font-size: 11px;
+}
+
+
+/* LIGHTBOX */
+
+.mediaV54SinScroll {
+    overflow: hidden;
+}
+
+
+.mediaV54Lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 24px;
+    background: rgba(1,7,13,.95);
+    backdrop-filter: blur(8px);
+}
+
+
+.mediaV54Lightbox.abierto {
+    display: flex;
+}
+
+
+.mediaV54LightboxImg {
+    display: block;
+    max-width: min(96vw, 1500px);
+    max-height: 82vh;
+    object-fit: contain;
+    border-radius: 8px;
+    background: #fff;
+    box-shadow: 0 22px 75px rgba(0,0,0,.55);
+}
+
+
+.mediaV54Cerrar {
+    position: fixed;
+    top: 18px;
+    right: 20px;
+    width: 44px;
+    height: 44px;
+    border: 1px solid rgba(255,255,255,.18);
+    border-radius: 50%;
+    background: rgba(8,20,33,.94);
+    color: #fff;
+    font-size: 28px;
+    cursor: pointer;
+}
+
+
+.mediaV54LightboxCaption {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    max-width: 760px;
+    text-align: center;
+}
+
+
+.mediaV54LightboxCaption strong {
+    color: #fff;
+    font-size: 16px;
+}
+
+
+.mediaV54LightboxCaption span {
+    color: #9fb3ca;
+    font-size: 12px;
+}
+
+
+@media (max-width: 760px) {
+
+    .mediaDemoV54 {
+        width: min(100% - 24px, 1000px);
+        padding: 50px 0;
+    }
+
+
+    .mediaV54Grid {
+        grid-template-columns: 1fr;
+    }
+
+
+    .mediaV54VideoWrap {
+        min-height: 300px;
+    }
+
+
+    .mediaV54Video {
+        max-height: 68vh;
+    }
+
+
+    .mediaV54Galeria {
+        grid-template-columns: 1fr;
+    }
+
+
+    .mediaV54CardTexto {
+        min-height: 0;
+    }
+}
+
+/* === MEDIA V5.4 END === */
+
+
+/* === CONFIGURADOR V5.7 START === */
+
+#listaAdicionales {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    margin-top: 17px;
+}
+
+#listaAdicionales .adicionalWrap {
+    overflow: hidden;
+    border: 1px solid #294158;
+    border-radius: 15px;
+    background: #081522;
+    transition:
+        border-color .16s ease,
+        box-shadow .16s ease;
+}
+
+#listaAdicionales .adicionalWrap.seleccionado {
+    border-color: #21d56f;
+    box-shadow:
+        0 0 0 1px rgba(33,213,111,.20);
+}
+
+#listaAdicionales .adicional {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    padding: 15px 16px 8px;
+    cursor: pointer;
+}
+
+#listaAdicionales .adicional input {
+    margin-top: 4px;
+    accent-color: #21d56f;
+}
+
+#listaAdicionales .adicional > span {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 0;
+}
+
+#listaAdicionales .adicional strong {
+    color: #fff;
+    font-size: 14px;
+    line-height: 1.35;
+}
+
+#listaAdicionales .adicional small {
+    color: #9fb3ca;
+    font-size: 11px;
+    line-height: 1.4;
+}
+
+#listaAdicionales .recomendacionMini {
+    color: #9fb3ca;
+    font-size: 11px;
+}
+
+#listaAdicionales .adicionalInfoBar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 0 16px 12px;
+}
+
+#listaAdicionales .verIncluye {
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: #ff970f;
+    font-weight: 800;
+    font-size: 11px;
+    cursor: pointer;
+}
+
+#listaAdicionales .estadoSeleccion {
+    color: #21d56f;
+    font-size: 9px;
+    font-weight: 900;
+    letter-spacing: .6px;
+}
+
+#listaAdicionales .fichaAdicional {
+    padding: 18px 17px;
+    border-top: 1px solid #294158;
+    background: #07111d;
+}
+
+#listaAdicionales .fichaAdicional.oculto,
+#listaAdicionales .estadoSeleccion.oculto {
+    display: none !important;
+}
+
+#listaAdicionales .fichaEtiqueta {
+    color: #ff970f;
+    font-size: 9px;
+    font-weight: 900;
+    letter-spacing: 1px;
+}
+
+#listaAdicionales .fichaAdicional h4 {
+    margin: 8px 0 8px;
+    color: #fff;
+    font-size: 16px;
+}
+
+#listaAdicionales .fichaPromesa {
+    margin: 0 0 10px;
+    color: #9fb3ca;
+    line-height: 1.55;
+}
+
+#listaAdicionales .fichaAdicional ul {
+    margin: 0 0 12px 18px;
+    padding: 0;
+    color: #e6eef7;
+}
+
+#listaAdicionales .fichaAdicional li {
+    margin: 5px 0;
+    line-height: 1.4;
+}
+
+#listaAdicionales .paraQuien {
+    padding: 10px 11px;
+    border-radius: 10px;
+    background: rgba(255,138,0,.07);
+    color: #9fb3ca;
+    font-size: 11px;
+    line-height: 1.45;
+}
+
+#listaAdicionales .paraQuien strong {
+    color: #ff970f;
+    font-size: inherit;
+}
+
+@media (max-width: 720px) {
+    #listaAdicionales {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* === CONFIGURADOR V5.7 END === */
+
+
+
+
+
+/* === RESUMEN PEDIDO V5.9 START === */
+
+
+#resumenPedidoV59 {
+    margin:
+        10px 0
+        14px;
+}
+
+
+.pedidoV59 {
+    overflow:
+        hidden;
+
+    border:
+        1px solid
+        #294158;
+
+    border-radius:
+        13px;
+
+    background:
+        #081522;
+}
+
+
+.pedidoV59Head {
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        space-between;
+
+    gap:
+        15px;
+
+    padding:
+        13px 14px;
+
+    border-bottom:
+        1px solid
+        rgba(41,65,88,.72);
+}
+
+
+.pedidoV59Head > div {
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    gap:
+        2px;
+}
+
+
+.pedidoV59Mini {
+    color:
+        #7fa0c0;
+
+    font-size:
+        8px;
+
+    font-weight:
+        900;
+
+    letter-spacing:
+        1px;
+}
+
+
+.pedidoV59Head strong {
+    color:
+        #fff;
+
+    font-size:
+        13px;
+}
+
+
+.pedidoV59Precio {
+    color:
+        #fff;
+
+    font-size:
+        17px;
+
+    font-weight:
+        900;
+}
+
+
+.pedidoV59Lista {
+    display:
+        grid;
+
+    grid-template-columns:
+        repeat(
+            2,
+            minmax(0,1fr)
+        );
+
+    gap:
+        7px;
+
+    padding:
+        11px 12px;
+}
+
+
+.pedidoV59Item {
+    display:
+        flex;
+
+    align-items:
+        flex-start;
+
+    gap:
+        8px;
+
+    min-width:
+        0;
+
+    padding:
+        9px 10px;
+
+    border-radius:
+        9px;
+
+    background:
+        rgba(
+            255,
+            255,
+            255,
+            .025
+        );
+}
+
+
+.pedidoV59Check {
+    width:
+        20px;
+
+    min-width:
+        20px;
+
+    height:
+        20px;
+
+    display:
+        inline-flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    border-radius:
+        50%;
+
+    background:
+        rgba(
+            33,
+            213,
+            111,
+            .12
+        );
+
+    color:
+        #21d56f;
+
+    font-size:
+        11px;
+
+    font-weight:
+        900;
+}
+
+
+.pedidoV59Info {
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    gap:
+        2px;
+
+    min-width:
+        0;
+}
+
+
+.pedidoV59Info strong {
+    color:
+        #f2f6fa;
+
+    font-size:
+        11px;
+
+    line-height:
+        1.35;
+}
+
+
+.pedidoV59Info small {
+    color:
+        #8098b0;
+
+    font-size:
+        8px;
+}
+
+
+.pedidoV59Estado {
+    margin:
+        0 12px
+        10px;
+
+    padding:
+        8px 10px;
+
+    border-radius:
+        8px;
+
+    font-size:
+        10px;
+
+    font-weight:
+        650;
+}
+
+
+.pedidoV59Estado.pendiente {
+    border:
+        1px solid
+        rgba(
+            255,
+            151,
+            15,
+            .28
+        );
+
+    background:
+        rgba(
+            255,
+            151,
+            15,
+            .055
+        );
+
+    color:
+        #c9d4df;
+}
+
+
+.pedidoV59Estado.pendiente strong {
+    color:
+        #ff970f;
+}
+
+
+.pedidoV59Estado.completo {
+    border:
+        1px solid
+        rgba(
+            33,
+            213,
+            111,
+            .24
+        );
+
+    background:
+        rgba(
+            33,
+            213,
+            111,
+            .055
+        );
+
+    color:
+        #65e899;
+}
+
+
+.pedidoV59Footer {
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        space-between;
+
+    gap:
+        12px;
+
+    padding:
+        9px 12px;
+
+    border-top:
+        1px solid
+        rgba(
+            41,
+            65,
+            88,
+            .65
+        );
+
+    color:
+        #8fa4b8;
+
+    font-size:
+        9px;
+}
+
+
+.editarV59 {
+    padding:
+        6px 9px;
+
+    border:
+        1px solid
+        #294158;
+
+    border-radius:
+        7px;
+
+    background:
+        transparent;
+
+    color:
+        #dce8f3;
+
+    font-size:
+        9px;
+
+    font-weight:
+        750;
+
+    cursor:
+        pointer;
+}
+
+
+.editarV59:hover {
+    border-color:
+        #ff970f;
+}
+
+
+/*
+    WhatsApp
+*/
+
+.whatsappV59 {
+    min-height:
+        58px !important;
+
+    display:
+        flex !important;
+
+    flex-direction:
+        column;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    gap:
+        2px;
+
+    padding:
+        9px 14px !important;
+
+    line-height:
+        1.15 !important;
+}
+
+
+.waV59Principal {
+    display:
+        block;
+
+    font-size:
+        13px;
+
+    font-weight:
+        900;
+}
+
+
+.waV59Detalle {
+    display:
+        block;
+
+    font-size:
+        9px;
+
+    font-weight:
+        650;
+
+    opacity:
+        .78;
+}
+
+
+.whatsappV59.pedidoIncompletoV59 {
+    opacity:
+        .62;
+}
+
+
+@media (
+    max-width: 720px
+) {
+
+    .pedidoV59Lista {
+        grid-template-columns:
+            1fr;
+    }
+
+
+    .pedidoV59Footer {
+        align-items:
+            stretch;
+
+        flex-direction:
+            column;
+    }
+
+
+    .editarV59 {
+        width:
+            100%;
+    }
+
+
+    .waV59Detalle {
+        max-width:
+            96%;
+
+        text-align:
+            center;
+    }
+}
+
+
+/* === RESUMEN PEDIDO V5.9 END === */
+
+
+/* === WHATSAPP V6.0 START === */
+
+
+.whatsappV59.pedidoListoV60,
+.whatsappV58.pedidoListoV60,
+.pedidoListoV60 {
+    opacity:
+        1 !important;
+
+    pointer-events:
+        auto !important;
+
+    cursor:
+        pointer !important;
+
+    filter:
+        none !important;
+}
+
+
+.whatsappV59.pedidoBloqueadoV60,
+.whatsappV58.pedidoBloqueadoV60,
+.pedidoBloqueadoV60 {
+    opacity:
+        .55 !important;
+
+    cursor:
+        not-allowed !important;
+}
+
+
+.pedidoListoV60:hover {
+    transform:
+        translateY(-1px);
+
+    filter:
+        brightness(1.05) !important;
+}
+
+
+/* === WHATSAPP V6.0 END === */
+
+
+/* === VIP FULL V6.1 START === */
+
+
+/*
+    Tarjetas incluidas automáticamente en VIP.
+*/
+
+#listaAdicionales .adicionalWrap.incluidoVipV61 {
+    border-color:
+        #21d56f !important;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(33,213,111,.055),
+            rgba(33,213,111,.018)
+        ),
+        #081522 !important;
+
+    box-shadow:
+        0 0 0 1px
+        rgba(33,213,111,.12);
+}
+
+
+#listaAdicionales .incluidoVipV61 input[type="checkbox"] {
+    accent-color:
+        #21d56f;
+
+    opacity:
+        1 !important;
+}
+
+
+#listaAdicionales .incluidoVipV61 .estadoSeleccion {
+    color:
+        #21d56f;
+
+    font-size:
+        9px;
+
+    font-weight:
+        900;
+
+    letter-spacing:
+        .55px;
+}
+
+
+/*
+    Botón WhatsApp más legible.
+    Esto mejora las 3 opciones, no solo VIP.
+*/
+
+.whatsappV59 .waV59Principal,
+.whatsappV58 .waV58Principal {
+    font-size:
+        16px !important;
+
+    line-height:
+        1.2 !important;
+}
+
+
+.whatsappV59 .waV59Detalle,
+.whatsappV58 .waV58Detalle {
+    margin-top:
+        3px;
+
+    font-size:
+        12px !important;
+
+    line-height:
+        1.3 !important;
+
+    font-weight:
+        700 !important;
+
+    opacity:
+        .88 !important;
+}
+
+
+.whatsappV59.botonVipV61 {
+    min-height:
+        64px !important;
+}
+
+
+/*
+    En VIP el resumen grande se oculta por JS,
+    así el recorrido es:
+    tarjetas marcadas -> WhatsApp.
+*/
+
+
+@media (
+    max-width: 720px
+) {
+
+    .whatsappV59 .waV59Principal,
+    .whatsappV58 .waV58Principal {
+        font-size:
+            15px !important;
+    }
+
+
+    .whatsappV59 .waV59Detalle,
+    .whatsappV58 .waV58Detalle {
+        font-size:
+            11px !important;
+    }
+}
+
+
+/* === VIP FULL V6.1 END === */
+
+
+/* === LIMPIEZA RESUMEN V6.2 START === */
+
+/*
+    El resumen ya está justo debajo de las opciones.
+    Por eso no necesitamos un botón extra de
+    "Editar selección" en Opción 1 ni Combo Pro.
+*/
+
+.editarV59,
+.editarPedidoV58 {
+    display: none !important;
+}
+
+/*
+    Al quedar solo el texto, el pie se ve más limpio.
+*/
+
+.pedidoV59Footer,
+.pedidoV58Pie {
+    justify-content: flex-start !important;
+}
+
+/* === LIMPIEZA RESUMEN V6.2 END === */
+
+
+/* === PRIORIDAD VIP V6.5 START === */
+
+
+/*
+    Combo Pro vuelve a ser una opción intermedia.
+*/
+
+.comboNeutralV65 {
+    transform:
+        none !important;
+
+    box-shadow:
+        none !important;
+}
+
+
+/*
+    VIP Full = opción objetivo.
+*/
+
+.vipObjetivoV65 {
+    position:
+        relative !important;
+
+    overflow:
+        visible !important;
+
+    border-color:
+        rgba(
+            255,
+            151,
+            15,
+            .88
+        ) !important;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(
+                255,
+                151,
+                15,
+                .065
+            ),
+            rgba(
+                255,
+                151,
+                15,
+                .018
+            )
+        ),
+        #0d1c2c !important;
+
+    box-shadow:
+        0 14px 36px
+        rgba(
+            0,
+            0,
+            0,
+            .20
+        ),
+        0 0 0 1px
+        rgba(
+            255,
+            151,
+            15,
+            .08
+        ) !important;
+
+    transform:
+        translateY(
+            -3px
+        );
+}
+
+
+/*
+    Badge encima de VIP.
+*/
+
+.vipBadgeV65 {
+    position:
+        absolute;
+
+    top:
+        -12px;
+
+    left:
+        50%;
+
+    transform:
+        translateX(
+            -50%
+        );
+
+    z-index:
+        3;
+
+    display:
+        inline-flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    white-space:
+        nowrap;
+
+    padding:
+        6px 11px;
+
+    border:
+        1px solid
+        rgba(
+            255,
+            151,
+            15,
+            .75
+        );
+
+    border-radius:
+        999px;
+
+    background:
+        #ff970f;
+
+    color:
+        #07111d;
+
+    font-size:
+        9px;
+
+    font-weight:
+        950;
+
+    letter-spacing:
+        .55px;
+
+    box-shadow:
+        0 7px 18px
+        rgba(
+            0,
+            0,
+            0,
+            .22
+        );
+}
+
+
+/*
+    Motivo concreto para subir al VIP.
+*/
+
+.vipValorV65 {
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    gap:
+        2px;
+
+    margin:
+        14px 0 12px;
+
+    padding:
+        10px 11px;
+
+    border:
+        1px solid
+        rgba(
+            255,
+            151,
+            15,
+            .24
+        );
+
+    border-radius:
+        10px;
+
+    background:
+        rgba(
+            255,
+            151,
+            15,
+            .055
+        );
+}
+
+
+.vipValorV65 strong {
+    color:
+        #fff;
+
+    font-size:
+        12px;
+}
+
+
+.vipValorV65 span {
+    color:
+        #ffb14d;
+
+    font-size:
+        10px;
+
+    font-weight:
+        750;
+}
+
+
+/*
+    CTA VIP.
+*/
+
+.vipObjetivoV65 .vipCtaV65 {
+    border-color:
+        #ff970f !important;
+
+    background:
+        #ff970f !important;
+
+    color:
+        #07111d !important;
+
+    font-weight:
+        900 !important;
+
+    box-shadow:
+        0 9px 22px
+        rgba(
+            255,
+            151,
+            15,
+            .12
+        );
+}
+
+
+.vipObjetivoV65 .vipCtaV65:hover {
+    filter:
+        brightness(
+            1.06
+        );
+
+    transform:
+        translateY(
+            -1px
+        );
+}
+
+
+/*
+    Si VIP está seleccionado, mantenemos el protagonismo.
+*/
+
+.vipObjetivoV65:has(
+    button:disabled
+) {
+    border-color:
+        #21d56f !important;
+}
+
+
+/*
+    Móvil:
+    sin desplazar la tarjeta para no producir saltos.
+*/
+
+@media (
+    max-width: 760px
+) {
+
+    .vipObjetivoV65 {
+        margin-top:
+            12px;
+
+        transform:
+            none;
+    }
+
+
+    .vipBadgeV65 {
+        top:
+            -11px;
+    }
+
+
+    .vipValorV65 {
+        margin:
+            12px 0
+            10px;
+    }
+}
+
+
+/* === PRIORIDAD VIP V6.5 END === */
+
+
+/* === MODO CAMPANA V6.7 START === */
+
+/*
+    En enlaces de campaña no mostramos el selector de producto.
+    El elemento sigue existiendo para la lógica interna.
+*/
+
+.modoCampanaV67 #selectorProducto,
+.modoCampanaV67 .selectorOcultoV67,
+.modoCampanaV67 .contenedorSelectorOcultoV67 {
+    display: none !important;
+}
+
+/* === MODO CAMPANA V6.7 END === */
+
