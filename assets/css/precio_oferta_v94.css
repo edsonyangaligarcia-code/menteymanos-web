@@ -1,0 +1,168 @@
+﻿/* =========================================================
+   MENTE & MANOS - PRECIO OFERTA VISIBLE V9.4
+   ========================================================= */
+
+/* El nuevo header nunca debe quedar oculto por V9.3 */
+[data-v94="header"],
+[data-v94="header"] * {
+    display: initial;
+}
+
+.mmOfertaHeaderV94 {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 8px !important;
+    width: 100% !important;
+    margin: 0 0 14px !important;
+}
+
+.mmOfertaTopV94 {
+    display: flex !important;
+    align-items: flex-start !important;
+    justify-content: space-between !important;
+    gap: 12px !important;
+    width: 100% !important;
+}
+
+.mmOfertaNombreV94 {
+    color: #ffad19 !important;
+    font-size: 12px !important;
+    line-height: 1.05 !important;
+    font-weight: 900 !important;
+    letter-spacing: .03em !important;
+    text-transform: uppercase !important;
+}
+
+.mmOfertaPrecioActualV94 {
+    display: block !important;
+    color: #ffffff !important;
+    font-size: 20px !important;
+    line-height: 1 !important;
+    font-weight: 900 !important;
+    white-space: nowrap !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+.mmOfertaAnclaV94 {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    flex-wrap: wrap !important;
+    gap: 8px !important;
+    width: 100% !important;
+}
+
+.mmOfertaAntesV94 {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    color: rgba(255,255,255,.86) !important;
+    font-size: 11px !important;
+    line-height: 1 !important;
+    font-weight: 750 !important;
+    white-space: nowrap !important;
+}
+
+.mmOfertaAntesPrecioV94 {
+    text-decoration: line-through !important;
+    text-decoration-thickness: 2px !important;
+    text-decoration-color: rgba(255,255,255,.58) !important;
+    font-weight: 900 !important;
+}
+
+.mmOfertaOfertaBadgeV94 {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 4px 9px !important;
+    border-radius: 999px !important;
+    background: rgba(255, 166, 20, .10) !important;
+    border: 1px solid rgba(255, 166, 20, .32) !important;
+    color: #ffb347 !important;
+    font-size: 9px !important;
+    line-height: 1 !important;
+    font-weight: 900 !important;
+    letter-spacing: .03em !important;
+    text-transform: uppercase !important;
+}
+
+.mmOfertaAhorroV94 {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    align-self: center !important;
+    margin: -8px auto 2px !important;
+    padding: 5px 12px !important;
+    border-radius: 999px !important;
+    background: #ffad19 !important;
+    color: #111 !important;
+    font-size: 10px !important;
+    line-height: 1 !important;
+    font-weight: 900 !important;
+    letter-spacing: .04em !important;
+    text-transform: uppercase !important;
+}
+
+/* PC */
+@media (min-width: 761px) {
+    .mmOfertaHeaderV94 {
+        min-height: 58px !important;
+    }
+}
+
+/* CELULAR */
+@media (max-width: 760px) {
+    .mmOfertaHeaderV94 {
+        gap: 5px !important;
+        margin-bottom: 10px !important;
+    }
+
+    .mmOfertaTopV94 {
+        gap: 5px !important;
+        flex-direction: column !important;
+    }
+
+    .mmOfertaNombreV94 {
+        font-size: 8px !important;
+    }
+
+    .mmOfertaPrecioActualV94 {
+        font-size: 14px !important;
+    }
+
+    .mmOfertaAnclaV94 {
+        gap: 4px !important;
+    }
+
+    .mmOfertaAntesV94 {
+        font-size: 7.5px !important;
+        gap: 3px !important;
+    }
+
+    .mmOfertaOfertaBadgeV94 {
+        padding: 3px 5px !important;
+        font-size: 6px !important;
+        letter-spacing: .01em !important;
+    }
+
+    .mmOfertaAhorroV94 {
+        margin-top: -7px !important;
+        padding: 4px 7px !important;
+        font-size: 6.5px !important;
+    }
+}
+
+@media (max-width: 390px) {
+    .mmOfertaPrecioActualV94 {
+        font-size: 13px !important;
+    }
+
+    .mmOfertaAntesV94 {
+        font-size: 7px !important;
+    }
+
+    .mmOfertaOfertaBadgeV94 {
+        font-size: 5.7px !important;
+    }
+}
