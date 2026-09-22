@@ -1,0 +1,167 @@
+﻿/* =========================================================
+   MENTE & MANOS - CARDS OFERTAS DEFINITIVAS V9.5
+   ========================================================= */
+
+#ofertas .oferta .cabeceraOferta.cabeceraOfertaV95 {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    justify-content: flex-start !important;
+    gap: 7px !important;
+    width: 100% !important;
+    min-height: 76px !important;
+    margin: 0 0 10px !important;
+    padding: 0 !important;
+}
+
+#ofertas .cabeceraOfertaV95 .nombreOfertaV95 {
+    order: 1 !important;
+    display: block !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    color: #ffad19 !important;
+    font-size: 12px !important;
+    line-height: 1.05 !important;
+    font-weight: 900 !important;
+    letter-spacing: .03em !important;
+    text-transform: uppercase !important;
+}
+
+#ofertas .cabeceraOfertaV95 .anclaOfertaV95 {
+    order: 2 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    flex-wrap: wrap !important;
+    gap: 7px !important;
+    width: 100% !important;
+    margin: 0 !important;
+}
+
+#ofertas .cabeceraOfertaV95 .antesOfertaV95 {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 5px !important;
+    color: rgba(255,255,255,.87) !important;
+    font-size: 10.5px !important;
+    line-height: 1 !important;
+    font-weight: 750 !important;
+    white-space: nowrap !important;
+}
+
+#ofertas .cabeceraOfertaV95 .precioNormalV95 {
+    color: rgba(255,255,255,.76) !important;
+    font-weight: 900 !important;
+    text-decoration: line-through !important;
+    text-decoration-thickness: 2px !important;
+    text-decoration-color: rgba(255,255,255,.58) !important;
+}
+
+#ofertas .cabeceraOfertaV95 .badgeOfertaV95 {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 4px 8px !important;
+    border: 1px solid rgba(255,171,31,.34) !important;
+    border-radius: 999px !important;
+    background: rgba(255,171,31,.09) !important;
+    color: #ffb347 !important;
+    font-size: 8px !important;
+    line-height: 1 !important;
+    font-weight: 900 !important;
+    letter-spacing: .03em !important;
+    text-transform: uppercase !important;
+    white-space: nowrap !important;
+}
+
+#ofertas .cabeceraOfertaV95 .precioOfertaV95 {
+    order: 3 !important;
+    display: block !important;
+    margin: 2px 0 0 !important;
+    color: #ffffff !important;
+    font-size: 20px !important;
+    line-height: 1 !important;
+    font-weight: 900 !important;
+    white-space: nowrap !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+#ofertas .oferta[data-oferta="3"] { overflow: visible !important; }
+
+#ofertas .oferta[data-oferta="3"] > .vipBadgeV65 {
+    position: absolute !important;
+    top: -12px !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    z-index: 10 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    margin: 0 !important;
+    padding: 6px 13px !important;
+    border-radius: 999px !important;
+    background: #ffad19 !important;
+    color: #111111 !important;
+    font-size: 9px !important;
+    line-height: 1 !important;
+    font-weight: 900 !important;
+    letter-spacing: .035em !important;
+    text-transform: uppercase !important;
+    white-space: nowrap !important;
+}
+
+#ofertas .mmOfertaAhorroV94,
+#ofertas .mmOfertaAhorroBadgeV93,
+#ofertas .mm-v79-badge-top,
+#ofertas .mm-v80-badge {
+    display: none !important;
+}
+
+#ofertas .oferta > h3 { margin-top: 7px !important; }
+
+@media (max-width: 720px) {
+    #ofertas .oferta .cabeceraOferta.cabeceraOfertaV95 {
+        gap: 5px !important;
+        min-height: 82px !important;
+        margin-bottom: 5px !important;
+    }
+    #ofertas .cabeceraOfertaV95 .nombreOfertaV95 {
+        font-size: 8px !important;
+        line-height: 1 !important;
+    }
+    #ofertas .cabeceraOfertaV95 .anclaOfertaV95 { gap: 4px !important; }
+    #ofertas .cabeceraOfertaV95 .antesOfertaV95 {
+        gap: 3px !important;
+        font-size: 6.9px !important;
+        line-height: 1 !important;
+    }
+    #ofertas .cabeceraOfertaV95 .badgeOfertaV95 {
+        padding: 3px 5px !important;
+        font-size: 5.7px !important;
+        line-height: 1 !important;
+        letter-spacing: .01em !important;
+    }
+    #ofertas .cabeceraOfertaV95 .precioOfertaV95 {
+        margin-top: 4px !important;
+        font-size: 14px !important;
+        line-height: 1 !important;
+    }
+    #ofertas .oferta[data-oferta="3"] > .vipBadgeV65 {
+        top: -9px !important;
+        max-width: calc(100% - 8px) !important;
+        padding: 4px 7px !important;
+        font-size: 6.3px !important;
+    }
+    #ofertas .oferta > h3 { margin-top: 4px !important; }
+}
+
+@media (max-width: 390px) {
+    #ofertas .oferta .cabeceraOferta.cabeceraOfertaV95 { min-height: 78px !important; }
+    #ofertas .cabeceraOfertaV95 .antesOfertaV95 { font-size: 6.3px !important; }
+    #ofertas .cabeceraOfertaV95 .badgeOfertaV95 {
+        padding: 3px 4px !important;
+        font-size: 5.2px !important;
+    }
+    #ofertas .cabeceraOfertaV95 .precioOfertaV95 { font-size: 13px !important; }
+}
