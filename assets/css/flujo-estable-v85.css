@@ -1,0 +1,58 @@
+﻿/* =========================================================
+   MENTE & MANOS - FLUJO ESTABLE V8.5
+   ========================================================= */
+
+/*
+   Mientras se arma VIP en el mismo clic, evitamos que se vea
+   un estado intermedio con checks vacíos.
+*/
+body.vipPreparandoV85 #configurador {
+    opacity: 0 !important;
+    pointer-events: none !important;
+}
+
+/*
+   En VIP no mostramos el resumen redundante.
+   El CTA queda directamente después de los ING incluidos.
+*/
+body.vipActivoV85 #resumenPedidoV59,
+body.vipActivoV85 #resumenPedidoV58,
+body.vipActivoV85 .resumenPedido {
+    display: none !important;
+}
+
+/*
+   El detalle VIP antiguo duplicaba información y generaba
+   otro destino de scroll. V8.5 usa el configurador compacto.
+*/
+body.vipActivoV85 #detalleVip {
+    display: none !important;
+}
+
+/* Estado final de cada ING dentro de VIP */
+body.vipActivoV85 #listaAdicionales .adicionalWrap {
+    border-color: rgba(35, 209, 96, .48) !important;
+}
+
+body.vipActivoV85 #listaAdicionales .estadoSeleccion {
+    color: #35d777 !important;
+}
+
+/* Puntos de llegada claros */
+#tituloConfigurador {
+    scroll-margin-top: 90px;
+}
+
+#continuarWhatsapp {
+    scroll-margin-top: 95px;
+}
+
+@media (max-width: 760px) {
+    #tituloConfigurador {
+        scroll-margin-top: 76px;
+    }
+
+    #continuarWhatsapp {
+        scroll-margin-top: 82px;
+    }
+}

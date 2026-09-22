@@ -399,14 +399,17 @@ function seleccionarPlan(plan) {
     if (plan === 3) {
         maximoAdicionales = 0;
         document.getElementById("tituloConfigurador").textContent = "VIP Full seleccionado";
-        document.getElementById("ayudaConfigurador").textContent = "Los 7 ING están incluidos automáticamente.";
+        const ayudaConfiguradorVip =
+            document.getElementById("ayudaConfigurador");
+
+        if (ayudaConfiguradorVip) {
+            ayudaConfiguradorVip.textContent =
+                "Los 7 ING están incluidos automáticamente.";
+        }
         document.getElementById("listaAdicionales").innerHTML = "";
         detalleVip.classList.remove("oculto");
         actualizarResumen();
-
-        setTimeout(() => {
-            detalleVip.scrollIntoView({ behavior: "smooth", block: "start" });
-        }, 150);
+        /* V8.5: el scroll VIP lo controla flujo-estable-v85.js */
 
         return;
     }
@@ -419,13 +422,17 @@ function seleccionarPlan(plan) {
     document.getElementById("tituloConfigurador").textContent =
         `Elige ${cantidad} ING adicional${cantidad > 1 ? "es" : ""} para complementar ${lineaING[productoActual].codigo}`;
 
-    document.getElementById("ayudaConfigurador").textContent =
-        `${lineaING[productoActual].codigo} — ${lineaING[productoActual].nombre} ya está incluido en tu pedido.`;
+    const ayudaConfiguradorNormal =
+        document.getElementById("ayudaConfigurador");
+
+    if (ayudaConfiguradorNormal) {
+        ayudaConfiguradorNormal.textContent =
+            `${lineaING[productoActual].codigo} — ${lineaING[productoActual].nombre} ya está incluido en tu pedido.`;
+    }
 
     renderizarAdicionales();
     actualizarResumen();
-
-    configurador.scrollIntoView({ behavior: "smooth", block: "center" });
+    /* V8.5: scroll controlado por flujo-estable-v85.js */
 }
 
 function renderizarAdicionales() {
@@ -695,8 +702,20 @@ function actualizarResumen() {
 
     const nombres = productosPedido.map(clave => lineaING[clave].codigo).join(" + ");
 
-    document.getElementById("resumenProductos").textContent = nombres;
-    document.getElementById("resumenPrecio").textContent = formatearPrecio(precio);
+    const resumenProductosLegacy =
+        document.getElementById("resumenProductos");
+
+    const resumenPrecioLegacy =
+        document.getElementById("resumenPrecio");
+
+    if (resumenProductosLegacy) {
+        resumenProductosLegacy.textContent = nombres;
+    }
+
+    if (resumenPrecioLegacy) {
+        resumenPrecioLegacy.textContent =
+            formatearPrecio(precio);
+    }
 
     const boton = document.getElementById("continuarWhatsapp");
 
@@ -1270,6 +1289,7 @@ document.addEventListener(
 
 
 iniciar();
+
 
 
 
