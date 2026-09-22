@@ -1,0 +1,258 @@
+﻿/* =========================================================
+   MENTE & MANOS - OFERTAS LIMPIAS Y COMPACTAS V8.1
+   ========================================================= */
+
+/* Evita restos visuales de los parches V7.9/V8.0 */
+.mm-v79-tag,
+.mm-v79-price,
+.mm-v79-title,
+.mm-v79-desc,
+.mm-v79-note,
+.mm-v79-badge-top,
+.mm-v80-shell,
+.mm-v80-badge,
+.mm-v80-top,
+.mm-v80-tag,
+.mm-v80-price,
+.mm-v80-title,
+.mm-v80-desc,
+.mm-v80-note,
+.mm-v80-spacer {
+    display: none !important;
+}
+
+/* Grilla de ofertas */
+#ofertas .ofertas {
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: 14px !important;
+    align-items: stretch !important;
+}
+
+/* Tarjeta base */
+#ofertas .oferta {
+    position: relative !important;
+    display: flex !important;
+    flex-direction: column !important;
+    min-height: 330px !important;
+    padding: 22px 20px 18px !important;
+    border-radius: 18px !important;
+    gap: 0 !important;
+    overflow: visible !important;
+}
+
+/* Encabezado superior */
+#ofertas .oferta .cabeceraOferta {
+    display: flex !important;
+    align-items: flex-start !important;
+    justify-content: space-between !important;
+    gap: 12px !important;
+    width: 100% !important;
+    margin: 0 !important;
+}
+
+#ofertas .oferta .cabeceraOferta span {
+    max-width: 55% !important;
+    color: #ffad19 !important;
+    font-size: 13px !important;
+    line-height: 1.15 !important;
+    font-weight: 900 !important;
+    letter-spacing: .025em !important;
+    text-transform: uppercase !important;
+}
+
+#ofertas .oferta .cabeceraOferta strong {
+    color: #ffffff !important;
+    font-size: 20px !important;
+    line-height: 1 !important;
+    font-weight: 900 !important;
+    white-space: nowrap !important;
+    margin-left: auto !important;
+}
+
+/* Título */
+#ofertas .oferta > h3 {
+    margin: 24px 0 0 !important;
+    color: #ffffff !important;
+    font-size: 18px !important;
+    line-height: 1.25 !important;
+    font-weight: 850 !important;
+}
+
+/* Descripción */
+#ofertas .oferta > p {
+    margin: 14px 0 0 !important;
+    color: #aecdF4 !important;
+    font-size: 14px !important;
+    line-height: 1.55 !important;
+}
+
+/* Botón siempre abajo */
+#ofertas .oferta > .elegirOferta,
+#ofertas .oferta > button.elegirOferta {
+    width: 100% !important;
+    min-height: 50px !important;
+    margin-top: auto !important;
+    padding: 11px 14px !important;
+    border-radius: 13px !important;
+    font-size: 15px !important;
+    line-height: 1.15 !important;
+    font-weight: 850 !important;
+}
+
+/* Combo: no queremos un segundo badge compitiendo con VIP */
+#ofertas .oferta[data-oferta="2"] .recomendado {
+    display: none !important;
+}
+
+/* VIP */
+#ofertas .oferta[data-oferta="3"] {
+    border-color: #ff9f0a !important;
+    background: linear-gradient(
+        180deg,
+        rgba(255,159,10,.055) 0%,
+        rgba(255,159,10,.018) 100%
+    ) !important;
+}
+
+#ofertas .oferta[data-oferta="3"] > h3 {
+    margin-top: 24px !important;
+}
+
+#ofertas .oferta[data-oferta="3"] > p {
+    max-width: 31ch !important;
+}
+
+/* Valor insertado por V6.5 */
+#ofertas .vipValorV65 {
+    margin: 18px 0 0 !important;
+    padding: 10px 12px !important;
+    border-radius: 11px !important;
+    min-height: auto !important;
+    background: rgba(255,159,10,.075) !important;
+    border: 1px solid rgba(255,159,10,.32) !important;
+}
+
+#ofertas .vipValorV65 strong,
+#ofertas .vipValorV65 span,
+#ofertas .vipValorV65 div {
+    line-height: 1.25 !important;
+}
+
+#ofertas .vipValorV65 strong {
+    font-size: 13px !important;
+}
+
+#ofertas .vipValorV65 span {
+    font-size: 11px !important;
+}
+
+/* Badge MAYOR AHORRO */
+#ofertas .vipBadgeV65 {
+    position: absolute !important;
+    top: -12px !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    z-index: 5 !important;
+    margin: 0 !important;
+    padding: 6px 13px !important;
+    border-radius: 999px !important;
+    white-space: nowrap !important;
+    font-size: 10px !important;
+    line-height: 1 !important;
+    font-weight: 900 !important;
+    letter-spacing: .04em !important;
+}
+
+/* Botón VIP */
+#ofertas .oferta[data-oferta="3"] > .elegirOferta {
+    background: #ff980e !important;
+    color: #050505 !important;
+    border-color: #ff980e !important;
+}
+
+/* El borde largo vacío que quedó de antiguos parches */
+#ofertas > .vipDetailV68:empty,
+#ofertas > .vipDetailV65:empty {
+    display: none !important;
+}
+
+/* Escritorio pequeño / tablet */
+@media (max-width: 900px) {
+    #ofertas .ofertas {
+        gap: 10px !important;
+    }
+
+    #ofertas .oferta {
+        min-height: 310px !important;
+        padding: 20px 17px 16px !important;
+    }
+
+    #ofertas .oferta .cabeceraOferta strong {
+        font-size: 18px !important;
+    }
+
+    #ofertas .oferta > h3 {
+        font-size: 16px !important;
+    }
+
+    #ofertas .oferta > p {
+        font-size: 13px !important;
+    }
+}
+
+/* CELULAR */
+@media (max-width: 720px) {
+
+    #ofertas .ofertas {
+        grid-template-columns: 1fr !important;
+        gap: 12px !important;
+    }
+
+    #ofertas .oferta {
+        min-height: 238px !important;
+        padding: 17px 16px 15px !important;
+        border-radius: 16px !important;
+    }
+
+    #ofertas .oferta[data-oferta="3"] {
+        min-height: 330px !important;
+        margin-top: 6px !important;
+    }
+
+    #ofertas .oferta .cabeceraOferta span {
+        font-size: 11px !important;
+    }
+
+    #ofertas .oferta .cabeceraOferta strong {
+        font-size: 18px !important;
+    }
+
+    #ofertas .oferta > h3 {
+        margin-top: 17px !important;
+        font-size: 16px !important;
+    }
+
+    #ofertas .oferta > p {
+        margin-top: 10px !important;
+        font-size: 13px !important;
+        line-height: 1.45 !important;
+    }
+
+    #ofertas .oferta > .elegirOferta {
+        min-height: 46px !important;
+        padding: 10px 12px !important;
+        font-size: 14px !important;
+    }
+
+    #ofertas .vipValorV65 {
+        margin-top: 14px !important;
+        padding: 9px 11px !important;
+    }
+
+    #ofertas .vipBadgeV65 {
+        top: -10px !important;
+        padding: 5px 11px !important;
+        font-size: 9px !important;
+    }
+}

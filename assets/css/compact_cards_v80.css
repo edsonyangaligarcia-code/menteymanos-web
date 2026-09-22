@@ -1,0 +1,134 @@
+﻿.mm-v80-offer-card{
+  position: relative !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: flex-start !important;
+  min-height: 388px !important;
+  padding: 18px 18px 16px !important;
+  gap: 12px !important;
+  overflow: visible !important;
+}
+
+.mm-v80-shell{
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  height: 100%;
+}
+
+.mm-v80-top{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:12px;
+}
+
+.mm-v80-tag{
+  color:#ffae1a;
+  font-size:14px;
+  font-weight:800;
+  text-transform:uppercase;
+  line-height:1.1;
+  letter-spacing:.03em;
+}
+
+.mm-v80-price{
+  color:#ffffff;
+  font-size:20px;
+  font-weight:900;
+  line-height:1;
+  white-space:nowrap;
+  text-align:right;
+}
+
+.mm-v80-title{
+  color:#ffffff;
+  font-size:17px;
+  font-weight:800;
+  line-height:1.25;
+  margin-top:2px;
+}
+
+.mm-v80-desc{
+  color:rgba(225,236,255,.88);
+  font-size:14px;
+  line-height:1.65;
+  margin:0;
+}
+
+.mm-v80-note{
+  border:1px solid rgba(255,166,25,.35);
+  background:rgba(255,166,25,.08);
+  border-radius:12px;
+  padding:10px 12px;
+  color:#ffffff;
+  font-size:14px;
+  line-height:1.25;
+}
+
+.mm-v80-note small{
+  display:block;
+  margin-top:4px;
+  color:#ffb11b;
+  font-size:12.5px;
+  font-weight:800;
+}
+
+.mm-v80-spacer{
+  flex:1 1 auto;
+}
+
+.mm-v80-action{
+  margin-top:auto;
+}
+
+.mm-v80-action button,
+.mm-v80-action .btn,
+.mm-v80-action a,
+.mm-v80-action [role="button"]{
+  width:100% !important;
+  min-height:52px !important;
+  border-radius:14px !important;
+  font-size:16px !important;
+  font-weight:800 !important;
+}
+
+.mm-v80-vip .mm-v80-badge{
+  position:absolute;
+  top:-12px;
+  left:50%;
+  transform:translateX(-50%);
+  background:#ffac1c;
+  color:#171717;
+  padding:6px 14px;
+  border-radius:999px;
+  font-size:12px;
+  font-weight:900;
+  letter-spacing:.04em;
+  text-transform:uppercase;
+  z-index:3;
+}
+
+.mm-v80-vip .mm-v80-title{font-size:18px;}
+.mm-v80-vip .mm-v80-desc{font-size:14px;}
+
+@media (max-width: 1024px){
+  .mm-v80-offer-card{min-height:370px !important;}
+}
+
+@media (max-width: 768px){
+  .mm-v80-offer-card{
+    min-height:auto !important;
+    padding:16px 16px 16px !important;
+    gap:10px !important;
+  }
+  .mm-v80-tag{font-size:13px;}
+  .mm-v80-price{font-size:18px;}
+  .mm-v80-title{font-size:16px;}
+  .mm-v80-desc{font-size:13.5px;line-height:1.55;}
+  .mm-v80-note{padding:10px 11px;font-size:13.5px;}
+  .mm-v80-action button,
+  .mm-v80-action .btn,
+  .mm-v80-action a,
+  .mm-v80-action [role="button"]{min-height:50px !important;font-size:15px !important;}
+}
