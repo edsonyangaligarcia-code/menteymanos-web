@@ -35,7 +35,7 @@
         {
             code: "ING 6",
             title: "AutoCAD + Bloques",
-            desc: "Bloques, productividad y recursos CAD.",
+            desc: "Bloques dinámicos, librerías y recursos listos para AutoCAD.",
             key: "ing6"
         },
         {
@@ -370,4 +370,5 @@
     }
 
 })();
+
 

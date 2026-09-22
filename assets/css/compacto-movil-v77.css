@@ -1,0 +1,134 @@
+﻿/* =========================================================
+   MENTE & MANOS - COMPACTAR MOVIL V7.7
+   ========================================================= */
+#exploradorContenido,
+.exploradorContenido,
+.explorerSection,
+.driveSection { margin-top: 14px !important; }
+
+#exploradorContenido .section-card,
+.exploradorContenido .section-card,
+.explorerSection .section-card,
+.driveSection .section-card,
+#exploradorContenido .card,
+.exploradorContenido .card,
+.explorerSection .card,
+.driveSection .card { padding: 18px !important; border-radius: 20px !important; }
+
+#exploradorContenido h2,
+.exploradorContenido h2,
+.explorerSection h2,
+.driveSection h2 { margin: 0 0 10px !important; font-size: 28px !important; line-height: 1.08 !important; }
+
+#exploradorContenido .eyebrow,
+.exploradorContenido .eyebrow,
+.explorerSection .eyebrow,
+.driveSection .eyebrow { margin-bottom: 8px !important; font-size: 11px !important; letter-spacing: .14em !important; }
+
+#exploradorContenido .search-input,
+.exploradorContenido .search-input,
+.explorerSection .search-input,
+.driveSection .search-input,
+#exploradorContenido input[type="search"],
+.exploradorContenido input[type="search"],
+.explorerSection input[type="search"],
+.driveSection input[type="search"],
+#exploradorContenido input[type="text"],
+.exploradorContenido input[type="text"],
+.explorerSection input[type="text"],
+.driveSection input[type="text"] { min-height: 46px !important; padding: 0 14px !important; font-size: 14px !important; border-radius: 14px !important; }
+
+#exploradorContenido .explorer-meta,
+.exploradorContenido .explorer-meta,
+.explorerSection .explorer-meta,
+.driveSection .explorer-meta,
+#exploradorContenido .drive-meta,
+.exploradorContenido .drive-meta,
+.explorerSection .drive-meta,
+.driveSection .drive-meta { font-size: 13px !important; line-height: 1.35 !important; }
+
+#exploradorContenido .breadcrumb,
+.exploradorContenido .breadcrumb,
+.explorerSection .breadcrumb,
+.driveSection .breadcrumb,
+#exploradorContenido .path-chip,
+.exploradorContenido .path-chip,
+.explorerSection .path-chip,
+.driveSection .path-chip { min-height: 34px !important; padding: 7px 12px !important; font-size: 12px !important; border-radius: 11px !important; }
+
+#exploradorContenido .nav-buttons,
+.exploradorContenido .nav-buttons,
+.explorerSection .nav-buttons,
+.driveSection .nav-buttons,
+#exploradorContenido .drive-nav,
+.exploradorContenido .drive-nav,
+.explorerSection .drive-nav,
+.driveSection .drive-nav { gap: 8px !important; }
+
+#exploradorContenido .nav-buttons button,
+.exploradorContenido .nav-buttons button,
+.explorerSection .nav-buttons button,
+.driveSection .nav-buttons button,
+#exploradorContenido .drive-nav button,
+.exploradorContenido .drive-nav button,
+.explorerSection .drive-nav button,
+.driveSection .drive-nav button { min-height: 42px !important; padding: 0 14px !important; border-radius: 12px !important; font-size: 13px !important; }
+
+#exploradorContenido table,
+.exploradorContenido table,
+.explorerSection table,
+.driveSection table { border-radius: 16px !important; overflow: hidden !important; }
+
+#exploradorContenido thead th,
+.exploradorContenido thead th,
+.explorerSection thead th,
+.driveSection thead th { padding: 12px 12px !important; font-size: 11px !important; }
+
+#exploradorContenido tbody td,
+.exploradorContenido tbody td,
+.explorerSection tbody td,
+.driveSection tbody td { padding: 11px 12px !important; font-size: 13px !important; line-height: 1.3 !important; }
+
+.lineaIngSimpleV76,
+#lineaIngSimpleV76 { margin: 10px 0 14px !important; padding: 12px !important; border-radius: 16px !important; }
+.lineaIngEyebrowV76 { margin-bottom: 5px !important; font-size: 10px !important; }
+.lineaIngTitleV76 { margin: 0 0 5px !important; font-size: 18px !important; line-height: 1.05 !important; }
+.lineaIngDescV76 { margin: 0 0 8px !important; font-size: 11px !important; line-height: 1.3 !important; }
+.lineaIngListaV76 { gap: 5px !important; }
+.lineaIngFilaV76 { grid-template-columns: 46px minmax(0,1fr) auto !important; min-height: 36px !important; gap: 7px !important; padding: 7px 10px !important; border-radius: 11px !important; }
+.lineaIngCodigoV76 { font-size: 10px !important; }
+.lineaIngNombreV76 { font-size: 11.5px !important; line-height: 1.18 !important; }
+.lineaIngActualV76 { min-height: 19px !important; padding: 0 6px !important; font-size: 7.5px !important; }
+
+@media (max-width: 768px) {
+  #exploradorContenido .section-card, .exploradorContenido .section-card, .explorerSection .section-card, .driveSection .section-card,
+  #exploradorContenido .card, .exploradorContenido .card, .explorerSection .card, .driveSection .card { padding: 13px !important; border-radius: 16px !important; }
+  #exploradorContenido h2, .exploradorContenido h2, .explorerSection h2, .driveSection h2 { margin: 0 0 8px !important; font-size: 20px !important; }
+  #exploradorContenido .eyebrow, .exploradorContenido .eyebrow, .explorerSection .eyebrow, .driveSection .eyebrow { margin-bottom: 6px !important; font-size: 10px !important; }
+  #exploradorContenido .search-input, .exploradorContenido .search-input, .explorerSection .search-input, .driveSection .search-input,
+  #exploradorContenido input[type="search"], .exploradorContenido input[type="search"], .explorerSection input[type="search"], .driveSection input[type="search"],
+  #exploradorContenido input[type="text"], .exploradorContenido input[type="text"], .explorerSection input[type="text"], .driveSection input[type="text"] { min-height: 40px !important; padding: 0 12px !important; font-size: 13px !important; border-radius: 12px !important; }
+  #exploradorContenido .explorer-meta, .exploradorContenido .explorer-meta, .explorerSection .explorer-meta, .driveSection .explorer-meta,
+  #exploradorContenido .drive-meta, .exploradorContenido .drive-meta, .explorerSection .drive-meta, .driveSection .drive-meta { font-size: 11.5px !important; }
+  #exploradorContenido .breadcrumb, .exploradorContenido .breadcrumb, .explorerSection .breadcrumb, .driveSection .breadcrumb,
+  #exploradorContenido .path-chip, .exploradorContenido .path-chip, .explorerSection .path-chip, .driveSection .path-chip { min-height: 30px !important; padding: 5px 10px !important; font-size: 11px !important; border-radius: 10px !important; }
+  #exploradorContenido .nav-buttons, .exploradorContenido .nav-buttons, .explorerSection .nav-buttons, .driveSection .nav-buttons,
+  #exploradorContenido .drive-nav, .exploradorContenido .drive-nav, .explorerSection .drive-nav, .driveSection .drive-nav { gap: 6px !important; }
+  #exploradorContenido .nav-buttons button, .exploradorContenido .nav-buttons button, .explorerSection .nav-buttons button, .driveSection .nav-buttons button,
+  #exploradorContenido .drive-nav button, .exploradorContenido .drive-nav button, .explorerSection .drive-nav button, .driveSection .drive-nav button { min-height: 36px !important; padding: 0 10px !important; border-radius: 10px !important; font-size: 12px !important; }
+  #exploradorContenido thead th, .exploradorContenido thead th, .explorerSection thead th, .driveSection thead th { padding: 10px 8px !important; font-size: 10px !important; }
+  #exploradorContenido tbody td, .exploradorContenido tbody td, .explorerSection tbody td, .driveSection tbody td { padding: 9px 8px !important; font-size: 11.5px !important; }
+  .lineaIngSimpleV76, #lineaIngSimpleV76 { margin: 8px 0 12px !important; padding: 10px !important; border-radius: 14px !important; }
+  .lineaIngTitleV76 { font-size: 16px !important; }
+  .lineaIngDescV76 { font-size: 10.5px !important; margin-bottom: 7px !important; }
+  .lineaIngFilaV76 { grid-template-columns: 42px minmax(0,1fr) auto !important; min-height: 32px !important; padding: 6px 8px !important; gap: 6px !important; border-radius: 10px !important; }
+  .lineaIngCodigoV76 { font-size: 9px !important; }
+  .lineaIngNombreV76 { font-size: 10.5px !important; line-height: 1.15 !important; }
+  .lineaIngActualV76 { min-height: 17px !important; font-size: 7px !important; padding: 0 5px !important; }
+}
+
+@media (max-width: 480px) {
+  #exploradorContenido table, .exploradorContenido table, .explorerSection table, .driveSection table { display: block !important; overflow-x: auto !important; -webkit-overflow-scrolling: touch !important; }
+  .lineaIngFilaV76 { grid-template-columns: 40px minmax(0,1fr) !important; align-items: start !important; }
+  .lineaIngActualV76 { grid-column: 2 !important; justify-self: start !important; margin-top: 2px !important; }
+}

@@ -7,7 +7,7 @@
         "ing 3": "BIM y Revit",
         "ing 4": "CoordinaciÃ³n BIM",
         "ing 5": "GestiÃ³n y SupervisiÃ³n de Obras",
-        "ing 6": "AutoCAD + Bloques DinÃ¡micos",
+        "ing 6": "Bloques Dinámicos para AutoCAD",
         "ing 7": "CÃ¡lculo Estructural PRO"
     };
 
@@ -42,8 +42,8 @@
     function corregirTextosGlobales() {
         const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null);
         const cambios = [
-            ["AutoCAD + Bloques", "AutoCAD + Bloques DinÃ¡micos"],
-            ["Bloques, productividad y recursos CAD.", "Bloques dinÃ¡micos para AutoCAD."],
+            ["AutoCAD + Bloques", "Bloques Dinámicos para AutoCAD"],
+            ["Bloques dinámicos, librerías y recursos listos para AutoCAD.", "Bloques dinÃ¡micos para AutoCAD."],
             ["Recomendado para complementar ING 1", "Bloques dinÃ¡micos para AutoCAD."],
             ["Bloques productivos y recursos CAD.", "Bloques dinÃ¡micos para AutoCAD."]
         ];
@@ -81,11 +81,11 @@
                     if (!tx) return;
 
                     if (/^ING 6\s*[â€”-]/i.test(tx) || tx === "AutoCAD + Bloques" || /ING 6.*AutoCAD \+ Bloques/i.test(tx)) {
-                        el.textContent = "ING 6 â€” AutoCAD + Bloques DinÃ¡micos";
+                        el.textContent = "ING 6 â€” Bloques Dinámicos para AutoCAD";
                     }
 
                     if (
-                        tx === "Bloques, productividad y recursos CAD." ||
+                        tx === "Bloques dinámicos, librerías y recursos listos para AutoCAD." ||
                         tx === "Recomendado para complementar ING 1" ||
                         tx === "Bloques productivos y recursos CAD."
                     ) {
@@ -112,3 +112,4 @@
     setTimeout(aplicar, 900);
     setTimeout(aplicar, 1800);
 })();
+

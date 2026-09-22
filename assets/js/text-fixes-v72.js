@@ -67,7 +67,7 @@
 
                 if (
                     t === normalizar(
-                        "Incluye toda la Línea ING: Planos, expedientes, BIM, coordinación, obra, AutoCAD y cálculo estructural."
+                        "Elige la opción que mejor se adapte a lo que necesitas."
                     )
                 ) {
                     el.remove();
@@ -141,3 +141,4 @@
     setTimeout(aplicar, 250);
     setTimeout(aplicar, 900);
 })();
+

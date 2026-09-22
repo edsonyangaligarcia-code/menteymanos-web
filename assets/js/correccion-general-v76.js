@@ -7,7 +7,7 @@
         { key: "ing3", codigo: "ING 3", nombre: "BIM y Revit" },
         { key: "ing4", codigo: "ING 4", nombre: "Coordinación BIM Avanzada" },
         { key: "ing5", codigo: "ING 5", nombre: "Gestión y Supervisión de Obras" },
-        { key: "ing6", codigo: "ING 6", nombre: "AutoCAD + Bloques Dinámicos" },
+        { key: "ing6", codigo: "ING 6", nombre: "Bloques Dinámicos para AutoCAD" },
         { key: "ing7", codigo: "ING 7", nombre: "Cálculo Estructural PRO" }
     ];
 
@@ -128,10 +128,10 @@
             let t = nodo.nodeValue || "";
 
             t = t
-                .replaceAll("ING 6 — AutoCAD + Bloques", "ING 6 — AutoCAD + Bloques Dinámicos")
-                .replaceAll("ING 6 - AutoCAD + Bloques", "ING 6 - AutoCAD + Bloques Dinámicos")
-                .replaceAll("AutoCAD + Bloques", "AutoCAD + Bloques Dinámicos")
-                .replaceAll("Bloques, productividad y recursos CAD.", "Bloques dinámicos para AutoCAD.")
+                .replaceAll("ING 6 — AutoCAD + Bloques", "ING 6 — Bloques Dinámicos para AutoCAD")
+                .replaceAll("ING 6 - AutoCAD + Bloques", "ING 6 - Bloques Dinámicos para AutoCAD")
+                .replaceAll("AutoCAD + Bloques", "Bloques Dinámicos para AutoCAD")
+                .replaceAll("Bloques dinámicos, librerías y recursos listos para AutoCAD.", "Bloques dinámicos para AutoCAD.")
                 .replaceAll("Bloques productivos y recursos CAD.", "Bloques dinámicos para AutoCAD.");
 
             nodo.nodeValue = t;
@@ -155,3 +155,4 @@
     setTimeout(aplicar, 900);
     setTimeout(aplicar, 1800);
 })();
+
