@@ -1,0 +1,351 @@
+﻿/* =========================================================
+   MENTE & MANOS - MOBILE CONVERSION V6.8
+   ========================================================= */
+
+:root {
+    --mm-drive-bg: #f8fbff;
+    --mm-drive-border: #d2e3fc;
+    --mm-drive-text: #1f1f1f;
+    --mm-drive-sub: #5f6368;
+    --mm-drive-blue: #1a73e8;
+    --mm-drive-folder: #fbbc04;
+    --mm-surface-dark: #07182b;
+    --mm-card-dark: #0b2138;
+    --mm-card-dark-2: #0d2742;
+    --mm-accent: #23d160;
+    --mm-orange: #ffb020;
+}
+
+html.mobileConversionV68 {
+    scroll-behavior: smooth;
+}
+
+html.mobileConversionV68 body {
+    -webkit-text-size-adjust: 100%;
+}
+
+html.mobileConversionV68 .lineaIngSimpleV68 {
+    margin: 18px 0 24px 0;
+    padding: 16px;
+    border-radius: 18px;
+    background: linear-gradient(180deg, #081a2e 0%, #0b223b 100%);
+    border: 1px solid rgba(255,255,255,.08);
+}
+
+html.mobileConversionV68 .lineaIngEyebrowV68 {
+    color: #ffb020;
+    font-size: 12px;
+    letter-spacing: .14em;
+    font-weight: 800;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+}
+
+html.mobileConversionV68 .lineaIngTitleV68 {
+    margin: 0 0 8px 0;
+    font-size: 26px;
+    line-height: 1.08;
+    font-weight: 800;
+    color: #fff;
+}
+
+html.mobileConversionV68 .lineaIngDescV68 {
+    margin: 0 0 14px 0;
+    color: rgba(255,255,255,.82);
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+html.mobileConversionV68 .lineaIngGridV68 {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+}
+
+html.mobileConversionV68 .lineaIngItemV68 {
+    display: grid;
+    grid-template-columns: 58px 1fr;
+    gap: 10px;
+    align-items: start;
+    padding: 12px 12px 10px 12px;
+    border-radius: 14px;
+    background: rgba(255,255,255,.035);
+    border: 1px solid rgba(255,255,255,.06);
+}
+
+html.mobileConversionV68 .lineaIngItemV68.activo {
+    border-color: rgba(35, 209, 96, .7);
+    box-shadow: 0 0 0 1px rgba(35,209,96,.25) inset;
+    background: rgba(35,209,96,.06);
+}
+
+html.mobileConversionV68 .lineaIngCodeV68 {
+    color: #ffb020;
+    font-weight: 800;
+    font-size: 13px;
+    line-height: 1.2;
+}
+
+html.mobileConversionV68 .lineaIngTextV68 {
+    color: #fff;
+    font-size: 14px;
+    line-height: 1.35;
+    font-weight: 700;
+}
+
+html.mobileConversionV68 .lineaIngMetaV68 {
+    color: rgba(255,255,255,.72);
+    font-size: 12px;
+    line-height: 1.35;
+    margin-top: 2px;
+}
+
+html.mobileConversionV68 .lineaIngBadgeV68 {
+    display: inline-block;
+    margin-top: 6px;
+    padding: 5px 8px;
+    border-radius: 999px;
+    font-size: 11px;
+    line-height: 1;
+    font-weight: 700;
+    color: #031322;
+    background: #23d160;
+}
+
+html.mobileConversionV68 .driveLikeV68 {
+    background: var(--mm-drive-bg) !important;
+    color: var(--mm-drive-text) !important;
+    border-radius: 20px !important;
+    border: 1px solid var(--mm-drive-border) !important;
+    box-shadow: 0 10px 30px rgba(21, 55, 114, .06);
+    padding: 14px !important;
+}
+
+html.mobileConversionV68 .driveLikeV68 h1,
+html.mobileConversionV68 .driveLikeV68 h2,
+html.mobileConversionV68 .driveLikeV68 h3,
+html.mobileConversionV68 .driveLikeV68 h4,
+html.mobileConversionV68 .driveLikeV68 p,
+html.mobileConversionV68 .driveLikeV68 span,
+html.mobileConversionV68 .driveLikeV68 div,
+html.mobileConversionV68 .driveLikeV68 small,
+html.mobileConversionV68 .driveLikeV68 label {
+    color: inherit;
+}
+
+html.mobileConversionV68 .driveLikeV68 .driveAccentV68 {
+    color: var(--mm-drive-blue) !important;
+}
+
+html.mobileConversionV68 .driveLikeV68 input[type="text"],
+html.mobileConversionV68 .driveLikeV68 input[type="search"] {
+    background: #fff !important;
+    color: var(--mm-drive-text) !important;
+    border: 1px solid var(--mm-drive-border) !important;
+    border-radius: 12px !important;
+    min-height: 46px !important;
+    box-shadow: none !important;
+}
+
+html.mobileConversionV68 .driveLikeV68 .driveNavWrapV68 {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+    margin-top: 10px;
+    flex-wrap: nowrap;
+}
+
+html.mobileConversionV68 .driveLikeV68 .navBtnV68 {
+    min-width: 112px;
+    min-height: 42px;
+    border-radius: 12px !important;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-weight: 700;
+    background: #fff !important;
+    color: var(--mm-drive-blue) !important;
+    border: 1px solid var(--mm-drive-border) !important;
+    box-shadow: none !important;
+}
+
+html.mobileConversionV68 .driveLikeV68 .navBtnV68[disabled],
+html.mobileConversionV68 .driveLikeV68 .navBtnV68.desactivadoV68 {
+    opacity: .55;
+}
+
+html.mobileConversionV68 .driveLikeV68 .driveLikeTableV68,
+html.mobileConversionV68 .driveLikeV68 table {
+    width: 100% !important;
+    border-collapse: separate !important;
+    border-spacing: 0 !important;
+    overflow: hidden;
+    border-radius: 16px !important;
+    background: #fff !important;
+    border: 1px solid var(--mm-drive-border) !important;
+}
+
+html.mobileConversionV68 .driveLikeV68 thead th {
+    background: #eef4ff !important;
+    color: #36598b !important;
+    font-size: 11px !important;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    padding: 12px 10px !important;
+}
+
+html.mobileConversionV68 .driveLikeV68 tbody td {
+    color: #22364f !important;
+    padding: 11px 10px !important;
+    border-top: 1px solid #edf2fb !important;
+    vertical-align: middle;
+    font-size: 13px !important;
+}
+
+html.mobileConversionV68 .driveLikeV68 tbody tr:hover {
+    background: #f7faff !important;
+}
+
+html.mobileConversionV68 .driveLikeV68 .folderV68 {
+    color: var(--mm-drive-folder) !important;
+}
+
+html.mobileConversionV68 .mobileStickyCtaV68 {
+    position: sticky;
+    bottom: 12px;
+    z-index: 30;
+}
+
+html.mobileConversionV68 .conversionHintV68 {
+    margin-top: 10px;
+    padding: 12px;
+    border-radius: 14px;
+    background: rgba(255,176,32,.12);
+    border: 1px solid rgba(255,176,32,.24);
+    color: #fff;
+    font-size: 13px;
+    line-height: 1.45;
+}
+
+html.mobileConversionV68 .conversionHintV68 strong {
+    color: #ffcf68;
+}
+
+html.mobileConversionV68 .includeButtonV68 {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    min-height: 34px;
+    padding: 0 2px;
+    font-weight: 800 !important;
+    color: #ffb020 !important;
+    text-decoration: none !important;
+}
+
+html.mobileConversionV68 .subInfoV68 {
+    margin-top: 10px;
+    padding: 12px;
+    border-radius: 14px;
+    background: rgba(255,255,255,.04);
+    border: 1px solid rgba(255,255,255,.08);
+    color: rgba(255,255,255,.88);
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+html.mobileConversionV68 .subInfoV68 strong {
+    color: #fff;
+}
+
+html.mobileConversionV68 .vipDetailV68 {
+    display: block;
+    margin-top: 10px;
+    padding: 10px 12px;
+    border-radius: 12px;
+    background: rgba(255,176,32,.08);
+    border: 1px solid rgba(255,176,32,.24);
+    color: #ffcf68;
+    font-size: 12px;
+    line-height: 1.45;
+    font-weight: 700;
+}
+
+html.mobileConversionV68 .ctaPulseV68 {
+    animation: mmPulseV68 1.8s infinite;
+}
+
+@keyframes mmPulseV68 {
+    0%   { box-shadow: 0 0 0 0 rgba(35,209,96,.45); }
+    70%  { box-shadow: 0 0 0 12px rgba(35,209,96,0); }
+    100% { box-shadow: 0 0 0 0 rgba(35,209,96,0); }
+}
+
+@media (max-width: 900px) {
+    html.mobileConversionV68 h1 {
+        font-size: clamp(34px, 9vw, 52px) !important;
+        line-height: 1.02 !important;
+    }
+
+    html.mobileConversionV68 h2 {
+        font-size: clamp(28px, 6.6vw, 38px) !important;
+        line-height: 1.05 !important;
+    }
+}
+
+@media (max-width: 768px) {
+
+    html.mobileConversionV68 section,
+    html.mobileConversionV68 .section,
+    html.mobileConversionV68 main > div,
+    html.mobileConversionV68 .container,
+    html.mobileConversionV68 .wrapper {
+        max-width: 100% !important;
+    }
+
+    html.mobileConversionV68 section {
+        padding-top: 16px !important;
+        padding-bottom: 16px !important;
+    }
+
+    html.mobileConversionV68 .driveLikeV68 {
+        margin-top: 8px;
+        padding: 12px !important;
+        border-radius: 18px !important;
+    }
+
+    html.mobileConversionV68 .driveLikeV68 .driveNavWrapV68 {
+        justify-content: space-between;
+    }
+
+    html.mobileConversionV68 .driveLikeV68 .navBtnV68 {
+        min-width: calc(50% - 5px);
+        flex: 1 1 0;
+    }
+
+    html.mobileConversionV68 .driveLikeV68 table {
+        font-size: 12px !important;
+    }
+
+    html.mobileConversionV68 .driveLikeV68 tbody td,
+    html.mobileConversionV68 .driveLikeV68 thead th {
+        padding-left: 8px !important;
+        padding-right: 8px !important;
+    }
+
+    html.mobileConversionV68 button,
+    html.mobileConversionV68 a.button,
+    html.mobileConversionV68 a[class*="btn"],
+    html.mobileConversionV68 [role="button"] {
+        min-height: 46px;
+    }
+
+    html.mobileConversionV68 .compactBlockV68 {
+        padding-top: 8px !important;
+        padding-bottom: 8px !important;
+    }
+
+    html.mobileConversionV68 .mobileStickyCtaV68 {
+        bottom: 10px;
+    }
+}
