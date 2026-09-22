@@ -1,0 +1,88 @@
+﻿/* =========================================================
+   MENTE & MANOS - PUENTE HACIA OFERTAS V8.9
+   ========================================================= */
+
+#puenteOfertasV89 {
+    width: min(100% - 28px, 980px);
+    margin: 18px auto 6px;
+    text-align: center;
+}
+
+#puenteOfertasV89 .puenteOfertaV89 {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+
+    padding: 8px 15px;
+    border-radius: 999px;
+
+    background: rgba(255, 159, 10, .08);
+    border: 1px solid rgba(255, 159, 10, .34);
+
+    color: #ffad19;
+    font-size: 11px;
+    line-height: 1;
+    font-weight: 900;
+    letter-spacing: .07em;
+    text-transform: uppercase;
+}
+
+#puenteOfertasV89 .flechaV89 {
+    font-size: 15px;
+    line-height: 1;
+}
+
+
+/*
+   Acercamos las ofertas al puente.
+*/
+#puenteOfertasV89 + #ofertas {
+    padding-top: 16px !important;
+}
+
+
+/*
+   El título propio de la sección de ofertas ya sería
+   repetitivo en móvil. Dejamos solo nuestro puente corto.
+*/
+@media (max-width: 720px) {
+
+    #puenteOfertasV89 {
+        width: calc(100% - 20px);
+        margin: 12px auto 2px;
+    }
+
+    #puenteOfertasV89 .puenteOfertaV89 {
+        padding: 7px 12px;
+        gap: 5px;
+
+        font-size: 9.5px;
+        letter-spacing: .045em;
+    }
+
+    #puenteOfertasV89 .flechaV89 {
+        font-size: 13px;
+    }
+
+    #puenteOfertasV89 + #ofertas {
+        padding-top: 8px !important;
+    }
+
+    /*
+       Evitamos duplicar:
+       "ELIGE TU OFERTA / Arma tu paquete..."
+       porque las 3 tarjetas ya se entienden visualmente.
+    */
+    #ofertas > .tituloSeccion {
+        display: none !important;
+    }
+
+    /*
+       Reduce aún más el hueco anterior.
+    */
+    .lineaIngSimpleV76,
+    #lineaIngSimpleV76 {
+        margin-bottom: 6px !important;
+    }
+}
