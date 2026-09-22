@@ -1,0 +1,166 @@
+﻿/* =========================================================
+   MENTE & MANOS - GALERÍA MÓVIL 2x2 V8.7
+   ========================================================= */
+
+@media (max-width: 760px) {
+
+    /*
+       Compactamos solamente la sección de demostración.
+       El video conserva su tamaño y funcionamiento.
+    */
+    .mediaDemoV54 {
+        width: min(100% - 16px, 1000px) !important;
+        padding-top: 20px !important;
+        padding-bottom: 22px !important;
+    }
+
+    .mediaV54Encabezado {
+        margin-bottom: 12px !important;
+    }
+
+    .mediaV54Encabezado h2 {
+        margin-bottom: 5px !important;
+        font-size: 24px !important;
+        line-height: 1.08 !important;
+    }
+
+    .mediaV54Encabezado p {
+        font-size: 12px !important;
+        line-height: 1.35 !important;
+    }
+
+    .mediaV54Grid {
+        grid-template-columns: 1fr !important;
+        gap: 12px !important;
+    }
+
+
+    /* =====================================================
+       GALERÍA: 2 COLUMNAS REALES
+       ===================================================== */
+
+    .mediaV54Galeria {
+        display: grid !important;
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        gap: 8px !important;
+        align-items: stretch !important;
+    }
+
+
+    /*
+       ING 3 tiene 3 imágenes.
+       La última queda centrada ocupando el ancho de una tarjeta.
+       ING 1 (4 imágenes) e ING 7 (2) no se ven afectados.
+    */
+    .mediaV54Galeria > .mediaV54Card:last-child:nth-child(odd) {
+        grid-column: 1 / -1 !important;
+        width: calc(50% - 4px) !important;
+        justify-self: center !important;
+    }
+
+
+    /* Tarjeta más pequeña */
+    .mediaV54Card {
+        min-width: 0 !important;
+        border-radius: 11px !important;
+    }
+
+
+    /*
+       Mantiene la imagen legible sin que se vuelva demasiado alta.
+       El archivo completo sigue disponible con "Ver en grande".
+    */
+    .mediaV54ImgWrap {
+        aspect-ratio: 4 / 3 !important;
+        min-height: 0 !important;
+    }
+
+    .mediaV54ImgWrap img {
+        object-fit: contain !important;
+    }
+
+
+    /* Botón de zoom más discreto */
+    .mediaV54Zoom {
+        right: 5px !important;
+        bottom: 5px !important;
+        padding: 4px 6px !important;
+        border-radius: 999px !important;
+        font-size: 7.5px !important;
+        line-height: 1 !important;
+    }
+
+
+    /* Texto compacto debajo de cada imagen */
+    .mediaV54CardTexto {
+        min-height: 54px !important;
+        gap: 2px !important;
+        padding: 7px 8px 8px !important;
+    }
+
+    .mediaV54CardTexto strong {
+        display: -webkit-box !important;
+        -webkit-box-orient: vertical !important;
+        -webkit-line-clamp: 2 !important;
+        overflow: hidden !important;
+
+        font-size: 10.5px !important;
+        line-height: 1.15 !important;
+    }
+
+    .mediaV54CardTexto span {
+        display: -webkit-box !important;
+        -webkit-box-orient: vertical !important;
+        -webkit-line-clamp: 2 !important;
+        overflow: hidden !important;
+
+        font-size: 8.5px !important;
+        line-height: 1.25 !important;
+    }
+
+
+    /* Menos espacio debajo de la galería */
+    .mediaV54Nota {
+        margin-top: 7px !important;
+        font-size: 9px !important;
+    }
+}
+
+
+/* =========================================================
+   CELULARES ANGOSTOS
+   Seguimos manteniendo 2 columnas.
+   ========================================================= */
+
+@media (max-width: 390px) {
+
+    .mediaDemoV54 {
+        width: calc(100% - 12px) !important;
+    }
+
+    .mediaV54Galeria {
+        gap: 6px !important;
+    }
+
+    .mediaV54Galeria > .mediaV54Card:last-child:nth-child(odd) {
+        width: calc(50% - 3px) !important;
+    }
+
+    .mediaV54CardTexto {
+        min-height: 50px !important;
+        padding: 6px 7px 7px !important;
+    }
+
+    .mediaV54CardTexto strong {
+        font-size: 9.8px !important;
+    }
+
+    .mediaV54CardTexto span {
+        font-size: 8px !important;
+    }
+
+    .mediaV54Zoom {
+        padding: 3px 5px !important;
+        font-size: 7px !important;
+    }
+}
