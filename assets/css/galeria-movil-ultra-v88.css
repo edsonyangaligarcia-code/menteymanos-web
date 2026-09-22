@@ -1,0 +1,239 @@
+﻿/* =========================================================
+   MENTE & MANOS - GALERÍA MÓVIL ULTRA COMPACTA V8.8
+   ========================================================= */
+
+@media (max-width: 760px) {
+
+    /*
+       Reducimos únicamente el bloque de demostración visual.
+    */
+    .mediaDemoV54 {
+        width: calc(100% - 12px) !important;
+        padding-top: 14px !important;
+        padding-bottom: 16px !important;
+    }
+
+    .mediaV54Encabezado {
+        margin-bottom: 8px !important;
+    }
+
+    .mediaV54Encabezado h2 {
+        margin: 0 0 4px !important;
+        font-size: 21px !important;
+        line-height: 1.05 !important;
+    }
+
+    .mediaV54Encabezado p {
+        margin: 0 !important;
+        font-size: 10.5px !important;
+        line-height: 1.25 !important;
+    }
+
+    .mediaV54Grid {
+        grid-template-columns: 1fr !important;
+        gap: 8px !important;
+    }
+
+
+    /* =====================================================
+       GALERÍA: DOS COLUMNAS REALES
+       ===================================================== */
+
+    #mediaV54Galeria,
+    .mediaV54Galeria {
+        display: grid !important;
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        grid-auto-flow: row !important;
+        gap: 6px !important;
+        width: 100% !important;
+        align-items: stretch !important;
+    }
+
+
+    /*
+       Desactiva el comportamiento de V8.7 que centraba
+       la última imagen impar.
+       En V8.8, si hay 3 imágenes, la tercera simplemente
+       ocupa media fila como cualquier otra tarjeta.
+    */
+    #mediaV54Galeria > .mediaV54Card:last-child:nth-child(odd),
+    .mediaV54Galeria > .mediaV54Card:last-child:nth-child(odd) {
+        grid-column: auto !important;
+        width: 100% !important;
+        justify-self: stretch !important;
+    }
+
+
+    /*
+       Tarjetas compactas.
+    */
+    #mediaV54Galeria .mediaV54Card,
+    .mediaV54Galeria .mediaV54Card {
+        width: 100% !important;
+        min-width: 0 !important;
+        max-width: none !important;
+        margin: 0 !important;
+        border-radius: 9px !important;
+        overflow: hidden !important;
+    }
+
+
+    /*
+       CLAVE DEL CAMBIO:
+       la imagen ya NO usa 4:3 grande.
+       Queda con una altura fija pequeña.
+    */
+    #mediaV54Galeria .mediaV54ImgWrap,
+    .mediaV54Galeria .mediaV54ImgWrap {
+        width: 100% !important;
+        height: 92px !important;
+        min-height: 92px !important;
+        max-height: 92px !important;
+        aspect-ratio: auto !important;
+        overflow: hidden !important;
+        background: #fff !important;
+    }
+
+
+    #mediaV54Galeria .mediaV54ImgWrap img,
+    .mediaV54Galeria .mediaV54ImgWrap img {
+        width: 100% !important;
+        height: 100% !important;
+        max-height: 92px !important;
+        object-fit: contain !important;
+        object-position: center !important;
+        background: #fff !important;
+    }
+
+
+    /*
+       "Ver en grande" pequeño.
+    */
+    #mediaV54Galeria .mediaV54Zoom,
+    .mediaV54Galeria .mediaV54Zoom {
+        right: 4px !important;
+        bottom: 4px !important;
+        padding: 3px 5px !important;
+        border-radius: 999px !important;
+        font-size: 6.5px !important;
+        line-height: 1 !important;
+        white-space: nowrap !important;
+    }
+
+
+    /*
+       Texto de la tarjeta:
+       solo dejamos el título.
+       La descripción larga no hace falta porque la imagen
+       se puede abrir en grande.
+    */
+    #mediaV54Galeria .mediaV54CardTexto,
+    .mediaV54Galeria .mediaV54CardTexto {
+        min-height: 30px !important;
+        padding: 5px 6px 6px !important;
+        gap: 0 !important;
+        justify-content: center !important;
+    }
+
+
+    #mediaV54Galeria .mediaV54CardTexto strong,
+    .mediaV54Galeria .mediaV54CardTexto strong {
+        display: -webkit-box !important;
+        -webkit-box-orient: vertical !important;
+        -webkit-line-clamp: 2 !important;
+        overflow: hidden !important;
+
+        margin: 0 !important;
+        font-size: 8.8px !important;
+        line-height: 1.1 !important;
+    }
+
+
+    /*
+       Ocultamos la descripción para ahorrar altura.
+    */
+    #mediaV54Galeria .mediaV54CardTexto span,
+    .mediaV54Galeria .mediaV54CardTexto span {
+        display: none !important;
+    }
+
+
+    .mediaV54Nota {
+        display: none !important;
+    }
+}
+
+
+/* =========================================================
+   CELULARES PEQUEÑOS
+   ========================================================= */
+
+@media (max-width: 430px) {
+
+    .mediaDemoV54 {
+        width: calc(100% - 8px) !important;
+        padding-top: 10px !important;
+        padding-bottom: 12px !important;
+    }
+
+    #mediaV54Galeria,
+    .mediaV54Galeria {
+        gap: 5px !important;
+    }
+
+    #mediaV54Galeria .mediaV54ImgWrap,
+    .mediaV54Galeria .mediaV54ImgWrap {
+        height: 78px !important;
+        min-height: 78px !important;
+        max-height: 78px !important;
+    }
+
+    #mediaV54Galeria .mediaV54ImgWrap img,
+    .mediaV54Galeria .mediaV54ImgWrap img {
+        max-height: 78px !important;
+    }
+
+    #mediaV54Galeria .mediaV54CardTexto,
+    .mediaV54Galeria .mediaV54CardTexto {
+        min-height: 27px !important;
+        padding: 4px 5px 5px !important;
+    }
+
+    #mediaV54Galeria .mediaV54CardTexto strong,
+    .mediaV54Galeria .mediaV54CardTexto strong {
+        font-size: 8px !important;
+        line-height: 1.08 !important;
+    }
+
+    #mediaV54Galeria .mediaV54Zoom,
+    .mediaV54Galeria .mediaV54Zoom {
+        padding: 3px 4px !important;
+        font-size: 6px !important;
+    }
+}
+
+
+/* =========================================================
+   CELULARES MUY ANGOSTOS
+   Seguimos forzando 2 columnas.
+   ========================================================= */
+
+@media (max-width: 360px) {
+
+    #mediaV54Galeria .mediaV54ImgWrap,
+    .mediaV54Galeria .mediaV54ImgWrap {
+        height: 70px !important;
+        min-height: 70px !important;
+        max-height: 70px !important;
+    }
+
+    #mediaV54Galeria .mediaV54ImgWrap img,
+    .mediaV54Galeria .mediaV54ImgWrap img {
+        max-height: 70px !important;
+    }
+
+    #mediaV54Galeria .mediaV54CardTexto strong,
+    .mediaV54Galeria .mediaV54CardTexto strong {
+        font-size: 7.5px !important;
+    }
+}
