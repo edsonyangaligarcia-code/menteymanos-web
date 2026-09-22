@@ -1,0 +1,168 @@
+﻿/* =========================================================
+   MENTE & MANOS - CARDS OFERTAS V9.3
+   ========================================================= */
+
+[data-v93-hide="1"] {
+    display: none !important;
+}
+
+.mmOfertaCardV93 {
+    position: relative !important;
+}
+
+.mmOfertaHeaderV93 {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 8px !important;
+    width: 100% !important;
+    margin: 0 0 14px 0 !important;
+}
+
+.mmOfertaHeaderTopV93 {
+    display: flex !important;
+    align-items: flex-start !important;
+    justify-content: space-between !important;
+    gap: 12px !important;
+    width: 100% !important;
+}
+
+.mmOfertaLabelWrapV93 {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 2px !important;
+    min-width: 0 !important;
+}
+
+.mmOfertaLabelV93 {
+    color: #ffab1f !important;
+    font-weight: 900 !important;
+    font-size: 12px !important;
+    line-height: 1.05 !important;
+    text-transform: uppercase !important;
+    letter-spacing: .03em !important;
+}
+
+.mmOfertaAhorrroBadgeV93,
+.mmOfertaAhorroBadgeV93 {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    align-self: flex-start !important;
+    padding: 5px 12px !important;
+    border-radius: 999px !important;
+    background: #ffab1f !important;
+    color: #171717 !important;
+    font-size: 11px !important;
+    font-weight: 900 !important;
+    line-height: 1 !important;
+    text-transform: uppercase !important;
+    letter-spacing: .04em !important;
+    margin: -8px auto 2px auto !important;
+}
+
+.mmOfertaPrecioWrapV93 {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-end !important;
+    gap: 4px !important;
+    flex-shrink: 0 !important;
+}
+
+.mmOfertaPrecioActualV93 {
+    color: #ffffff !important;
+    font-weight: 900 !important;
+    font-size: 18px !important;
+    line-height: 1 !important;
+    white-space: nowrap !important;
+}
+
+.mmOfertaPrecioAnclaRowV93 {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    gap: 8px !important;
+    flex-wrap: wrap !important;
+    width: 100% !important;
+}
+
+.mmOfertaAntesV93 {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    color: rgba(255,255,255,.84) !important;
+    font-size: 12px !important;
+    font-weight: 700 !important;
+    line-height: 1 !important;
+}
+
+.mmOfertaAntesV93 .valorAnclaV93 {
+    text-decoration: line-through !important;
+    text-decoration-thickness: 2px !important;
+    text-decoration-color: rgba(255,255,255,.6) !important;
+    font-weight: 900 !important;
+}
+
+.mmOfertaBadgeOfertaV93 {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 5px 10px !important;
+    border-radius: 999px !important;
+    border: 1px solid rgba(255, 171, 31, .35) !important;
+    background: rgba(255, 171, 31, .08) !important;
+    color: #ffb347 !important;
+    font-size: 10px !important;
+    font-weight: 900 !important;
+    line-height: 1 !important;
+    text-transform: uppercase !important;
+    letter-spacing: .03em !important;
+}
+
+@media (max-width: 900px) {
+    .mmOfertaLabelV93 {
+        font-size: 11px !important;
+    }
+
+    .mmOfertaPrecioActualV93 {
+        font-size: 17px !important;
+    }
+
+    .mmOfertaAntesV93 {
+        font-size: 11px !important;
+    }
+}
+
+@media (max-width: 640px) {
+    .mmOfertaHeaderV93 {
+        gap: 6px !important;
+        margin-bottom: 12px !important;
+    }
+
+    .mmOfertaHeaderTopV93 {
+        gap: 8px !important;
+    }
+
+    .mmOfertaLabelV93 {
+        font-size: 10px !important;
+    }
+
+    .mmOfertaPrecioActualV93 {
+        font-size: 15px !important;
+    }
+
+    .mmOfertaAntesV93 {
+        font-size: 10px !important;
+        gap: 5px !important;
+    }
+
+    .mmOfertaBadgeOfertaV93 {
+        font-size: 8px !important;
+        padding: 4px 8px !important;
+    }
+
+    .mmOfertaAhorroBadgeV93 {
+        font-size: 9px !important;
+        padding: 4px 10px !important;
+        margin-top: -6px !important;
+    }
+}
