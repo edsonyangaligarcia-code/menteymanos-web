@@ -1,0 +1,240 @@
+﻿/* =========================================================
+   MENTE & MANOS - CARDS DESKTOP V9.6
+   IMPORTANTE: nada de esto se aplica a <= 720px.
+   ========================================================= */
+
+@media (min-width: 721px) {
+
+    /*
+       La V8.1 tenía una regla más específica que empujaba
+       <strong> hacia la derecha con margin-left:auto.
+       Aquí la anulamos de forma explícita.
+    */
+    #ofertas .oferta .cabeceraOferta.cabeceraOfertaV95 {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        justify-content: flex-start !important;
+
+        gap: 7px !important;
+
+        width: 100% !important;
+        min-height: 88px !important;
+
+        margin: 0 0 10px 0 !important;
+        padding: 0 !important;
+    }
+
+
+    /* OPCIÓN 1 / COMBO PRO / VIP FULL */
+    #ofertas .oferta .cabeceraOferta.cabeceraOfertaV95
+    > span.nombreOfertaV95 {
+        order: 1 !important;
+
+        display: block !important;
+
+        width: auto !important;
+        max-width: none !important;
+
+        margin: 0 !important;
+        padding: 0 !important;
+
+        color: #ffad19 !important;
+
+        font-size: 12px !important;
+        line-height: 1 !important;
+        font-weight: 900 !important;
+
+        text-transform: uppercase !important;
+        letter-spacing: .03em !important;
+    }
+
+
+    /*
+       ANTES + badge PRECIO OFERTA
+       Todo queda en una misma fila, alineado a la izquierda.
+    */
+    #ofertas .oferta .cabeceraOferta.cabeceraOfertaV95
+    > .anclaOfertaV95 {
+        order: 2 !important;
+
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        justify-content: flex-start !important;
+        flex-wrap: wrap !important;
+
+        gap: 7px !important;
+
+        width: 100% !important;
+
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+
+    /*
+       Neutralizamos las reglas antiguas que afectaban
+       cualquier <span> dentro de .cabeceraOferta.
+    */
+    #ofertas .oferta .cabeceraOferta.cabeceraOfertaV95
+    .anclaOfertaV95 span {
+        max-width: none !important;
+        margin: 0 !important;
+    }
+
+
+    #ofertas .oferta .cabeceraOferta.cabeceraOfertaV95
+    .antesOfertaV95 {
+        display: inline-flex !important;
+        align-items: center !important;
+
+        gap: 5px !important;
+
+        color: #ffb347 !important;
+
+        font-size: 10.5px !important;
+        line-height: 1 !important;
+        font-weight: 800 !important;
+
+        text-transform: uppercase !important;
+
+        white-space: nowrap !important;
+    }
+
+
+    #ofertas .oferta .cabeceraOferta.cabeceraOfertaV95
+    .precioNormalV95 {
+        color: rgba(255, 183, 77, .92) !important;
+
+        font-size: 10.5px !important;
+        line-height: 1 !important;
+        font-weight: 900 !important;
+
+        text-decoration: line-through !important;
+        text-decoration-thickness: 2px !important;
+        text-decoration-color: rgba(255,255,255,.55) !important;
+
+        white-space: nowrap !important;
+    }
+
+
+    #ofertas .oferta .cabeceraOferta.cabeceraOfertaV95
+    .badgeOfertaV95 {
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+
+        width: auto !important;
+        max-width: none !important;
+
+        padding: 4px 8px !important;
+
+        border:
+            1px solid rgba(255, 171, 31, .35)
+            !important;
+
+        border-radius: 999px !important;
+
+        background:
+            rgba(255, 171, 31, .09)
+            !important;
+
+        color: #ffb347 !important;
+
+        font-size: 8px !important;
+        line-height: 1 !important;
+        font-weight: 900 !important;
+
+        letter-spacing: .03em !important;
+        text-transform: uppercase !important;
+
+        white-space: nowrap !important;
+    }
+
+
+    /*
+       PRECIO OFERTA GRANDE:
+       esta es la corrección principal.
+       Queda debajo del precio tachado y a la IZQUIERDA,
+       igual que en celular.
+    */
+    #ofertas .oferta .cabeceraOferta.cabeceraOfertaV95
+    > strong.precioOfertaV95 {
+        order: 3 !important;
+
+        position: static !important;
+
+        top: auto !important;
+        right: auto !important;
+        bottom: auto !important;
+        left: auto !important;
+
+        align-self: flex-start !important;
+
+        width: auto !important;
+        max-width: none !important;
+
+        margin:
+            3px
+            0
+            0
+            0
+            !important;
+
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+
+        padding: 0 !important;
+
+        color: #ffffff !important;
+
+        font-size: 20px !important;
+        line-height: 1 !important;
+        font-weight: 900 !important;
+
+        text-align: left !important;
+
+        white-space: nowrap !important;
+
+        visibility: visible !important;
+        opacity: 1 !important;
+    }
+
+
+    /*
+       Después del precio, el título del paquete comienza
+       siempre a la misma altura en las tres cards.
+    */
+    #ofertas .oferta > h3 {
+        margin:
+            7px
+            0
+            0
+            !important;
+    }
+
+
+    /*
+       VIP: dejamos un poco de aire por el badge superior.
+    */
+    #ofertas .oferta[data-oferta="3"] {
+        padding-top: 24px !important;
+    }
+
+
+    #ofertas .oferta[data-oferta="3"]
+    > .vipBadgeV65 {
+        top: -12px !important;
+
+        left: 50% !important;
+
+        transform:
+            translateX(-50%)
+            !important;
+
+        margin: 0 !important;
+
+        white-space: nowrap !important;
+    }
+}
