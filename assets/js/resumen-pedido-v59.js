@@ -31,7 +31,7 @@
 
         ing6: {
             codigo: "ING 6",
-            nombre: "AutoCAD + Bloques"
+            nombre: "Bloques Dinámicos para AutoCAD"
         },
 
         ing7: {
@@ -1206,3 +1206,4 @@
     }
 
 })();
+

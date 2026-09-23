@@ -1321,28 +1321,67 @@
         }
 
 
+        const permitidos =
+            [
+                "ing1",
+                "ing3",
+                "ing7"
+            ];
+
+
         const params =
             new URLSearchParams(
                 window.location.search
             );
 
 
-        const urlProducto =
+        const desdeQuery =
             params.get(
                 "producto"
             );
 
 
+        const coincidenciaRuta =
+            window.location.pathname.match(
+                /\/(ing1|ing3|ing7)(?:\/index\.html|\/)?$/i
+            );
+
+
+        const desdeRuta =
+            coincidenciaRuta
+                ? coincidenciaRuta[1].toLowerCase()
+                : null;
+
+
+        const selector =
+            document.getElementById(
+                "selectorProducto"
+            );
+
+
+        const desdeSelector =
+            selector
+                ? selector.value
+                : null;
+
+
+        /*
+            En una URL limpia /ing3/ o /ing7/ la ruta es
+            la fuente principal. En la raíz seguimos
+            aceptando ?producto=ingX.
+        */
         const inicial =
-            [
-                "ing1",
-                "ing3",
-                "ing7"
-            ].includes(
-                urlProducto
-            )
-                ? urlProducto
-                : "ing1";
+            permitidos.includes(desdeRuta)
+                ? desdeRuta
+                : (
+                    permitidos.includes(desdeQuery)
+                        ? desdeQuery
+                        : (
+                            permitidos.includes(desdeSelector)
+                                ? desdeSelector
+                                : "ing1"
+                        )
+                );
 
 
         cargar(
@@ -1366,3 +1405,4 @@
     }
 
 })();
+

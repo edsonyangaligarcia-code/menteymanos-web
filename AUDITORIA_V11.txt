@@ -1,0 +1,23 @@
+﻿MENTE & MANOS - AUDITORIA POST V11.0
+Fecha: 2026-09-23 01:11:39
+
+Scripts activos en index raíz: 22
+CSS activos en index raíz: 18
+
+CHECKS:
+[OK] Arbol detecta pathname
+[OK] App ya no exige descripcionProducto
+[OK] App ya no activa abrirWhatsapp legacy
+[OK] Renderer multimedia V5 eliminado de app
+[OK] WhatsApp incluye Ref WEB
+[OK] ING6 canónico en WhatsApp
+[OK] Ruta V10.0 no se carga
+[OK] Ruta V10.1 sigue activa
+[OK] VISTA PREVIA legacy eliminada
+[OK] FAQ legacy eliminado
+[OK] detalleVip legacy eliminado
+
+NOTA:
+V11.0 elimina duplicación y código muerto comprobado, pero no reescribe
+todavía todas las capas históricas V6-V9. Eso debe hacerse en una
+fase de consolidación separada después de validar la estabilidad visual.

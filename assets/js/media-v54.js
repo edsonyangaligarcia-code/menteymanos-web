@@ -94,14 +94,23 @@
 
     function productoActual() {
 
-        const selector =
-            document.getElementById("selectorProducto");
+        const coincidenciaRuta =
+            window.location.pathname.match(
+                /\/(ing1|ing3|ing7)(?:\/index\.html|\/)?$/i
+            );
+
+
+        const desdeRuta =
+            coincidenciaRuta
+                ? coincidenciaRuta[1].toLowerCase()
+                : null;
+
 
         if (
-            selector &&
-            MEDIA[selector.value]
+            desdeRuta &&
+            MEDIA[desdeRuta]
         ) {
-            return selector.value;
+            return desdeRuta;
         }
 
 
@@ -110,12 +119,27 @@
                 window.location.search
             );
 
+
         const desdeUrl =
             params.get("producto");
 
 
         if (MEDIA[desdeUrl]) {
             return desdeUrl;
+        }
+
+
+        const selector =
+            document.getElementById(
+                "selectorProducto"
+            );
+
+
+        if (
+            selector &&
+            MEDIA[selector.value]
+        ) {
+            return selector.value;
         }
 
 
@@ -444,4 +468,5 @@
     }
 
 })();
+
 

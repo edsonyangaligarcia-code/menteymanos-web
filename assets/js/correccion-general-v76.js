@@ -128,9 +128,9 @@
             let t = nodo.nodeValue || "";
 
             t = t
-                .replaceAll("ING 6 — AutoCAD + Bloques", "ING 6 — Bloques Dinámicos para AutoCAD")
-                .replaceAll("ING 6 - AutoCAD + Bloques", "ING 6 - Bloques Dinámicos para AutoCAD")
-                .replaceAll("AutoCAD + Bloques", "Bloques Dinámicos para AutoCAD")
+                .replaceAll("ING 6 — Bloques Dinámicos para AutoCAD", "ING 6 — Bloques Dinámicos para AutoCAD")
+                .replaceAll("ING 6 - Bloques Dinámicos para AutoCAD", "ING 6 - Bloques Dinámicos para AutoCAD")
+                .replaceAll("Bloques Dinámicos para AutoCAD", "Bloques Dinámicos para AutoCAD")
                 .replaceAll("Bloques dinámicos, librerías y recursos listos para AutoCAD.", "Bloques dinámicos para AutoCAD.")
                 .replaceAll("Bloques productivos y recursos CAD.", "Bloques dinámicos para AutoCAD.");
 
@@ -155,4 +155,5 @@
     setTimeout(aplicar, 900);
     setTimeout(aplicar, 1800);
 })();
+
 

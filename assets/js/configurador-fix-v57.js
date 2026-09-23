@@ -84,7 +84,7 @@
 
         ing6: {
             codigo: "ING 6",
-            nombre: "AutoCAD + Bloques",
+            nombre: "Bloques Dinámicos para AutoCAD",
             descripcion: "Bibliotecas, bloques y herramientas para trabajar más rápido.",
             etiqueta: "AUTOCAD Y BLOQUES",
             promesa: "Biblioteca de recursos CAD para dibujar y documentar con mayor rapidez.",
@@ -670,4 +670,5 @@
     }
 
 })();
+
 

@@ -1,0 +1,47 @@
+﻿/* =========================================================
+   MENTE & MANOS - ESTABILIDAD V11.0
+   Ajustes mínimos, especialmente de legibilidad móvil.
+   ========================================================= */
+
+@media (max-width: 720px) {
+
+    /*
+       Evitar microtipografía extrema sin cambiar la
+       composición compacta de las tres cards.
+    */
+    #ofertas .cabeceraOfertaV95 .antesOfertaV95 {
+        font-size: 8px !important;
+    }
+
+    #ofertas .cabeceraOfertaV95 .badgeOfertaV95 {
+        font-size: 7px !important;
+        padding: 3px 5px !important;
+    }
+
+    #ofertas .oferta[data-oferta="3"] > .vipBadgeV65 {
+        font-size: 7px !important;
+    }
+
+    body.vipActivoV85 #listaAdicionales .adicional strong {
+        font-size: 9.2px !important;
+    }
+
+    body.vipActivoV85 #listaAdicionales .estadoSeleccion {
+        font-size: 7px !important;
+    }
+}
+
+@media (max-width: 390px) {
+
+    #ofertas .cabeceraOfertaV95 .antesOfertaV95 {
+        font-size: 7.5px !important;
+    }
+
+    #ofertas .cabeceraOfertaV95 .badgeOfertaV95 {
+        font-size: 6.7px !important;
+    }
+
+    body.vipActivoV85 #listaAdicionales .estadoSeleccion {
+        font-size: 6.8px !important;
+    }
+}

@@ -35,7 +35,7 @@
 
         ing6: {
             codigo: "ING 6",
-            nombre: "AutoCAD + Bloques"
+            nombre: "Bloques Dinámicos para AutoCAD"
         },
 
         ing7: {
@@ -69,17 +69,20 @@
 
     function productoActual() {
 
-        const selector =
-            document.getElementById(
-                "selectorProducto"
+        const coincidenciaRuta =
+            window.location.pathname.match(
+                /\/(ing1|ing3|ing7)(?:\/index\.html|\/)?$/i
             );
 
 
-        if (
-            selector &&
-            LINEA[selector.value]
-        ) {
-            return selector.value;
+        const desdeRuta =
+            coincidenciaRuta
+                ? coincidenciaRuta[1].toLowerCase()
+                : null;
+
+
+        if (LINEA[desdeRuta]) {
+            return desdeRuta;
         }
 
 
@@ -91,6 +94,20 @@
 
         if (LINEA[url]) {
             return url;
+        }
+
+
+        const selector =
+            document.getElementById(
+                "selectorProducto"
+            );
+
+
+        if (
+            selector &&
+            LINEA[selector.value]
+        ) {
+            return selector.value;
         }
 
 
@@ -366,11 +383,25 @@
                 .join("\n");
 
 
+        const codigoPlan =
+            pedido.plan === 1
+                ? "OP1"
+                : (
+                    pedido.plan === 2
+                        ? "COMBO"
+                        : "VIP"
+                );
+
+
+        const referencia =
+            `WEB-${String(pedido.principal).toUpperCase()}-${codigoPlan}`;
+
+
         return (
             `Hola, ya revisé el contenido y quiero adquirir la ${pedido.nombrePlan} por ${dinero(pedido.precio)}.\n\n` +
             `Mi pedido:\n\n` +
             `${lista}\n\n` +
-            `Quiero continuar con la compra.`
+            `Quiero continuar con la compra.\n\nRef: ${referencia}`
         );
     }
 
@@ -732,4 +763,5 @@
     }
 
 })();
+
 

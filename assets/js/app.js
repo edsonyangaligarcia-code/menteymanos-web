@@ -85,7 +85,7 @@ const lineaING = {
     ing3: { codigo: "ING 3", nombre: "BIM y Revit", descripcion: "Plantillas, familias, proyectos y formación BIM." },
     ing4: { codigo: "ING 4", nombre: "Coordinación BIM Avanzada", descripcion: "Navisworks, Dynamo, coordinación y automatización." },
     ing5: { codigo: "ING 5", nombre: "Gestión y Supervisión de Obras", descripcion: "Residencia, supervisión, planeamiento y control." },
-    ing6: { codigo: "ING 6", nombre: "AutoCAD + Bloques", descripcion: "Bibliotecas, proyectos y recursos para dibujo CAD." },
+    ing6: { codigo: "ING 6", nombre: "Bloques Dinámicos para AutoCAD", descripcion: "Bibliotecas, proyectos y recursos para dibujo CAD." },
     ing7: { codigo: "ING 7", nombre: "Cálculo Estructural PRO", descripcion: "Análisis, modelado y recursos de cálculo estructural." }
 };
 
@@ -278,9 +278,13 @@ function iniciar() {
             : null;
 
     const productoInicial =
-        productoURL && productos[productoURL]
-            ? productoURL
-            : productoRuta;
+        productoRuta && productos[productoRuta]
+            ? productoRuta
+            : (
+                productoURL && productos[productoURL]
+                    ? productoURL
+                    : "ing1"
+            );
 
     if (
         productoInicial &&
@@ -312,8 +316,6 @@ function iniciar() {
             mostrarArchivos();
         }
     });
-    document.getElementById("continuarWhatsapp").addEventListener("click", abrirWhatsapp);
-    document.getElementById("vipContinuar").addEventListener("click", abrirWhatsapp);
 
     mostrarProducto();
 }
@@ -323,7 +325,15 @@ function mostrarProducto() {
 
     document.getElementById("codigoProducto").textContent = p.codigo;
     document.getElementById("nombreProducto").textContent = p.nombre;
-    document.getElementById("descripcionProducto").textContent = p.descripcion;
+    const descripcionProducto =
+        document.getElementById(
+            "descripcionProducto"
+        );
+
+    if (descripcionProducto) {
+        descripcionProducto.textContent =
+            p.descripcion;
+    }
 
     const tituloArbolProducto =
         document.getElementById("tituloArbolProducto");
@@ -347,7 +357,7 @@ function mostrarProducto() {
     document.getElementById("beneficios").innerHTML =
         p.beneficios.map(texto => `<div class="beneficio">${texto}</div>`).join("");
 
-    renderMediaProducto(); // V5
+    // V11.0: la multimedia la controla únicamente media-v54.js
 
     planActual = 0;
     adicionales = [];
@@ -355,7 +365,16 @@ function mostrarProducto() {
 
     limpiarSeleccionVisual();
     document.getElementById("configurador").classList.add("oculto");
-    document.getElementById("detalleVip").classList.add("oculto");
+    const detalleVipInicial =
+        document.getElementById(
+            "detalleVip"
+        );
+
+    if (detalleVipInicial) {
+        detalleVipInicial.classList.add(
+            "oculto"
+        );
+    }
 
     if (window.cargarArbolProducto) {
         window.cargarArbolProducto(productoActual);
@@ -425,14 +444,22 @@ function seleccionarPlan(plan) {
                 "Los 7 ING están incluidos automáticamente.";
         }
         document.getElementById("listaAdicionales").innerHTML = "";
-        detalleVip.classList.remove("oculto");
+        if (detalleVip) {
+            detalleVip.classList.remove(
+                "oculto"
+            );
+        }
         actualizarResumen();
         /* V8.5: el scroll VIP lo controla flujo-estable-v85.js */
 
         return;
     }
 
-    detalleVip.classList.add("oculto");
+    if (detalleVip) {
+        detalleVip.classList.add(
+            "oculto"
+        );
+    }
 
     const cantidad = plan === 1 ? 1 : 2;
     maximoAdicionales = cantidad;
@@ -747,566 +774,15 @@ function actualizarResumen() {
     boton.textContent = `Continuar por WhatsApp · ${formatearPrecio(precio)}`;
 }
 
-function abrirWhatsapp() {
-    let precio;
-    let seleccion;
-
-    if (planActual === 3) {
-        precio = 29.90;
-        seleccion = Object.keys(lineaING);
-    } else {
-        precio = planActual === 1 ? productos[productoActual].precio : 15.90;
-        seleccion = [productoActual, ...adicionales];
-    }
-
-    const nombrePlan =
-        planActual === 1 ? "Opción 1" :
-        planActual === 2 ? "Combo Pro" :
-        "VIP Full";
-
-    const lista = seleccion
-        .map(clave => `- ${lineaING[clave].codigo} — ${lineaING[clave].nombre}`)
-        .join("\n");
-
-    const mensaje =
-`Hola. Ya revisé el contenido y quiero adquirir ${nombrePlan} por ${formatearPrecio(precio)}.
-
-Mi selección:
-
-${lista}
-
-Quiero continuar con la compra.`;
-
-    const enlace =
-        `https://wa.me/${NUMERO_WHATSAPP}?text=${encodeURIComponent(mensaje)}`;
-
-    window.open(enlace, "_blank");
-}
-
 function formatearPrecio(precio) {
     return "S/ " + Number(precio).toFixed(2);
 }
 
-/* === V5 MEDIA PRODUCTOS START === */
-
-const mediaProductos = {
-
-    ing1: {
-
-        video:
-            "assets/media/ing1/video.mp4",
-
-        videoTitulo:
-            "Mira el contenido real de ING 1",
-
-        videoTexto:
-            "Una demostración rápida del material que encontrarás dentro del pack.",
-
-        imagenes: [
-
-            {
-                src:
-                    "assets/media/ing1/01-arquitectura.jpg",
-
-                titulo:
-                    "Planos de Arquitectura",
-
-                texto:
-                    "Distribuciones, plantas, cotas y documentación arquitectónica."
-            },
-
-            {
-                src:
-                    "assets/media/ing1/02-sanitarias.jpg",
-
-                titulo:
-                    "Instalaciones Sanitarias",
-
-                texto:
-                    "Redes, desagüe, detalles y especificaciones técnicas."
-            },
-
-            {
-                src:
-                    "assets/media/ing1/03-electricas.jpg",
-
-                titulo:
-                    "Instalaciones Eléctricas",
-
-                texto:
-                    "Distribución eléctrica, circuitos, leyendas y detalles."
-            },
-
-            {
-                src:
-                    "assets/media/ing1/04-estructuras.jpg",
-
-                titulo:
-                    "Estructuras y Detalles",
-
-                texto:
-                    "Vigas, aligerados, acero de refuerzo y detalles constructivos."
-            }
-
-        ]
-    },
-
-
-    /*
-        Cuando tengas ING 3 e ING 7,
-        solo agregaremos sus rutas aquí.
-    */
-
-    ing3: {
-
-        video:
-            "assets/media/ing3/video.mp4",
-
-        videoTitulo:
-            "Mira el contenido real de ING 3",
-
-        videoTexto:
-            "Explora proyectos, modelos y recursos BIM preparados para trabajar con Revit.",
-
-        imagenes: [
-
-            {
-                src:
-                    "assets/media/ing3/01-documentacion-revit.jpg",
-
-                titulo:
-                    "Documentación desde Revit",
-
-                texto:
-                    "Plantas, elevaciones, láminas y vistas 3D dentro de un mismo flujo BIM."
-            },
-
-            {
-                src:
-                    "assets/media/ing3/02-visualizacion-revit.jpg",
-
-                titulo:
-                    "Visualización de Proyecto en Revit",
-
-                texto:
-                    "Imagen referencial de visualización arquitectónica y presentación de un proyecto desarrollado en entorno BIM."
-            },
-
-            {
-                src:
-                    "assets/media/ing3/03-modelo-arquitectonico.jpg",
-
-                titulo:
-                    "Proyectos y Modelos Revit",
-
-                texto:
-                    "Vistas isométricas y modelos editables para estudiar y desarrollar proyectos."
-            }
-
-        ]
-    },
-    ing7: null
-
-};
-
-
-
-/* === MEDIA ING7 V5.2 START === */
-
-mediaProductos.ing7 = {
-
-    video:
-        "assets/media/ing7/video.mp4",
-
-    videoTitulo:
-        "Mira el contenido real de ING 7",
-
-    videoTexto:
-        "Explora recursos de análisis estructural, SAP2000, modelado metálico, plantillas de cálculo y material técnico incluido en Cálculo Estructural PRO.",
-
-    imagenes: [
-
-        {
-            src:
-                "assets/media/ing7/01-sap2000.png",
-
-            titulo:
-                "Análisis Estructural en SAP2000",
-
-            texto:
-                "Visualización de modelos estructurales, elementos y superficies dentro de un entorno de análisis y cálculo."
-        },
-
-        {
-            src:
-                "assets/media/ing7/02-estructura-metalica.png",
-
-            titulo:
-                "Modelado Estructural Metálico 3D",
-
-            texto:
-                "Estructuras de acero, plataformas, arriostres y elementos metálicos representados en un modelo técnico tridimensional."
-        }
-
-    ]
-};
-
-/* === MEDIA ING7 V5.2 END === */
-
-function renderMediaProducto() {
-
-    const media =
-        mediaProductos[
-            productoActual
-        ];
-
-
-    const contenedorVideo =
-        document.getElementById(
-            "mediaProducto"
-        );
-
-
-    const galeria =
-        document.getElementById(
-            "galeriaProducto"
-        );
-
-
-    const nota =
-        document.getElementById(
-            "notaGaleria"
-        );
-
-
-    if (
-        !contenedorVideo ||
-        !galeria
-    ) {
-        return;
-    }
-
-
-    /*
-        Si aún no hemos cargado material
-        para ING 3 o ING 7, mantenemos
-        un placeholder limpio.
-    */
-
-    if (!media) {
-
-        contenedorVideo.innerHTML = `
-            <div class="mediaPendiente">
-                <span class="mediaPendienteIcono">▶</span>
-
-                <strong>
-                    Video demostración
-                </strong>
-
-                <small>
-                    Próximamente colocaremos aquí
-                    la demostración real de
-                    ${lineaING[productoActual].codigo}.
-                </small>
-            </div>
-        `;
-
-
-        galeria.innerHTML = `
-            <div class="galeriaPendiente">
-                Próximamente: imágenes reales de
-                ${lineaING[productoActual].codigo}.
-            </div>
-        `;
-
-
-        if (nota) {
-            nota.textContent =
-                "Las imágenes serán reemplazadas por muestras reales del producto.";
-        }
-
-
-        return;
-    }
-
-
-    contenedorVideo.innerHTML = `
-        <div class="demoVideoTexto">
-
-            <span>
-                DEMOSTRACIÓN REAL
-            </span>
-
-            <h3>
-                ${media.videoTitulo}
-            </h3>
-
-            <p>
-                ${media.videoTexto}
-            </p>
-
-        </div>
-
-
-        <div class="videoRealWrap">
-
-            <video
-                class="videoReal"
-                controls
-                playsinline
-                preload="metadata"
-            >
-                <source
-                    src="${media.video}"
-                    type="video/mp4"
-                >
-
-                Tu navegador no puede reproducir este video.
-            </video>
-
-        </div>
-    `;
-
-
-    galeria.innerHTML =
-        media.imagenes
-            .map(
-                (imagen, index) => `
-                    <button
-                        type="button"
-                        class="laminaProducto"
-                        data-imagen="${index}"
-                    >
-
-                        <div class="laminaImagenWrap">
-
-                            <img
-                                src="${imagen.src}"
-                                alt="${imagen.titulo}"
-                                loading="lazy"
-                            >
-
-                            <span class="ampliarLamina">
-                                Ver en grande
-                            </span>
-
-                        </div>
-
-
-                        <div class="laminaTexto">
-
-                            <strong>
-                                ${imagen.titulo}
-                            </strong>
-
-                            <span>
-                                ${imagen.texto}
-                            </span>
-
-                        </div>
-
-                    </button>
-                `
-            )
-            .join("");
-
-
-    if (nota) {
-
-        nota.textContent =
-            `${media.notaGaleria || `Muestras reales del contenido de ${lineaING[productoActual].codigo}. Toca cualquier lámina para verla en detalle.`}`;
-
-    }
-
-
-    galeria
-        .querySelectorAll(
-            ".laminaProducto"
-        )
-        .forEach(
-            boton => {
-
-                boton.addEventListener(
-                    "click",
-                    function () {
-
-                        const index =
-                            Number(
-                                boton.dataset.imagen
-                            );
-
-
-                        abrirLightbox(
-                            media.imagenes[index]
-                        );
-
-                    }
-                );
-
-            }
-        );
-
-}
-
-
-function abrirLightbox(imagen) {
-
-    const modal =
-        document.getElementById(
-            "lightboxMedia"
-        );
-
-
-    const img =
-        document.getElementById(
-            "imagenLightbox"
-        );
-
-
-    const caption =
-        document.getElementById(
-            "captionLightbox"
-        );
-
-
-    if (
-        !modal ||
-        !img
-    ) {
-        return;
-    }
-
-
-    img.src =
-        imagen.src;
-
-
-    img.alt =
-        imagen.titulo;
-
-
-    if (caption) {
-
-        caption.innerHTML = `
-            <strong>
-                ${imagen.titulo}
-            </strong>
-
-            <span>
-                ${imagen.texto}
-            </span>
-        `;
-
-    }
-
-
-    modal.classList.remove(
-        "oculto"
-    );
-
-
-    document.body.classList.add(
-        "sinScroll"
-    );
-
-}
-
-
-function cerrarLightboxMedia() {
-
-    const modal =
-        document.getElementById(
-            "lightboxMedia"
-        );
-
-
-    if (!modal) {
-        return;
-    }
-
-
-    modal.classList.add(
-        "oculto"
-    );
-
-
-    document.body.classList.remove(
-        "sinScroll"
-    );
-
-}
-
-
-document.addEventListener(
-    "DOMContentLoaded",
-    function () {
-
-        const cerrar =
-            document.getElementById(
-                "cerrarLightbox"
-            );
-
-
-        const modal =
-            document.getElementById(
-                "lightboxMedia"
-            );
-
-
-        if (cerrar) {
-
-            cerrar.addEventListener(
-                "click",
-                cerrarLightboxMedia
-            );
-
-        }
-
-
-        if (modal) {
-
-            modal.addEventListener(
-                "click",
-                function (event) {
-
-                    if (
-                        event.target ===
-                        modal
-                    ) {
-
-                        cerrarLightboxMedia();
-
-                    }
-
-                }
-            );
-
-        }
-
-
-        document.addEventListener(
-            "keydown",
-            function (event) {
-
-                if (
-                    event.key ===
-                    "Escape"
-                ) {
-
-                    cerrarLightboxMedia();
-
-                }
-
-            }
-        );
-
-    }
-);
-
-/* === V5 MEDIA PRODUCTOS END === */
+/* V11.0: renderer multimedia legacy eliminado; media-v54.js es la única fuente. */
 
 
 iniciar();
+
 
 
 
