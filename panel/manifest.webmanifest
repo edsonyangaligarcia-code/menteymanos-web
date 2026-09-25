@@ -1,0 +1,17 @@
+{
+  "name": "Mente & Manos — Panel de ventas",
+  "short_name": "M&M Panel",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#0a0d12",
+  "theme_color": "#0a0d12",
+  "icons": [
+    {
+      "src": "../assets/media/logo.png",
+      "sizes": "any",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
