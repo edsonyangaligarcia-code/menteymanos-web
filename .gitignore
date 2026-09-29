@@ -1,6 +1,16 @@
-﻿backup_*/
+backup_*/
 herramientas/
 fuentes_arboles/
 auditoria_web_*.txt
 Thumbs.db
 .DS_Store
+
+# Archivos privados / muestras CAD para APS
+private/
+
+# Secretos locales de Cloudflare/APS
+.dev.vars
+
+# Salida pública generada para Cloudflare Pages
+dist/
+.wrangler/
