@@ -21,13 +21,22 @@ const buyButton = document.getElementById('buy-button');
 const sticky = document.getElementById('mobile-sticky');
 const stickyBuy = document.getElementById('sticky-buy');
 const dialog = document.getElementById('checkout-dialog');
+const checkoutSteps = [...dialog.querySelectorAll('[data-checkout-step]')];
+const emailInput = document.getElementById('checkout-email');
+const emailStatus = document.getElementById('email-status');
+const verifyButton = document.getElementById('verify-email-button');
+const emailContinue = document.getElementById('email-continue');
+const emailTryAgain = document.getElementById('email-try-again');
 let planKey = null;
 let selectedExtras = [];
+let verifiedEmail = null;
+let activeVerification = null;
+let verificationVersion = 0;
 
 function formatPrice(number) { return `S/ ${number.toFixed(2)}`; }
 function getOrder() {
   const plan = offers[planKey];
-  return { producto: 'ING 1', oferta: plan.label, adicionales: planKey === 'vip' ? products.map(([code]) => code) : selectedExtras, moneda: 'PEN', total: plan.price, estado: 'pago_proximamente' };
+  return { offer: planKey, label: plan.label, price: plan.price, items: ['ING 1', ...(planKey === 'vip' ? products.map(([code]) => code) : selectedExtras)], verifiedEmail };
 }
 function renderOrder() {
   const plan = offers[planKey];
@@ -72,19 +81,114 @@ document.querySelectorAll('[data-plan]').forEach(button => button.addEventListen
 }));
 function openCheckout() {
   if (!planKey || buyButton.disabled) return;
+  resetVerification();
+  emailInput.value = '';
+  document.getElementById('payment-status').hidden = true;
   const order = getOrder();
-  console.info('Pedido ING1 (sin cobro):', order);
-  const box = document.getElementById('checkout-summary');
-  box.replaceChildren();
-  const heading = document.createElement('strong'); heading.textContent = `${order.oferta} · ${formatPrice(order.total)}`;
-  const details = document.createElement('span'); details.textContent = order.oferta === 'VIP Full' ? 'Incluye ING 1 a ING 7' : `ING 1 + ${order.adicionales.join(', ')}`;
-  box.append(heading, details);
+  dialog.querySelectorAll('[data-checkout-offer]').forEach(element => { element.textContent = order.label; });
+  dialog.querySelectorAll('[data-checkout-items]').forEach(element => { element.textContent = order.items.join(' · '); });
+  dialog.querySelectorAll('[data-checkout-price]').forEach(element => { element.textContent = formatPrice(order.price); });
   dialog.showModal();
+  document.body.classList.add('checkout-open');
+  showCheckoutStep('intro');
+}
+function showCheckoutStep(name) {
+  for (const step of checkoutSteps) step.hidden = step.dataset.checkoutStep !== name;
+  dialog.scrollTop = 0;
+  const heading = dialog.querySelector(`[data-checkout-step="${name}"] h2`);
+  heading.tabIndex = -1;
+  heading.focus();
+}
+function setEmailStatus(kind, title, description, address = '') {
+  emailStatus.replaceChildren();
+  emailStatus.className = `checkout-status ${kind}`;
+  if (kind === 'loading') {
+    const spinner = document.createElement('span'); spinner.className = 'checkout-spinner'; spinner.setAttribute('aria-hidden', 'true'); emailStatus.append(spinner);
+  }
+  const content = document.createElement('div');
+  const strong = document.createElement('strong'); strong.textContent = title;
+  const text = document.createElement('p'); text.textContent = description;
+  content.append(strong, text);
+  if (address) { const shownEmail = document.createElement('span'); shownEmail.className = 'verified-address'; shownEmail.textContent = address; content.append(shownEmail); }
+  emailStatus.append(content);
+  emailStatus.hidden = false;
+}
+function resetVerification() {
+  verificationVersion += 1;
+  if (activeVerification) { activeVerification.controller.abort(); clearTimeout(activeVerification.timer); activeVerification = null; }
+  verifiedEmail = null;
+  emailStatus.hidden = true;
+  emailStatus.replaceChildren();
+  emailInput.removeAttribute('aria-invalid');
+  verifyButton.hidden = false;
+  verifyButton.disabled = false;
+  emailContinue.hidden = true;
+  emailTryAgain.hidden = true;
+}
+async function verifyEmail(event) {
+  event.preventDefault();
+  if (activeVerification) return;
+  const email = emailInput.value.trim().toLowerCase();
+  emailInput.value = email;
+  if (!emailInput.checkValidity() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    resetVerification();
+    emailInput.setAttribute('aria-invalid', 'true');
+    setEmailStatus('error', 'Correo no válido', 'Revisa el formato e inténtalo nuevamente.');
+    return;
+  }
+  resetVerification();
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), 16000);
+  activeVerification = { controller, timer };
+  const version = verificationVersion;
+  verifyButton.disabled = true;
+  setEmailStatus('loading', 'Comprobando correo con Google Drive…', 'Esto puede tardar unos segundos.');
+  try {
+    const response = await fetch('/api/drive/verify-email', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email }),
+      signal: controller.signal
+    });
+    const result = await response.json().catch(() => null);
+    if (version !== verificationVersion || !dialog.open) return;
+    if (response.ok && result?.ok === true && result.compatible === true && result.email === email) {
+      verifiedEmail = email;
+      setEmailStatus('success', '✓ CORREO APTO', 'Correo apto para recibir tu compra. Este correo puede recibir tu acceso en Google Drive.', email);
+      verifyButton.hidden = true;
+      emailContinue.hidden = false;
+    } else if (response.ok && result?.ok === true && result.compatible === false) {
+      setEmailStatus('rejected', '⚠ NO PODEMOS ENTREGAR A ESTE CORREO', 'Usa el correo con el que normalmente accedes a Google Drive.');
+      verifyButton.hidden = true;
+      emailTryAgain.hidden = false;
+    } else if (response.status === 400 && result?.error === 'INVALID_EMAIL') {
+      emailInput.setAttribute('aria-invalid', 'true');
+      setEmailStatus('error', 'Correo no válido', 'Revisa el formato e inténtalo nuevamente.');
+    } else {
+      setEmailStatus('error', 'Verificación no disponible', 'No pudimos comprobar el correo ahora. Inténtalo de nuevo en unos momentos.');
+    }
+  } catch {
+    if (version === verificationVersion && dialog.open) setEmailStatus('error', 'Verificación no disponible', 'No pudimos comprobar el correo ahora. Inténtalo de nuevo en unos momentos.');
+  } finally {
+    clearTimeout(timer);
+    if (activeVerification?.controller === controller) { activeVerification = null; verifyButton.disabled = false; }
+  }
 }
 buyButton.addEventListener('click', openCheckout);
 stickyBuy.addEventListener('click', openCheckout);
+document.getElementById('checkout-to-email').addEventListener('click', () => { showCheckoutStep('email'); emailInput.focus(); });
+document.getElementById('verify-email-form').addEventListener('submit', verifyEmail);
+emailInput.addEventListener('input', () => { if (verifiedEmail || !emailStatus.hidden || activeVerification) resetVerification(); });
+emailContinue.addEventListener('click', () => {
+  if (!verifiedEmail || emailInput.value.trim().toLowerCase() !== verifiedEmail) return;
+  document.getElementById('review-email').textContent = verifiedEmail;
+  showCheckoutStep('review');
+});
+emailTryAgain.addEventListener('click', () => { emailInput.value = ''; resetVerification(); emailInput.focus(); });
+document.getElementById('edit-email').addEventListener('click', () => { resetVerification(); showCheckoutStep('email'); emailInput.focus(); });
+document.getElementById('continue-payment').addEventListener('click', () => { document.getElementById('payment-status').hidden = false; });
 document.getElementById('close-dialog').addEventListener('click', () => dialog.close());
-document.getElementById('dialog-ok').addEventListener('click', () => dialog.close());
 dialog.addEventListener('click', event => { if (event.target === dialog) dialog.close(); });
+dialog.addEventListener('close', () => { resetVerification(); emailInput.value = ''; document.body.classList.remove('checkout-open'); });
 mountCatalog();
 mountViewer();

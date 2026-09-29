@@ -121,3 +121,40 @@
 .cad-card:fullscreen .cad-stage{flex:1 1 auto;height:auto;min-height:0;max-height:none;background:#0b0f14}
 .cad-tabs button,.breadcrumbs button{min-height:44px}
 .dialog-head button{min-width:44px;min-height:44px}
+/* Checkout de verificación de correo: el diálogo conserva la compra en la página. */
+body.checkout-open{overflow:hidden}
+body.checkout-open .mobile-sticky{visibility:hidden}
+#checkout-dialog{width:min(520px,calc(100vw - 28px));max-height:calc(100dvh - 32px);overflow-y:auto;overscroll-behavior:contain;padding:24px}
+#checkout-dialog .dialog-head{gap:14px}
+#checkout-dialog .dialog-head button{flex:none}
+#checkout-dialog h2{margin:18px 0 14px;font-size:clamp(24px,4vw,28px)}
+#checkout-dialog p{margin:10px 0;color:#53666d;font-size:14px;line-height:1.55}
+.checkout-step[hidden],#email-status[hidden],#email-continue[hidden],#email-try-again[hidden],#verify-email-button[hidden],#payment-status[hidden]{display:none}
+.checkout-breakdown{border:1px solid #e0e9e8;border-radius:12px;background:#f8fbfa;overflow:hidden}
+.checkout-breakdown>div{display:grid;grid-template-columns:90px minmax(0,1fr);gap:12px;align-items:start;padding:12px 14px;border-bottom:1px solid #e4ecea}
+.checkout-breakdown>div:last-child{border-bottom:0}
+.checkout-breakdown span{color:#65777b;font-size:13px;font-weight:700}
+.checkout-breakdown strong{color:#172e33;font-size:15px;overflow-wrap:anywhere}
+#checkout-dialog .checkout-breakdown p{margin:0;color:#233d42;font-size:14px;overflow-wrap:anywhere}
+#checkout-dialog .checkout-note{margin:16px 0}
+.checkout-main-button{width:100%;min-height:48px;margin-top:12px}
+#verify-email-form label{display:block;margin:18px 0 7px;font-size:14px;font-weight:750}
+#checkout-email{width:100%;min-height:50px;border:1px solid #b9ccca;border-radius:9px;background:#fff;color:#17202a;padding:11px 13px;font-size:16px}
+#checkout-email[aria-invalid="true"]{border-color:#b64d3f}
+#checkout-dialog .checkout-help{margin:9px 0 15px;font-size:13px}
+.checkout-status{display:flex;align-items:flex-start;gap:12px;margin:15px 0 2px;padding:13px;border-radius:10px;border:1px solid #d9e5e4;background:#f2f6f6;color:#27434a}
+.checkout-status strong{display:block;font-size:14px;line-height:1.35}
+#checkout-dialog .checkout-status p{margin:5px 0 0;font-size:14px}
+.checkout-status.success{background:#eaf7f0;border-color:#b9deca;color:#145c3e}
+.checkout-status.rejected{background:#fff8e8;border-color:#e7d8ac;color:#6d541b}
+.checkout-status.error{background:#fff5f2;border-color:#efccc5;color:#8b3428}
+.verified-address{display:block;margin-top:7px;font-size:14px;font-weight:750;overflow-wrap:anywhere}
+.checkout-spinner{flex:none;width:19px;height:19px;border:2px solid #a6c9c3;border-top-color:#087d74;border-radius:50%;animation:cad-spin .8s linear infinite}
+.checkout-text-button{display:inline-flex;align-items:center;min-height:44px;margin-top:8px;padding:5px 0;border:0;background:transparent;color:#087d74;font-size:13px;font-weight:800;letter-spacing:.03em}
+.checkout-payment-note{margin-top:14px;padding:14px;border:1px solid #dce9e7;border-radius:10px;background:#f1f8f6}
+.checkout-payment-note strong{font-size:15px}
+#checkout-dialog .checkout-payment-note p{margin:5px 0 0}
+#checkout-dialog .checkout-payment-status{margin:12px 0 0;padding:12px;border-radius:8px;background:#eaf7f0;color:#145c3e;font-weight:700}
+@media(max-width:680px){
+  #checkout-dialog{position:fixed;inset:auto 0 0;width:100%;max-width:none;max-height:90dvh;margin:0;border-radius:18px 18px 0 0;padding:21px 18px calc(18px + env(safe-area-inset-bottom,0px))}
+}
