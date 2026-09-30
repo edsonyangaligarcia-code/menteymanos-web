@@ -15,7 +15,7 @@ async function authorized(request, secret) {
 }
 
 export async function onRequestPost({ request, env }) {
-  if (!env.DB || env.MM_ENV !== 'test') return json({ ok: false, error: 'CHECKOUT_NOT_CONFIGURED' }, 503);
+  if (!env.DB || !['test', 'production'].includes(env.MM_ENV)) return json({ ok: false, error: 'CHECKOUT_NOT_CONFIGURED' }, 503);
   if (!(await authorized(request, env.MM_ADMIN_SECRET))) return json({ ok: false, error: 'UNAUTHORIZED' }, 401);
   try {
     const { results } = await env.DB.prepare(`SELECT mp_order_id FROM orders WHERE mp_order_id IS NOT NULL

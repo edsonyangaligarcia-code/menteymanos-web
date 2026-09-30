@@ -1,6 +1,6 @@
-# Bloque 3 · Checkout Pro de ING 1 (entorno de prueba)
+# Bloque 3 · Checkout Pro de ING 1
 
-Esta rama implementa Checkout Pro mediante **Orders API**. La tienda carga sin D1, pero `POST /api/checkout/create-order` responde `ORDER_STORE_NOT_CONFIGURED` y no contacta a Mercado Pago si falta `env.DB`. El código acepta únicamente `MM_ENV=test` y un token de prueba; producción requiere una revisión y cambio posterior.
+Esta rama implementa Checkout Pro mediante **Orders API**. La tienda carga sin D1, pero `POST /api/checkout/create-order` responde `ORDER_STORE_NOT_CONFIGURED` y no contacta a Mercado Pago si falta `env.DB`. El código acepta únicamente `MM_ENV=test` o `MM_ENV=production`; este documento describe la configuración de Preview/Test y los requisitos pendientes antes de activar Production.
 
 ## Variables privadas
 
@@ -10,12 +10,12 @@ Copiar los **nombres** de `.dev.vars.example` a `.dev.vars` local y completar al
 | --- | --- |
 | `MM_DRIVE_WEBAPP_URL` | URL HTTPS de Apps Script existente |
 | `MM_SHARED_SECRET` | Secreto compartido con Apps Script; también se usa como sal del hash de IP |
-| `MP_ACCESS_TOKEN` | Access Token **de prueba** de la aplicación Mercado Pago |
-| `MP_WEBHOOK_SECRET` | Secret signature de Webhooks de la misma aplicación |
+| `MP_ACCESS_TOKEN` | Access Token de la aplicación Mercado Pago correspondiente al entorno |
+| `MP_WEBHOOK_SECRET` | Secret signature de Webhooks de la aplicación correspondiente al entorno |
 | `MP_TEST_PAYER_EMAIL` | Email ficticio `@testuser.com` de la cuenta **Comprador de prueba** de Mercado Pago; obligatorio solo en Preview/Test |
 | `MM_PUBLIC_BASE_URL` | Origen HTTPS público, sin ruta, para las tres URLs de retorno |
-| `MM_ENV` | `test` en este bloque |
-| `MM_ADMIN_SECRET` | Secreto nuevo y exclusivo, de al menos 32 caracteres, para la reconciliación administrativa manual |
+| `MM_ENV` | `test` en `.dev.vars.example`; `production` requiere configuración separada |
+| `MM_ADMIN_SECRET` | Secreto exclusivo del entorno, de al menos 32 caracteres, para la reconciliación administrativa |
 
 Las credenciales APS existentes permanecen independientes. No se necesita `MP_PUBLIC_KEY`: Checkout Pro redirige a `checkout_url` alojada por Mercado Pago.
 
@@ -67,7 +67,7 @@ El registro D1 `orders` guarda la orden local, snapshot canónico, mapeo MP, est
 
 En Preview/Test, el webhook real de Mercado Pago continúa devolviendo **401** porque su firma no pasa el HMAC estricto; el simulador oficial sí pasa. No se debilitó la validación HMAC. `/api/checkout/status` continúa como reconciliación interactiva, con claim y backoff persistentes, y consulta pedidos entregados para detectar reembolsos sin repetir Drive.
 
-`POST /api/checkout/reconcile-admin` está habilitado solo con `MM_ENV=test`, D1 y `Authorization: Bearer <MM_ADMIN_SECRET>`. Procesa hasta 5 pedidos por invocación y devuelve únicamente contadores. El Worker separado `workers/reconcile-cron.js` es el fallback automático previsto si el comprador abandona la página: `wrangler.reconcile.jsonc` configura **solo el environment `preview`** para invocar ese endpoint cada 5 minutos (`*/5 * * * *`). El Worker no tiene binding D1 ni credenciales de Mercado Pago. **Este Worker todavía no se ha desplegado; Production no está configurado.**
+`POST /api/checkout/reconcile-admin` acepta `MM_ENV=test` o `MM_ENV=production` y exige D1 y `Authorization: Bearer <MM_ADMIN_SECRET>` del entorno. Procesa hasta 5 pedidos por invocación y devuelve únicamente contadores. El Worker separado `workers/reconcile-cron.js` es el fallback automático previsto si el comprador abandona la página: `wrangler.reconcile.jsonc` configura **solo el environment `preview`** para invocar ese endpoint cada 5 minutos (`*/5 * * * *`). El Worker no tiene binding D1 ni credenciales de Mercado Pago. **Este Worker todavía no se ha desplegado; Production no está configurado.**
 
 | Variable del Worker Preview | Uso |
 | --- | --- |
@@ -76,6 +76,10 @@ En Preview/Test, el webhook real de Mercado Pago continúa devolviendo **401** p
 
 Guardar `RECONCILE_SECRET` y `MM_ADMIN_SECRET` como secrets de sus respectivos servicios, nunca en Git. El Worker envía el primero solo en `Authorization: Bearer` al endpoint de Preview. Su timeout de 150 segundos permite procesar hasta cinco pedidos con llamadas secuenciales a Mercado Pago y Drive, sin esperar al siguiente Cron de cinco minutos.
 
-Para producción quedan pendientes: revisión de credenciales productivas, binding D1 de producción y migración, webhook público productivo, prueba completa con comprador de prueba, confirmación del contrato de respuesta de Apps Script, supervisión de webhooks y política de reembolsos. Este bloque no activa producción, no hace despliegue y no realiza cobros reales.
+## Production (preparación, sin despliegue)
+
+Configurar `MM_ENV=production` únicamente en el proyecto Pages de Production. `MP_TEST_PAYER_EMAIL` no se exige ni se usa: Mercado Pago recibe como `payer.email` el email real de la orden, que también permanece en D1 y se usa para Drive. Production necesita sus propias credenciales de Mercado Pago (`MP_ACCESS_TOKEN` y `MP_WEBHOOK_SECRET`), `MM_PUBLIC_BASE_URL`, configuración de Drive y una **D1 separada** con las migraciones correspondientes; no reutilizar la D1 de Preview.
+
+Production necesita su propio `MM_ADMIN_SECRET` y, antes de automatizar la recuperación sin comprador, su propio Worker Cron con `RECONCILE_SECRET` del mismo valor y `RECONCILE_URL` productiva. La configuración `wrangler.reconcile.jsonc` actual contiene solo Preview; no configura un Cron de Production. Guardar todos los secretos en los servicios correspondientes, nunca en Git. Antes de activar Production siguen pendientes la revisión de credenciales y bindings, la prueba integral de pago y entrega, la supervisión del webhook y la política de reembolsos. **Production no está desplegado ni activado por este cambio.**
 
 Documentación oficial: [Orders API de Checkout Pro](https://www.mercadopago.com.pe/developers/en/docs/checkout-pro-orders/create-order), [URLs de retorno](https://www.mercadopago.com.pe/developers/en/docs/checkout-pro-orders/web-integration/configure-back-urls), [Webhooks de Checkout Pro](https://www.mercadopago.com.pe/developers/en/docs/checkout-pro-orders/notifications?scope=prod), [bindings D1 en Pages](https://developers.cloudflare.com/pages/functions/bindings/) y [comandos D1](https://developers.cloudflare.com/d1/wrangler-commands/).

@@ -9,7 +9,7 @@ const offerMap = { OP1: 'opcion1', COMBO: 'combo', VIP: 'vip', opcion1: 'opcion1
 function invalid(code, status = 400) { return json({ ok: false, error: code }, status); }
 export async function onRequestPost({ request, env }) {
   if (!env.DB) return invalid('ORDER_STORE_NOT_CONFIGURED', 503);
-  if (env.MM_ENV !== 'test' || !env.MP_ACCESS_TOKEN || !env.MP_WEBHOOK_SECRET || !publicBaseUrl(env.MM_PUBLIC_BASE_URL) || !testPayerEmail(env.MP_TEST_PAYER_EMAIL)) return invalid('CHECKOUT_NOT_CONFIGURED', 503);
+  if (!['test', 'production'].includes(env.MM_ENV) || !env.MP_ACCESS_TOKEN || !env.MP_WEBHOOK_SECRET || !publicBaseUrl(env.MM_PUBLIC_BASE_URL) || (env.MM_ENV === 'test' && !testPayerEmail(env.MP_TEST_PAYER_EMAIL))) return invalid('CHECKOUT_NOT_CONFIGURED', 503);
   if (!env.MM_DRIVE_WEBAPP_URL || !env.MM_SHARED_SECRET) return invalid('DRIVE_NOT_CONFIGURED', 503);
   try {
     const limit = await rateLimit(env, request, 'create-order', 5, 900);

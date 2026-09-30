@@ -4,7 +4,7 @@ import { getWebhook, recordWebhook, finishWebhook } from '../../../server/order-
 import { reconcileMercadoPagoOrder } from '../../../server/reconcile-order.js';
 
 export async function onRequestPost({ request, env }) {
-  if (!env.DB || env.MM_ENV !== 'test' || !env.MP_WEBHOOK_SECRET) return json({ ok: false, error: 'CHECKOUT_NOT_CONFIGURED' }, 503);
+  if (!env.DB || !['test', 'production'].includes(env.MM_ENV) || !env.MP_WEBHOOK_SECRET) return json({ ok: false, error: 'CHECKOUT_NOT_CONFIGURED' }, 503);
   const url = new URL(request.url);
   const dataId = url.searchParams.get('data.id');
   const requestId = request.headers.get('x-request-id');

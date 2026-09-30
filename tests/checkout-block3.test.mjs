@@ -137,6 +137,44 @@ test('browser cannot supply a payer email', async () => {
   }
   assert.equal(calls.create, 0);
 });
+test('production creates checkout with the real email without a test payer', async () => {
+  const env = environment(); env.MM_ENV = 'production'; delete env.MP_TEST_PAYER_EMAIL;
+  const calls = mockFetch(env);
+  assert.equal((await createOrder({ request: createRequest(), env })).status, 200);
+  assert.deepEqual(calls.mpPayers, ['buyer@gmail.com']);
+  assert.equal(localOrder(env).email, 'buyer@gmail.com');
+  assert.deepEqual(calls.verifiedEmails, ['buyer@gmail.com']);
+  assert.equal((await webhook({ request: await hookRequest(env), env })).status, 200);
+  assert.equal(calls.delivered[0].email, 'buyer@gmail.com');
+  const ref = localOrder(env).id;
+  const state = await (await status({ request: new Request(`https://shop.test/api/checkout/status?ref=${ref}`), env })).json();
+  assert.equal(state.deliveryStatus, 'delivered');
+});
+
+test('production ignores the test payer and rejects payer fields from the browser', async () => {
+  const env = environment(); env.MM_ENV = 'production';
+  const calls = mockFetch(env);
+  const invalid = await createOrder({ request: createRequest({ requestId: REQUEST_ID, offer: 'VIP', additionalItems: [], email: 'buyer@gmail.com', payer: { email: 'other@testuser.com' } }), env });
+  assert.equal(invalid.status, 400);
+  assert.equal((await invalid.json()).error, 'INVALID_ORDER');
+  assert.equal(calls.create, 0);
+  assert.equal((await createOrder({ request: createRequest(), env })).status, 200);
+  assert.deepEqual(calls.mpPayers, ['buyer@gmail.com']);
+});
+
+test('unsupported MM_ENV is rejected by checkout, webhook and admin reconciliation', async () => {
+  const env = environment(); env.MM_ENV = 'staging';
+  const calls = mockFetch(env);
+  const order = await createOrder({ request: createRequest(), env });
+  assert.equal(order.status, 503);
+  assert.equal((await order.json()).error, 'CHECKOUT_NOT_CONFIGURED');
+  assert.equal(calls.create, 0);
+  const hook = await webhook({ request: await hookRequest(env), env });
+  assert.equal(hook.status, 503);
+  assert.equal((await hook.json()).error, 'CHECKOUT_NOT_CONFIGURED');
+  assert.equal((await reconcileAdmin({ request: new Request('https://shop.test/api/checkout/reconcile-admin', { method: 'POST' }), env })).status, 503);
+});
+
 test('same request ID returns stored checkout and keeps MP idempotency key', async () => {
   const env = environment(); const calls = mockFetch(env);
   const first = await seed(env);
@@ -166,10 +204,28 @@ test('create-order refuses missing D1 and missing checkout config', async () => 
   assert.equal((await createOrder({ request: createRequest(), env: { ...env, MP_ACCESS_TOKEN: undefined } })).status, 503);
   assert.equal((await createOrder({ request: createRequest(), env: { ...env, MP_WEBHOOK_SECRET: undefined } })).status, 503);
 });
+test('production requires its own DB, Mercado Pago, public URL and Drive configuration', async () => {
+  const env = environment(); env.MM_ENV = 'production'; delete env.MP_TEST_PAYER_EMAIL;
+  const calls = mockFetch(env);
+  for (const key of ['DB', 'MP_ACCESS_TOKEN', 'MP_WEBHOOK_SECRET', 'MM_PUBLIC_BASE_URL', 'MM_DRIVE_WEBAPP_URL', 'MM_SHARED_SECRET']) {
+    const response = await createOrder({ request: createRequest(), env: { ...env, [key]: undefined } });
+    assert.equal(response.status, 503, key);
+  }
+  assert.equal(calls.create, 0);
+});
 test('webhook without signature or with invalid signature returns 401', async () => {
   const env = environment(); mockFetch(env); await seed(env);
   assert.equal((await webhook({ request: await hookRequest(env, 'n1', { noSignature: true }), env })).status, 401);
   assert.equal((await webhook({ request: await hookRequest(env, 'n1', { signature: 'ts=1700000000,v1=' + '0'.repeat(64) }), env })).status, 401);
+});
+test('production webhook accepts a valid signature and rejects an invalid one', async () => {
+  const env = environment(); env.MM_ENV = 'production'; delete env.MP_TEST_PAYER_EMAIL;
+  const calls = mockFetch(env); await seed(env);
+  assert.equal((await webhook({ request: await hookRequest(env, 'invalid', { signature: 'ts=1700000000,v1=' + '0'.repeat(64) }), env })).status, 401);
+  assert.equal(calls.get, 0);
+  assert.equal((await webhook({ request: await hookRequest(env, 'valid'), env })).status, 200);
+  assert.equal(calls.get, 1);
+  assert.equal(localOrder(env).payment_status, 'paid');
 });
 test('signed webhook always GETs MP; body action cannot authorize delivery', async () => {
   const env = environment(); const calls = mockFetch(env, { mpOverrides: { status: 'created', status_detail: 'created' } }); await seed(env);
@@ -410,4 +466,16 @@ test('administrative reconciliation requires a configured secret', async () => {
   const request = token => new Request('https://shop.test/api/checkout/reconcile-admin', { method: 'POST', headers: { Authorization: `Bearer ${token}` } });
   assert.equal((await reconcileAdmin({ request: request('wrong'), env })).status, 401);
   assert.equal((await reconcileAdmin({ request: request(env.MM_ADMIN_SECRET), env })).status, 200);
+});
+
+test('production administrative reconciliation requires and verifies its own secret', async () => {
+  const env = environment(); env.MM_ENV = 'production'; delete env.MP_TEST_PAYER_EMAIL;
+  mockFetch(env); await seed(env);
+  const request = token => new Request('https://shop.test/api/checkout/reconcile-admin', { method: 'POST', headers: { Authorization: `Bearer ${token}` } });
+  assert.equal((await reconcileAdmin({ request: request('wrong'), env })).status, 401);
+  env.MM_ADMIN_SECRET = 'p'.repeat(32);
+  assert.equal((await reconcileAdmin({ request: request('wrong'), env })).status, 401);
+  const response = await reconcileAdmin({ request: request(env.MM_ADMIN_SECRET), env });
+  assert.equal(response.status, 200);
+  assert.equal((await response.json()).ok, true);
 });

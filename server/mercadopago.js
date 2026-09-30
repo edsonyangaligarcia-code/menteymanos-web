@@ -3,7 +3,7 @@ import { centsToDecimalString, checkoutUrl, decimalStringToCents, normalizeEmail
 const API = 'https://api.mercadopago.com';
 const TIMEOUT_MS = 8000;
 async function mpFetch(env, path, options = {}) {
-  if (env.MM_ENV !== 'test' || !env.MP_ACCESS_TOKEN) throw new Error('CHECKOUT_NOT_CONFIGURED');
+  if (!['test', 'production'].includes(env.MM_ENV) || !env.MP_ACCESS_TOKEN) throw new Error('CHECKOUT_NOT_CONFIGURED');
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), TIMEOUT_MS);
   try {
