@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { DatabaseSync } from 'node:sqlite';
 import { readFileSync } from 'node:fs';
+import { runInNewContext } from 'node:vm';
 import { buildIng1Order } from '../server/ing1-order.js';
 import { centsToDecimalString, decimalStringToCents } from '../server/checkout-common.js';
 import { createMpBody } from '../server/mercadopago.js';
@@ -10,7 +11,7 @@ import { onRequestPost as createOrder } from '../functions/api/checkout/create-o
 import { onRequestPost as webhook } from '../functions/api/mercadopago/webhook.js';
 import { onRequestGet as status } from '../functions/api/checkout/status.js';
 import { onRequestPost as verifyEmail } from '../functions/api/drive/verify-email.js';
-import { RECONCILE_LEASE_SECONDS, claimReconciliation, claimDelivery, finishDelivery, failDelivery, updatePayment } from '../server/order-store.js';
+import { RECONCILE_LEASE_SECONDS, DELIVERY_EMAIL_LEASE_SECONDS, claimReconciliation, claimDelivery, finishDelivery, failDelivery, updatePayment, claimDeliveryEmail, finishDeliveryEmail, failDeliveryEmail } from '../server/order-store.js';
 import { reconcileMercadoPagoOrder } from '../server/reconcile-order.js';
 import { onRequestPost as reconcileAdmin } from '../functions/api/checkout/reconcile-admin.js';
 
@@ -22,6 +23,7 @@ function database() {
   const sqlite = new DatabaseSync(':memory:');
   sqlite.exec(readFileSync(new URL('../migrations/0001_checkout_orders.sql', import.meta.url), 'utf8'));
   sqlite.exec(readFileSync(new URL('../migrations/0002_checkout_claims.sql', import.meta.url), 'utf8'));
+  sqlite.exec(readFileSync(new URL('../migrations/0003_delivery_email.sql', import.meta.url), 'utf8'));
   return { prepare(sql) { const statement = sqlite.prepare(sql); return { bind(...params) { return { first: async () => statement.get(...params) || null, run: async () => ({ meta: { changes: statement.run(...params).changes } }), all: async () => ({ results: statement.all(...params) }) }; }, all: async () => ({ results: statement.all() }) }; }, sqlite };
 }
 function environment() { return { DB: database(), MM_ENV: 'test', MP_ACCESS_TOKEN: 'TEST-placeholder-unit-test', MP_WEBHOOK_SECRET: 'unit-test-webhook-secret', MP_TEST_PAYER_EMAIL: 'TESTUSER123@testuser.com', MM_PUBLIC_BASE_URL: 'https://preview.example.pages.dev', MM_DRIVE_WEBAPP_URL: SCRIPT, MM_SHARED_SECRET: 'unit-test-drive-secret' }; }
@@ -265,6 +267,8 @@ test('valid accredited webhook delivers once and stores only canonical codes', a
   assert.equal(calls.deliver, 1);
   assert.deepEqual(calls.delivered[0].items, ['ING1', 'ING2', 'ING3', 'ING4', 'ING5', 'ING6', 'ING7']);
   assert.equal(localOrder(env).delivery_status, 'delivered');
+  assert.equal(localOrder(env).delivery_email_status, 'pending');
+  assert.equal(localOrder(env).delivery_email_sent_at, null);
   assert.equal((await webhook({ request: await hookRequest(env), env })).status, 200);
   assert.equal(calls.get, 1);
   assert.equal(calls.deliver, 1);
@@ -478,4 +482,99 @@ test('production administrative reconciliation requires and verifies its own sec
   const response = await reconcileAdmin({ request: request(env.MM_ADMIN_SECRET), env });
   assert.equal(response.status, 200);
   assert.equal((await response.json()).ok, true);
+});
+
+test('delivery email migration leaves existing orders not_ready', () => {
+  const sqlite = new DatabaseSync(':memory:');
+  sqlite.exec(readFileSync(new URL('../migrations/0001_checkout_orders.sql', import.meta.url), 'utf8'));
+  sqlite.exec(readFileSync(new URL('../migrations/0002_checkout_claims.sql', import.meta.url), 'utf8'));
+  const insert = sqlite.prepare("INSERT INTO orders (id,request_id,external_reference,email,offer_code,additional_items_json,items_json,amount_cents,currency,payment_status,delivery_status,created_at,updated_at) VALUES (?,?,?,?,?,'[]','[]',990,'PEN',?,?,?,?)");
+  for (const [id, payment, delivery] of [['one', 'paid', 'delivered'], ['two', 'paid', 'pending'], ['three', 'refunded', 'delivered']]) insert.run(id, id, id, 'buyer@gmail.com', 'VIP', payment, delivery, '2026-01-01', '2026-01-01');
+  sqlite.exec(readFileSync(new URL('../migrations/0003_delivery_email.sql', import.meta.url), 'utf8'));
+  assert.deepEqual(sqlite.prepare('SELECT id,delivery_email_status FROM orders ORDER BY id').all().map(row => ({ ...row })), [
+    { id: 'one', delivery_email_status: 'not_ready' },
+    { id: 'three', delivery_email_status: 'not_ready' },
+    { id: 'two', delivery_email_status: 'not_ready' }
+  ]);
+});
+
+test('delivery email claim is single owner; failed retry sends only once after sent', async () => {
+  const env = environment(); mockFetch(env); await seed(env);
+  const order = localOrder(env);
+  assert.equal(await claimDeliveryEmail(env.DB, order), null);
+  env.DB.sqlite.prepare("UPDATE orders SET payment_status='paid',delivery_status='delivered',delivery_email_status='pending'").run();
+  const [a, b] = await Promise.all([claimDeliveryEmail(env.DB, order), claimDeliveryEmail(env.DB, order)]);
+  assert.equal([a, b].filter(Boolean).length, 1);
+  const first = a || b;
+  assert.equal(await failDeliveryEmail(env.DB, order, first), true);
+  const retry = await claimDeliveryEmail(env.DB, order);
+  assert.ok(retry && retry !== first);
+  assert.equal(await finishDeliveryEmail(env.DB, order, first), false);
+  assert.equal(await finishDeliveryEmail(env.DB, order, retry), true);
+  assert.ok(localOrder(env).delivery_email_sent_at);
+  assert.equal(await claimDeliveryEmail(env.DB, order), null);
+  assert.equal(await failDeliveryEmail(env.DB, order, retry), false);
+});
+
+test('expired delivery email claim cannot confirm a replacement; refund blocks new claim', async () => {
+  const env = environment(); mockFetch(env); await seed(env);
+  env.DB.sqlite.prepare("UPDATE orders SET payment_status='paid',delivery_status='delivered',delivery_email_status='pending'").run();
+  const order = localOrder(env);
+  const first = await claimDeliveryEmail(env.DB, order);
+  env.DB.sqlite.prepare('UPDATE orders SET delivery_email_claimed_at=?').run(Math.floor(Date.now() / 1000) - DELIVERY_EMAIL_LEASE_SECONDS - 1);
+  const second = await claimDeliveryEmail(env.DB, order);
+  assert.ok(second && second !== first);
+  assert.equal(await finishDeliveryEmail(env.DB, order, first), false);
+  assert.equal(await failDeliveryEmail(env.DB, order, first), false);
+  env.DB.sqlite.prepare("UPDATE orders SET payment_status='refunded'").run();
+  assert.equal(await finishDeliveryEmail(env.DB, order, second), false);
+  assert.equal(await claimDeliveryEmail(env.DB, order), null);
+});
+
+test('verified email advances to review without a second click and never starts payment', async () => {
+  const listeners = new Map();
+  const timers = new Map(); let timerId = 0;
+  const element = id => ({ id, hidden: false, disabled: false, value: '', textContent: '', children: [], classList: { add() {}, remove() {} },
+    addEventListener(type, handler) { listeners.set(`${id}:${type}`, handler); },
+    replaceChildren(...children) { this.children = children; }, append(...children) { this.children.push(...children); },
+    removeAttribute() {}, setAttribute() {}, checkValidity() { return true; }, focus() {}, scrollIntoView() {} });
+  const elements = new Map(); const get = id => { if (!elements.has(id)) elements.set(id, element(id)); return elements.get(id); };
+  const steps = ['intro', 'email', 'review'].map(name => ({ dataset: { checkoutStep: name }, hidden: name !== 'email' }));
+  const dialog = get('checkout-dialog'); dialog.open = true; dialog.scrollTop = 0;
+  dialog.querySelectorAll = selector => selector === '[data-checkout-step]' ? steps : [];
+  dialog.querySelector = selector => get(`${selector}:heading`);
+  const document = { getElementById: get, querySelectorAll: () => [], createElement: () => element('created'), createTextNode: value => value, body: { classList: { add() {}, remove() {} } } };
+  const source = readFileSync(new URL('../comprar/ing1/tienda.js', import.meta.url), 'utf8').replace(/^import .*;\r?\n/gm, '').replace(/mountCatalog\(\);\s*mountViewer\(\);\s*$/, '');
+  let paymentCalls = 0;
+  runInNewContext(source, { document, window: {}, crypto, AbortController,
+    setTimeout(callback, delay) { timers.set(++timerId, { callback, delay }); return timerId; },
+    clearTimeout(id) { timers.delete(id); },
+    async fetch(url) { if (url !== '/api/drive/verify-email') paymentCalls++; return { ok: true, json: async () => ({ ok: true, compatible: true, email: 'buyer@gmail.com' }) }; }
+  });
+  get('checkout-email').value = 'buyer@gmail.com';
+  await listeners.get('verify-email-form:submit')({ preventDefault() {} });
+  assert.equal(get('review-email').textContent, 'buyer@gmail.com');
+  assert.equal(get('email-status').children[0].children[0].textContent, '✓ CORREO APTO');
+  assert.equal(steps.find(step => step.dataset.checkoutStep === 'email').hidden, false);
+  const transition = [...timers.values()].find(timer => timer.delay === 400);
+  assert.ok(transition);
+  transition.callback();
+  assert.equal(steps.find(step => step.dataset.checkoutStep === 'review').hidden, false);
+  assert.equal(paymentCalls, 0);
+  listeners.get('edit-email:click')();
+  assert.equal(steps.find(step => step.dataset.checkoutStep === 'email').hidden, false);
+});
+
+test('delivered result copy reflects Drive delivery with and without items', () => {
+  const elements = new Map();
+  const get = id => { if (!elements.has(id)) elements.set(id, { textContent: '', hidden: false, children: [], replaceChildren() { this.children = []; }, append(child) { this.children.push(child); }, get childElementCount() { return this.children.length; }, addEventListener() {} }); return elements.get(id); };
+  const source = readFileSync(new URL('../comprar/ing1/resultado/resultado.js', import.meta.url), 'utf8').replace(/load\(\);\s*$/, '');
+  const context = { location: { search: '' }, URLSearchParams, URL, document: { getElementById: get, querySelector: get, createElement: () => ({}) }, setTimeout() {}, clearTimeout() {} };
+  runInNewContext(source, context);
+  const render = runInNewContext('render', context);
+  render({ paymentStatus: 'paid', deliveryStatus: 'delivered', items: [{ code: 'ING1', url: 'https://drive.google.com/drive/folders/example' }] });
+  assert.equal(get('status-title').textContent, 'Compra lista');
+  assert.equal(get('status-description').textContent, 'Tu pago fue confirmado. Tus ING ya están disponibles en tu Google Drive. Ábrelos con la misma cuenta de Google usada en la compra.');
+  render({ paymentStatus: 'paid', deliveryStatus: 'delivered', items: [] });
+  assert.equal(get('status-description').textContent, 'Tu pago fue confirmado y tu compra ya fue entregada en Google Drive.');
 });

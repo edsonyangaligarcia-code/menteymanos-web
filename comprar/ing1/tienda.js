@@ -25,7 +25,6 @@ const checkoutSteps = [...dialog.querySelectorAll('[data-checkout-step]')];
 const emailInput = document.getElementById('checkout-email');
 const emailStatus = document.getElementById('email-status');
 const verifyButton = document.getElementById('verify-email-button');
-const emailContinue = document.getElementById('email-continue');
 const emailTryAgain = document.getElementById('email-try-again');
 const paymentButton = document.getElementById('continue-payment');
 const paymentStatus = document.getElementById('payment-status');
@@ -34,6 +33,7 @@ let selectedExtras = [];
 let verifiedEmail = null;
 let activeVerification = null;
 let verificationVersion = 0;
+let reviewTransitionTimer = null;
 let paymentIntent = null;
 let paymentPending = false;
 let paymentController = null;
@@ -123,6 +123,8 @@ function setEmailStatus(kind, title, description, address = '') {
 }
 function resetVerification() {
   verificationVersion += 1;
+  clearTimeout(reviewTransitionTimer);
+  reviewTransitionTimer = null;
   if (activeVerification) { activeVerification.controller.abort(); clearTimeout(activeVerification.timer); activeVerification = null; }
   verifiedEmail = null;
   emailStatus.hidden = true;
@@ -130,7 +132,6 @@ function resetVerification() {
   emailInput.removeAttribute('aria-invalid');
   verifyButton.hidden = false;
   verifyButton.disabled = false;
-  emailContinue.hidden = true;
   emailTryAgain.hidden = true;
 }
 async function verifyEmail(event) {
@@ -164,7 +165,11 @@ async function verifyEmail(event) {
       verifiedEmail = email;
       setEmailStatus('success', '✓ CORREO APTO', 'Correo apto para recibir tu compra. Este correo puede recibir tu acceso en Google Drive.', email);
       verifyButton.hidden = true;
-      emailContinue.hidden = false;
+      document.getElementById('review-email').textContent = email;
+      reviewTransitionTimer = setTimeout(() => {
+        if (version === verificationVersion && dialog.open && verifiedEmail === email && emailInput.value.trim().toLowerCase() === email) showCheckoutStep('review');
+        reviewTransitionTimer = null;
+      }, 400);
     } else if (response.ok && result?.ok === true && result.compatible === false) {
       setEmailStatus('rejected', '⚠ NO PODEMOS ENTREGAR A ESTE CORREO', 'Usa el correo con el que normalmente accedes a Google Drive.');
       verifyButton.hidden = true;
@@ -187,11 +192,6 @@ stickyBuy.addEventListener('click', openCheckout);
 document.getElementById('checkout-to-email').addEventListener('click', () => { showCheckoutStep('email'); emailInput.focus(); });
 document.getElementById('verify-email-form').addEventListener('submit', verifyEmail);
 emailInput.addEventListener('input', () => { invalidatePaymentIntent(); if (verifiedEmail || !emailStatus.hidden || activeVerification) resetVerification(); });
-emailContinue.addEventListener('click', () => {
-  if (!verifiedEmail || emailInput.value.trim().toLowerCase() !== verifiedEmail) return;
-  document.getElementById('review-email').textContent = verifiedEmail;
-  showCheckoutStep('review');
-});
 emailTryAgain.addEventListener('click', () => { emailInput.value = ''; resetVerification(); emailInput.focus(); });
 document.getElementById('edit-email').addEventListener('click', () => { resetVerification(); showCheckoutStep('email'); emailInput.focus(); });
 paymentButton.addEventListener('click', async () => {
@@ -213,10 +213,9 @@ paymentButton.addEventListener('click', async () => {
     });
     const result = await response.json().catch(() => null);
     if (!response.ok || result?.ok !== true || typeof result.checkoutUrl !== 'string') {
-      paymentStatus.textContent = result?.error === 'ORDER_STORE_NOT_CONFIGURED' || result?.error === 'CHECKOUT_NOT_CONFIGURED'
-        ? 'El pago de prueba aún no está configurado. Inténtalo cuando esté disponible.'
-        : result?.error === 'RATE_LIMITED' ? 'Demasiados intentos. Espera unos minutos antes de reintentar.'
-          : 'No pudimos preparar el pago. Inténtalo de nuevo.';
+      paymentStatus.textContent = result?.error === 'RATE_LIMITED'
+        ? 'Demasiados intentos. Espera unos minutos antes de reintentar.'
+        : 'No pudimos preparar el pago. Inténtalo de nuevo.';
       return;
     }
     const url = new URL(result.checkoutUrl);

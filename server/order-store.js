@@ -1,5 +1,6 @@
 const now = () => new Date().toISOString();
 export const RECONCILE_LEASE_SECONDS = 90;
+export const DELIVERY_EMAIL_LEASE_SECONDS = 180;
 export const getByRequestId = (db, id) => db.prepare('SELECT * FROM orders WHERE request_id = ?').bind(id).first();
 export const getById = (db, id) => db.prepare('SELECT * FROM orders WHERE id = ?').bind(id).first();
 export const getByMpId = (db, id) => db.prepare('SELECT * FROM orders WHERE mp_order_id = ?').bind(id).first();
@@ -57,12 +58,33 @@ export async function claimDelivery(db, order, reconcileToken) {
   return result.meta.changes === 1 ? token : null;
 }
 export async function finishDelivery(db, order, token, reconcileToken, links) {
-  const result = await db.prepare("UPDATE orders SET delivery_status='delivered',delivery_response_json=?,delivery_error_code=NULL,delivery_claim_token=NULL,delivery_claimed_at=NULL,delivered_at=?,updated_at=? WHERE id=? AND reconcile_claim_token=? AND delivery_status='delivering' AND delivery_claim_token=?")
+  const result = await db.prepare("UPDATE orders SET delivery_status='delivered',delivery_email_status='pending',delivery_response_json=?,delivery_error_code=NULL,delivery_claim_token=NULL,delivery_claimed_at=NULL,delivered_at=?,updated_at=? WHERE id=? AND reconcile_claim_token=? AND delivery_status='delivering' AND delivery_claim_token=?")
     .bind(JSON.stringify(links), now(), now(), order.id, reconcileToken, token).run();
   return result.meta.changes === 1;
 }
 export async function failDelivery(db, order, token, reconcileToken) {
   const result = await db.prepare("UPDATE orders SET delivery_status='failed',delivery_error_code='DRIVE_UNAVAILABLE',delivery_claim_token=NULL,delivery_claimed_at=NULL,updated_at=? WHERE id=? AND reconcile_claim_token=? AND delivery_status='delivering' AND delivery_claim_token=?")
     .bind(now(), order.id, reconcileToken, token).run();
+  return result.meta.changes === 1;
+}
+export async function claimDeliveryEmail(db, order) {
+  const timestamp = Math.floor(Date.now() / 1000);
+  const token = crypto.randomUUID();
+  const result = await db.prepare(`UPDATE orders SET delivery_email_status='sending',delivery_email_claim_token=?,delivery_email_claimed_at=?,updated_at=?
+    WHERE id=? AND payment_status='paid' AND delivery_status='delivered' AND delivery_email_sent_at IS NULL
+    AND (delivery_email_status IN ('pending','failed') OR (delivery_email_status='sending' AND delivery_email_claimed_at < ?))`)
+    .bind(token, timestamp, now(), order.id, timestamp - DELIVERY_EMAIL_LEASE_SECONDS).run();
+  return result.meta.changes === 1 ? token : null;
+}
+export async function finishDeliveryEmail(db, order, token) {
+  const result = await db.prepare(`UPDATE orders SET delivery_email_status='sent',delivery_email_claim_token=NULL,delivery_email_claimed_at=NULL,delivery_email_sent_at=?,updated_at=?
+    WHERE id=? AND payment_status='paid' AND delivery_status='delivered' AND delivery_email_status='sending' AND delivery_email_claim_token=? AND delivery_email_sent_at IS NULL`)
+    .bind(now(), now(), order.id, token).run();
+  return result.meta.changes === 1;
+}
+export async function failDeliveryEmail(db, order, token) {
+  const result = await db.prepare(`UPDATE orders SET delivery_email_status='failed',delivery_email_claim_token=NULL,delivery_email_claimed_at=NULL,updated_at=?
+    WHERE id=? AND delivery_email_status='sending' AND delivery_email_claim_token=? AND delivery_email_sent_at IS NULL`)
+    .bind(now(), order.id, token).run();
   return result.meta.changes === 1;
 }
