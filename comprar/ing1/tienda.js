@@ -1,5 +1,6 @@
 import { mountCatalog } from './catalogo.js';
 import { mountViewer } from './visor.js';
+import { fichasIng } from './fichas-ing.js';
 
 const offers = {
   opcion1: { label: 'Opción 1', price: 9.90, extras: 1 },
@@ -47,7 +48,7 @@ function getOrder() {
 function renderOrder() {
   const plan = offers[planKey];
   const needed = plan.extras;
-  document.getElementById('order-title').textContent = plan.label;
+  document.getElementById('order-title').textContent = `${planKey === 'combo' ? 'Opción 2 · ' : planKey === 'vip' ? 'Opción 3 · ' : ''}${plan.label}`;
   document.getElementById('order-instruction').textContent = planKey === 'vip' ? 'Incluye ING 1 a ING 7; no necesitas elegir adicionales.' : `Elige ${needed} línea${needed > 1 ? 's' : ''} adicional${needed > 1 ? 'es' : ''}.`;
   extrasBox.replaceChildren();
   extrasBox.hidden = planKey === 'vip';
@@ -55,6 +56,7 @@ function renderOrder() {
   buyButton.textContent = 'Comprar ahora';
   stickyBuy.textContent = 'COMPRAR AHORA';
   if (planKey !== 'vip') for (const [code, name] of products) {
+    const item = document.createElement('div'); item.className = 'extra-item';
     const label = document.createElement('label');
     const input = document.createElement('input'); input.type = 'checkbox'; input.value = code; input.checked = selectedExtras.includes(code);
     input.addEventListener('change', () => {
@@ -63,14 +65,27 @@ function renderOrder() {
       invalidatePaymentIntent();
       renderSummary();
     });
-    label.append(input, document.createTextNode(`${code} — ${name}`)); extrasBox.append(label);
+    const title = document.createElement('span'); title.textContent = `${code} — ${name}`;
+    label.append(input, title);
+    const detail = fichasIng[code];
+    const panel = document.createElement('div'); panel.className = 'extra-detail'; panel.id = `extra-detail-${code.replace(' ', '').toLowerCase()}`; panel.hidden = true;
+    const category = document.createElement('span'); category.className = 'eyebrow'; category.textContent = detail.etiqueta;
+    const heading = document.createElement('strong'); heading.textContent = `${code} — ${name}`;
+    const promise = document.createElement('p'); promise.textContent = detail.promesa;
+    const list = document.createElement('ul');
+    for (const point of detail.incluye) { const li = document.createElement('li'); li.textContent = point; list.append(li); }
+    const ideal = document.createElement('p'); ideal.className = 'extra-ideal'; ideal.textContent = `Ideal para: ${detail.ideal}`;
+    panel.append(category, heading, promise, list, ideal);
+    const toggle = document.createElement('button'); toggle.type = 'button'; toggle.className = 'extra-toggle'; toggle.textContent = 'Ver qué incluye'; toggle.setAttribute('aria-expanded', 'false'); toggle.setAttribute('aria-controls', panel.id);
+    toggle.addEventListener('click', () => { const open = toggle.getAttribute('aria-expanded') !== 'true'; toggle.setAttribute('aria-expanded', String(open)); toggle.textContent = open ? 'Ocultar información' : 'Ver qué incluye'; panel.hidden = !open; });
+    item.append(label, toggle, panel); extrasBox.append(item);
   }
   renderSummary();
 }
 function renderSummary() {
   const plan = offers[planKey];
   const ready = planKey === 'vip' || selectedExtras.length === plan.extras;
-  summary.textContent = `${plan.label} · ${formatPrice(plan.price)}${planKey === 'vip' ? ' · ING 1–7' : ` · ING 1 + ${selectedExtras.length}/${plan.extras} adicionales`}`;
+  summary.textContent = `${plan.label} · ${formatPrice(plan.price)} · ${planKey === 'vip' ? 'ING 1–7' : `ING 1${selectedExtras.length ? ` + ${selectedExtras.join(', ')}` : ''} (${selectedExtras.length}/${plan.extras})`}`;
   buyButton.disabled = !ready;
   stickyBuy.disabled = !ready;
   document.getElementById('sticky-plan').textContent = plan.label;
@@ -81,6 +96,7 @@ document.querySelectorAll('[data-plan]').forEach(button => button.addEventListen
   invalidatePaymentIntent();
   selectedExtras = [];
   document.querySelectorAll('[data-plan-card]').forEach(card => card.classList.toggle('selected', card.dataset.planCard === planKey));
+  document.querySelectorAll('[data-plan]').forEach(option => option.setAttribute('aria-pressed', String(option.dataset.plan === planKey)));
   orderCard.hidden = false;
   sticky.hidden = false;
   document.body.classList.add('has-mobile-sticky');

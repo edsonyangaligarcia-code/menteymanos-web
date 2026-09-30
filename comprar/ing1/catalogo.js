@@ -10,11 +10,13 @@ export async function mountCatalog() {
   const forward = document.getElementById('catalog-forward');
   const home = document.getElementById('catalog-home');
   const count = document.getElementById('catalog-count');
+  const total = document.getElementById('catalog-total');
   let root, path = [], backStack = [], forwardStack = [];
   try {
     const response = await fetch('/comprar/ing1/catalogo-ing1.json');
     if (!response.ok) throw new Error('No se pudo cargar el catálogo');
     const data = await response.json();
+    total.textContent = `${new Intl.NumberFormat('es-PE').format(data.folders)} carpetas · ${new Intl.NumberFormat('es-PE').format(data.files)} archivos`;
     const main = data.tree.find(node => node.type === 'folder' && /colección maestra de planos/i.test(node.name));
     root = sortNodes(main?.children || data.tree);
   } catch {
