@@ -3,13 +3,13 @@ import { json, normalizeEmail, readJson, uuid, checkoutUrl, publicBaseUrl } from
 import { verifyDriveEmail } from '../../../server/drive-client.js';
 import { rateLimit } from '../../../server/rate-limit.js';
 import { insertOrder, getByRequestId, claimMpCreate, saveMpCreate } from '../../../server/order-store.js';
-import { createMpOrder } from '../../../server/mercadopago.js';
+import { createMpOrder, testPayerEmail } from '../../../server/mercadopago.js';
 
 const offerMap = { OP1: 'opcion1', COMBO: 'combo', VIP: 'vip', opcion1: 'opcion1', combo: 'combo', vip: 'vip' };
 function invalid(code, status = 400) { return json({ ok: false, error: code }, status); }
 export async function onRequestPost({ request, env }) {
   if (!env.DB) return invalid('ORDER_STORE_NOT_CONFIGURED', 503);
-  if (env.MM_ENV !== 'test' || !env.MP_ACCESS_TOKEN || !env.MP_WEBHOOK_SECRET || !publicBaseUrl(env.MM_PUBLIC_BASE_URL)) return invalid('CHECKOUT_NOT_CONFIGURED', 503);
+  if (env.MM_ENV !== 'test' || !env.MP_ACCESS_TOKEN || !env.MP_WEBHOOK_SECRET || !publicBaseUrl(env.MM_PUBLIC_BASE_URL) || !testPayerEmail(env.MP_TEST_PAYER_EMAIL)) return invalid('CHECKOUT_NOT_CONFIGURED', 503);
   if (!env.MM_DRIVE_WEBAPP_URL || !env.MM_SHARED_SECRET) return invalid('DRIVE_NOT_CONFIGURED', 503);
   try {
     const limit = await rateLimit(env, request, 'create-order', 5, 900);

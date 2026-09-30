@@ -24,23 +24,24 @@ function database() {
   sqlite.exec(readFileSync(new URL('../migrations/0002_checkout_claims.sql', import.meta.url), 'utf8'));
   return { prepare(sql) { const statement = sqlite.prepare(sql); return { bind(...params) { return { first: async () => statement.get(...params) || null, run: async () => ({ meta: { changes: statement.run(...params).changes } }), all: async () => ({ results: statement.all(...params) }) }; }, all: async () => ({ results: statement.all() }) }; }, sqlite };
 }
-function environment() { return { DB: database(), MM_ENV: 'test', MP_ACCESS_TOKEN: 'TEST-placeholder-unit-test', MP_WEBHOOK_SECRET: 'unit-test-webhook-secret', MM_PUBLIC_BASE_URL: 'https://preview.example.pages.dev', MM_DRIVE_WEBAPP_URL: SCRIPT, MM_SHARED_SECRET: 'unit-test-drive-secret' }; }
+function environment() { return { DB: database(), MM_ENV: 'test', MP_ACCESS_TOKEN: 'TEST-placeholder-unit-test', MP_WEBHOOK_SECRET: 'unit-test-webhook-secret', MP_TEST_PAYER_EMAIL: 'TESTUSER123@testuser.com', MM_PUBLIC_BASE_URL: 'https://preview.example.pages.dev', MM_DRIVE_WEBAPP_URL: SCRIPT, MM_SHARED_SECRET: 'unit-test-drive-secret' }; }
 function createRequest(body = { requestId: REQUEST_ID, offer: 'VIP', additionalItems: [], email: 'buyer@gmail.com' }, ip = '198.51.100.1') {
   return new Request('https://shop.test/api/checkout/create-order', { method: 'POST', headers: { 'Content-Type': 'application/json', 'CF-Connecting-IP': ip }, body: JSON.stringify(body) });
 }
 function mpOrder(local, overrides = {}) { return { id: local.mp_order_id, external_reference: local.external_reference, currency: 'PEN', total_amount: centsToDecimalString(local.amount_cents), total_paid_amount: centsToDecimalString(local.amount_cents), status: 'processed', status_detail: 'accredited', ...overrides }; }
 function localOrder(env) { return env.DB.sqlite.prepare('SELECT * FROM orders LIMIT 1').get(); }
 function mockFetch(env, options = {}) {
-  const calls = { verify: 0, create: 0, get: 0, deliver: 0, requestIds: [], delivered: [] };
+  const calls = { verify: 0, create: 0, get: 0, deliver: 0, requestIds: [], verifiedEmails: [], mpPayers: [], delivered: [] };
   globalThis.fetch = async (url, init) => {
     if (String(url) === SCRIPT) {
       const body = JSON.parse(init.body);
-      if (body.action === 'verify_email') { calls.verify++; return Response.json({ ok: true, compatible: options.compatible ?? true }); }
+      if (body.action === 'verify_email') { calls.verify++; calls.verifiedEmails.push(body.email); return Response.json({ ok: true, compatible: options.compatible ?? true }); }
       if (body.action === 'deliver') { calls.deliver++; calls.delivered.push(body); return Response.json(options.deliverResult?.(calls.deliver) ?? { ok: true, items: body.items.map(code => ({ code, url: `https://drive.google.com/drive/folders/${code}` })) }); }
     }
     if (String(url).endsWith('/v1/orders') && init.method === 'POST') {
       calls.create++; calls.requestIds.push(init.headers['X-Idempotency-Key']);
       const body = JSON.parse(init.body);
+      calls.mpPayers.push(body.payer.email);
       assert.equal(body.total_amount, centsToDecimalString(localOrder(env).amount_cents));
       return Response.json({ id: 'ORDER123', checkout_url: CHECKOUT, status: 'created', status_detail: 'created' });
     }
@@ -79,6 +80,7 @@ test('money conversion and MP item sum use integer cents', () => {
     assert.equal(decimalStringToCents(body.total_amount), offer.priceCents);
     assert.equal(body.processing_mode, 'manual');
     assert.equal(body.type, 'online');
+    assert.equal(body.payer.email, 'buyer@gmail.com');
   }
   assert.equal(decimalStringToCents('9.901'), null);
 });
@@ -91,6 +93,49 @@ test('client price and arbitrary final items cannot change order', async () => {
   const invalid = await createOrder({ request: createRequest({ requestId: REQUEST_ID, offer: 'VIP', additionalItems: [], email: 'buyer@gmail.com', items: ['ING 8'] }), env });
   assert.equal(invalid.status, 400);
   assert.equal(calls.create, 1);
+});
+
+test('test payer is normalized while local order and Drive keep the real buyer email', async () => {
+  const env = environment(); env.MP_TEST_PAYER_EMAIL = ' TESTUSER123@testuser.com ';
+  const calls = mockFetch(env);
+  assert.equal((await createOrder({ request: createRequest(), env })).status, 200);
+  assert.deepEqual(calls.mpPayers, ['testuser123@testuser.com']);
+  assert.equal(localOrder(env).email, 'buyer@gmail.com');
+  assert.deepEqual(calls.verifiedEmails, ['buyer@gmail.com']);
+  assert.equal((await webhook({ request: await hookRequest(env), env })).status, 200);
+  assert.equal(calls.delivered[0].email, 'buyer@gmail.com');
+});
+
+test('missing test payer blocks checkout before creating a local or MP order', async () => {
+  const env = environment(); env.MP_TEST_PAYER_EMAIL = undefined;
+  const calls = mockFetch(env);
+  const response = await createOrder({ request: createRequest(), env });
+  assert.equal(response.status, 503);
+  assert.equal((await response.json()).error, 'CHECKOUT_NOT_CONFIGURED');
+  assert.equal(calls.create, 0);
+  assert.equal(localOrder(env), undefined);
+});
+
+test('test payer outside testuser.com is rejected before creating an MP order', async () => {
+  const env = environment();
+  const calls = mockFetch(env);
+  for (const payer of ['buyer@gmail.com', 'not-an-email', 'buyer@testuser.com.evil']) {
+    env.MP_TEST_PAYER_EMAIL = payer;
+    const response = await createOrder({ request: createRequest(), env });
+    assert.equal(response.status, 503);
+    assert.equal((await response.json()).error, 'CHECKOUT_NOT_CONFIGURED');
+  }
+  assert.equal(calls.create, 0);
+});
+
+test('browser cannot supply a payer email', async () => {
+  const env = environment(); const calls = mockFetch(env);
+  for (const extra of [{ payer: { email: 'attacker@testuser.com' } }, { payerEmail: 'attacker@testuser.com' }]) {
+    const response = await createOrder({ request: createRequest({ requestId: crypto.randomUUID(), offer: 'VIP', additionalItems: [], email: 'buyer@gmail.com', ...extra }), env });
+    assert.equal(response.status, 400);
+    assert.equal((await response.json()).error, 'INVALID_ORDER');
+  }
+  assert.equal(calls.create, 0);
 });
 test('same request ID returns stored checkout and keeps MP idempotency key', async () => {
   const env = environment(); const calls = mockFetch(env);

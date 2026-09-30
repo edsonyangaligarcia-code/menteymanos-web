@@ -1,0 +1,16 @@
+{
+  "name": "mente-y-manos-reconcile",
+  "main": "workers/reconcile-cron.js",
+  "compatibility_date": "2026-09-30",
+  "env": {
+    "preview": {
+      "name": "mente-y-manos-reconcile-preview",
+      "vars": {
+        "RECONCILE_URL": "https://feature-ing1-compra-directa.menteymanos.pages.dev/api/checkout/reconcile-admin"
+      },
+      "triggers": {
+        "crons": ["*/5 * * * *"]
+      }
+    }
+  }
+}

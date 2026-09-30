@@ -12,11 +12,14 @@ Copiar los **nombres** de `.dev.vars.example` a `.dev.vars` local y completar al
 | `MM_SHARED_SECRET` | Secreto compartido con Apps Script; también se usa como sal del hash de IP |
 | `MP_ACCESS_TOKEN` | Access Token **de prueba** de la aplicación Mercado Pago |
 | `MP_WEBHOOK_SECRET` | Secret signature de Webhooks de la misma aplicación |
+| `MP_TEST_PAYER_EMAIL` | Email ficticio `@testuser.com` de la cuenta **Comprador de prueba** de Mercado Pago; obligatorio solo en Preview/Test |
 | `MM_PUBLIC_BASE_URL` | Origen HTTPS público, sin ruta, para las tres URLs de retorno |
 | `MM_ENV` | `test` en este bloque |
 | `MM_ADMIN_SECRET` | Secreto nuevo y exclusivo, de al menos 32 caracteres, para la reconciliación administrativa manual |
 
 Las credenciales APS existentes permanecen independientes. No se necesita `MP_PUBLIC_KEY`: Checkout Pro redirige a `checkout_url` alojada por Mercado Pago.
+
+En Preview/Test, `MP_TEST_PAYER_EMAIL` se normaliza y se envía únicamente como `payer.email` a Mercado Pago. El email real introducido por el comprador sigue guardado en D1, se verifica con Drive y es el destinatario de la entrega. No configures `MP_TEST_PAYER_EMAIL` como sustituto del email real de entrega.
 
 ## Crear y enlazar D1 manualmente
 
@@ -62,7 +65,16 @@ Apps Script recibe únicamente `{secret, action:"deliver", email, items:["ING1",
 
 El registro D1 `orders` guarda la orden local, snapshot canónico, mapeo MP, estado de pago, estado de entrega, claims e intentos. `webhook_events` evita repetir una notificación completada y permite reintentar fallos. `rate_limits` cuenta ventanas por hash de IP y sal privada. No se guardan secretos. Un fallo de Drive devuelve 503 al webhook y permite un reintento posterior. Los claims de entrega identifican cada intento, pero **Apps Script debe garantizar idempotencia de `deliver` por `orderId`**: su código no está en este repositorio, así que falta verificarlo o implementarlo allí.
 
-Existe una anomalía conocida en Preview/Test: webhooks reales de Mercado Pago no pasan la firma HMAC aunque el simulador oficial sí. Esta revisión no la resuelve ni debilita la validación. `/api/checkout/status` reconcilia en servidor con claim y backoff persistentes; también vuelve a consultar pedidos entregados para detectar reembolsos sin repetir Drive. Como recuperación sin comprador, se añadió `POST /api/checkout/reconcile-admin`, habilitado solo con `MM_ENV=test`, D1 y `Authorization: Bearer <MM_ADMIN_SECRET>`. Procesa hasta 5 pedidos por invocación, sin devolver identificadores ni secretos. Configurar un secreto privado de al menos 32 caracteres y ejecutarlo solo desde un cliente administrativo seguro. **No se ha configurado ni desplegado un programador.** Para automatizarlo falta un Worker/Cron separado o infraestructura equivalente que invoque este endpoint con el secreto; se debe diseñar, configurar y probar por separado. Hasta entonces la recuperación sin visita depende de una invocación administrativa manual.
+En Preview/Test, el webhook real de Mercado Pago continúa devolviendo **401** porque su firma no pasa el HMAC estricto; el simulador oficial sí pasa. No se debilitó la validación HMAC. `/api/checkout/status` continúa como reconciliación interactiva, con claim y backoff persistentes, y consulta pedidos entregados para detectar reembolsos sin repetir Drive.
+
+`POST /api/checkout/reconcile-admin` está habilitado solo con `MM_ENV=test`, D1 y `Authorization: Bearer <MM_ADMIN_SECRET>`. Procesa hasta 5 pedidos por invocación y devuelve únicamente contadores. El Worker separado `workers/reconcile-cron.js` es el fallback automático previsto si el comprador abandona la página: `wrangler.reconcile.jsonc` configura **solo el environment `preview`** para invocar ese endpoint cada 5 minutos (`*/5 * * * *`). El Worker no tiene binding D1 ni credenciales de Mercado Pago. **Este Worker todavía no se ha desplegado; Production no está configurado.**
+
+| Variable del Worker Preview | Uso |
+| --- | --- |
+| `RECONCILE_URL` | URL HTTPS de `/api/checkout/reconcile-admin` del Pages Preview; está en `wrangler.reconcile.jsonc` |
+| `RECONCILE_SECRET` | Secret del Worker, mínimo 32 caracteres; debe tener el mismo valor que `MM_ADMIN_SECRET` del Pages Preview |
+
+Guardar `RECONCILE_SECRET` y `MM_ADMIN_SECRET` como secrets de sus respectivos servicios, nunca en Git. El Worker envía el primero solo en `Authorization: Bearer` al endpoint de Preview. Su timeout de 150 segundos permite procesar hasta cinco pedidos con llamadas secuenciales a Mercado Pago y Drive, sin esperar al siguiente Cron de cinco minutos.
 
 Para producción quedan pendientes: revisión de credenciales productivas, binding D1 de producción y migración, webhook público productivo, prueba completa con comprador de prueba, confirmación del contrato de respuesta de Apps Script, supervisión de webhooks y política de reembolsos. Este bloque no activa producción, no hace despliegue y no realiza cobros reales.
 
