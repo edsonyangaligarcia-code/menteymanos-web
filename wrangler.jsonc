@@ -1,0 +1,11 @@
+﻿{
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "mente-y-manos-orders",
+      "database_id": "b733fdc7-0ac4-457c-aab2-cae700dd5e43",
+      "preview_database_id": "DB",
+      "migrations_dir": "migrations"
+    }
+  ]
+}

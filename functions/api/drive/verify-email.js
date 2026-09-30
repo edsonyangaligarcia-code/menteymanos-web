@@ -1,3 +1,5 @@
+import { rateLimit } from '../../../server/rate-limit.js';
+
 const MAX_BODY_BYTES = 1024;
 const MAX_EMAIL_LENGTH = 254;
 const UPSTREAM_TIMEOUT_MS = 12000;
@@ -46,6 +48,10 @@ function normalizeEmail(value) {
 }
 
 export async function onRequestPost({ request, env }) {
+  try {
+    const limit = await rateLimit(env, request, 'verify-email', 10, 600);
+    if (!limit.allowed) return new Response(JSON.stringify({ ok: false, error: 'RATE_LIMITED' }), { status: 429, headers: { ...headers, 'Retry-After': String(limit.retryAfter) } });
+  } catch { return json({ ok: false, error: 'SERVICE_UNAVAILABLE' }, 503); }
   if (!/^application\/json(?:\s*;|\s*$)/i.test(request.headers.get('content-type') || '')) return json({ ok: false, error: 'UNSUPPORTED_MEDIA_TYPE' }, 415);
   const length = Number(request.headers.get('content-length'));
   if (Number.isFinite(length) && length > MAX_BODY_BYTES) return json({ ok: false, error: 'PAYLOAD_TOO_LARGE' }, 413);

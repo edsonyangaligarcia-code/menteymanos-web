@@ -27,11 +27,17 @@ const emailStatus = document.getElementById('email-status');
 const verifyButton = document.getElementById('verify-email-button');
 const emailContinue = document.getElementById('email-continue');
 const emailTryAgain = document.getElementById('email-try-again');
+const paymentButton = document.getElementById('continue-payment');
+const paymentStatus = document.getElementById('payment-status');
 let planKey = null;
 let selectedExtras = [];
 let verifiedEmail = null;
 let activeVerification = null;
 let verificationVersion = 0;
+let paymentIntent = null;
+let paymentPending = false;
+let paymentController = null;
+function invalidatePaymentIntent() { paymentIntent = null; paymentController?.abort(); }
 
 function formatPrice(number) { return `S/ ${number.toFixed(2)}`; }
 function getOrder() {
@@ -54,6 +60,7 @@ function renderOrder() {
     input.addEventListener('change', () => {
       if (input.checked && selectedExtras.length >= needed) { input.checked = false; return; }
       selectedExtras = input.checked ? [...selectedExtras, code] : selectedExtras.filter(item => item !== code);
+      invalidatePaymentIntent();
       renderSummary();
     });
     label.append(input, document.createTextNode(`${code} — ${name}`)); extrasBox.append(label);
@@ -71,6 +78,7 @@ function renderSummary() {
 }
 document.querySelectorAll('[data-plan]').forEach(button => button.addEventListener('click', () => {
   planKey = button.dataset.plan;
+  invalidatePaymentIntent();
   selectedExtras = [];
   document.querySelectorAll('[data-plan-card]').forEach(card => card.classList.toggle('selected', card.dataset.planCard === planKey));
   orderCard.hidden = false;
@@ -178,7 +186,7 @@ buyButton.addEventListener('click', openCheckout);
 stickyBuy.addEventListener('click', openCheckout);
 document.getElementById('checkout-to-email').addEventListener('click', () => { showCheckoutStep('email'); emailInput.focus(); });
 document.getElementById('verify-email-form').addEventListener('submit', verifyEmail);
-emailInput.addEventListener('input', () => { if (verifiedEmail || !emailStatus.hidden || activeVerification) resetVerification(); });
+emailInput.addEventListener('input', () => { invalidatePaymentIntent(); if (verifiedEmail || !emailStatus.hidden || activeVerification) resetVerification(); });
 emailContinue.addEventListener('click', () => {
   if (!verifiedEmail || emailInput.value.trim().toLowerCase() !== verifiedEmail) return;
   document.getElementById('review-email').textContent = verifiedEmail;
@@ -186,9 +194,40 @@ emailContinue.addEventListener('click', () => {
 });
 emailTryAgain.addEventListener('click', () => { emailInput.value = ''; resetVerification(); emailInput.focus(); });
 document.getElementById('edit-email').addEventListener('click', () => { resetVerification(); showCheckoutStep('email'); emailInput.focus(); });
-document.getElementById('continue-payment').addEventListener('click', () => { document.getElementById('payment-status').hidden = false; });
+paymentButton.addEventListener('click', async () => {
+  if (paymentPending || !verifiedEmail || emailInput.value.trim().toLowerCase() !== verifiedEmail) return;
+  const fingerprint = JSON.stringify([planKey, selectedExtras, verifiedEmail]);
+  if (!paymentIntent || paymentIntent.fingerprint !== fingerprint) paymentIntent = { fingerprint, requestId: crypto.randomUUID() };
+  const currentIntent = paymentIntent;
+  const controller = new AbortController();
+  paymentController = controller;
+  paymentPending = true;
+  paymentButton.disabled = true;
+  paymentStatus.hidden = false;
+  paymentStatus.textContent = 'Preparando pago seguro…';
+  try {
+    const response = await fetch('/api/checkout/create-order', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ requestId: currentIntent.requestId, offer: planKey, additionalItems: selectedExtras, email: verifiedEmail }),
+      signal: controller.signal
+    });
+    const result = await response.json().catch(() => null);
+    if (!response.ok || result?.ok !== true || typeof result.checkoutUrl !== 'string') {
+      paymentStatus.textContent = result?.error === 'ORDER_STORE_NOT_CONFIGURED' || result?.error === 'CHECKOUT_NOT_CONFIGURED'
+        ? 'El pago de prueba aún no está configurado. Inténtalo cuando esté disponible.'
+        : result?.error === 'RATE_LIMITED' ? 'Demasiados intentos. Espera unos minutos antes de reintentar.'
+          : 'No pudimos preparar el pago. Inténtalo de nuevo.';
+      return;
+    }
+    const url = new URL(result.checkoutUrl);
+    if (url.protocol !== 'https:' || !/(^|\.)mercadopago\.com(?:\.[a-z]{2})?$/.test(url.hostname)) throw new Error('Invalid checkout URL');
+    if (!dialog.open || currentIntent !== paymentIntent || controller.signal.aborted) { paymentStatus.textContent = 'La selección cambió. Revisa la compra antes de continuar.'; return; }
+    window.location.assign(url.href);
+  } catch { paymentStatus.textContent = 'No pudimos conectar con el pago seguro. Inténtalo de nuevo.'; }
+  finally { if (paymentController === controller) paymentController = null; paymentPending = false; paymentButton.disabled = false; }
+});
 document.getElementById('close-dialog').addEventListener('click', () => dialog.close());
 dialog.addEventListener('click', event => { if (event.target === dialog) dialog.close(); });
-dialog.addEventListener('close', () => { resetVerification(); emailInput.value = ''; document.body.classList.remove('checkout-open'); });
+dialog.addEventListener('close', () => { invalidatePaymentIntent(); resetVerification(); emailInput.value = ''; document.body.classList.remove('checkout-open'); });
 mountCatalog();
 mountViewer();

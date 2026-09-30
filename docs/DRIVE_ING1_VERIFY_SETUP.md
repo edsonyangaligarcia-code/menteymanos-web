@@ -34,4 +34,4 @@ node --test tests/drive-block2.test.mjs
 
 ## Límites de este bloque
 
-La función limita el cuerpo a 1 KiB y corta la llamada a Apps Script tras 12 segundos. La UI evita solicitudes simultáneas. No hay un límite de peticiones persistente por IP; para producción se debe añadir una regla de rate limiting de Cloudflare. En Bloque 3, el backend deberá reconstruir precio en céntimos e items con `server/ing1-order.js` antes de crear una orden. La entrega de Drive debe ejecutarse solo desde el webhook de pago validado.
+La función limita el cuerpo a 1 KiB y corta la llamada a Apps Script tras 12 segundos. La UI evita solicitudes simultáneas. El Bloque 3 añadió un límite persistente de 10 intentos por 10 minutos e IP cuando D1 está enlazado. La vista local sin D1 usa memoria del proceso solo para permitir probar la verificación, sin garantía de persistencia. El checkout reconstruye precio en céntimos e items con `server/ing1-order.js` y entrega desde el webhook validado. Consulta `docs/CHECKOUT_ING1_BLOCK3_SETUP.md`.
