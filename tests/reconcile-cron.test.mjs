@@ -10,11 +10,25 @@ const originalFetch = globalThis.fetch;
 const originalLog = console.log;
 test.after(() => { globalThis.fetch = originalFetch; console.log = originalLog; });
 
-test('only the preview Worker has the five-minute Cron and Pages URL', () => {
+test('separate Preview and Production Workers have five-minute Crons without public URLs or secrets', () => {
   const config = JSON.parse(readFileSync(new URL('../wrangler.reconcile.jsonc', import.meta.url), 'utf8'));
+  assert.equal(config.workers_dev, false);
+  assert.equal(config.preview_urls, false);
+  for (const mode of ['preview', 'production']) {
+    assert.equal(config.env[mode].workers_dev ?? config.workers_dev, false);
+    assert.equal(config.env[mode].preview_urls ?? config.preview_urls, false);
+  }
+  assert.equal(config.env.preview.name, 'mente-y-manos-reconcile-preview');
+  assert.equal(config.env.production.name, 'mente-y-manos-reconcile-production');
+  assert.notEqual(config.env.preview.name, config.env.production.name);
   assert.deepEqual(config.env.preview.triggers.crons, ['*/5 * * * *']);
+  assert.deepEqual(config.env.production.triggers.crons, ['*/5 * * * *']);
   assert.equal(config.env.preview.vars.RECONCILE_URL, 'https://feature-ing1-compra-directa.menteymanos.pages.dev/api/checkout/reconcile-admin');
-  assert.equal(config.env.production, undefined);
+  assert.equal(config.env.production.vars.RECONCILE_URL, 'https://menteymanos.pages.dev/api/checkout/reconcile-admin');
+  assert.deepEqual(Object.keys(config.env.preview.vars), ['RECONCILE_URL']);
+  assert.deepEqual(Object.keys(config.env.production.vars), ['RECONCILE_URL']);
+  assert.doesNotMatch(JSON.stringify(config), /RECONCILE_SECRET/);
+  assert.equal(config.vars, undefined);
   assert.equal(config.d1_databases, undefined);
 });
 
