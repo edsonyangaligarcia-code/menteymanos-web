@@ -17,7 +17,7 @@ Copiar los **nombres** de `.dev.vars.example` a `.dev.vars` local y completar al
 | `MM_ENV` | `test` en `.dev.vars.example`; `production` requiere configuración separada |
 | `MM_ADMIN_SECRET` | Secreto exclusivo del entorno, de al menos 32 caracteres, para la reconciliación administrativa |
 
-Las credenciales APS existentes permanecen independientes. No se necesita `MP_PUBLIC_KEY`: Checkout Pro redirige a `checkout_url` alojada por Mercado Pago.
+Las credenciales APS existentes permanecen independientes. El visor CAD de Production requiere `APS_CLIENT_ID` y `APS_CLIENT_SECRET` en Pages; `/api/aps/viewer-token` devuelve 503 si falta alguna. No se necesita `MP_PUBLIC_KEY`: Checkout Pro redirige a `checkout_url` alojada por Mercado Pago.
 
 En Preview/Test, `MP_TEST_PAYER_EMAIL` se normaliza y se envía únicamente como `payer.email` a Mercado Pago. El email real introducido por el comprador sigue guardado en D1, se verifica con Drive y es el destinatario de la entrega. No configures `MP_TEST_PAYER_EMAIL` como sustituto del email real de entrega.
 
@@ -45,7 +45,7 @@ Para la base remota **de prueba**, una vez revisada y enlazada:
 npx.cmd --yes wrangler d1 migrations apply mente-y-manos-orders --remote
 ```
 
-`migrations/0002_checkout_claims.sql` añade tokens de claim y el último intento de reconciliación. Aplicar ambas migraciones en orden; la segunda también actualiza una base local que ya recibió `0001`. Antes de adoptar una configuración Wrangler para despliegue, descargar y revisar la configuración real del proyecto Pages con `npx.cmd --yes wrangler pages download config`; ese comando puede sobrescribir el archivo local existente. Para inspección, usar `npx.cmd --yes wrangler d1 execute mente-y-manos-orders --local --command="SELECT id,payment_status,delivery_status,delivery_attempts FROM orders LIMIT 10"` (usar `--remote` solo en la base de prueba remota verificada).
+`migrations/0002_checkout_claims.sql` añade tokens de claim y el último intento de reconciliación. `migrations/0003_delivery_email.sql` añade el estado y claim de notificación de entrega. Aplicar las tres migraciones en orden antes de desplegar código que use `0003`; no se aplicó ninguna durante este cambio. Antes de adoptar una configuración Wrangler para despliegue, descargar y revisar la configuración real del proyecto Pages con `npx.cmd --yes wrangler pages download config`; ese comando puede sobrescribir el archivo local existente. Para inspección, usar `npx.cmd --yes wrangler d1 execute mente-y-manos-orders --local --command="SELECT id,payment_status,delivery_status,delivery_attempts FROM orders LIMIT 10"` (usar `--remote` solo en la base de prueba remota verificada).
 
 ## Mercado Pago en prueba
 
@@ -57,13 +57,19 @@ https://<dominio-publico-de-prueba>/api/mercadopago/webhook
 
 Guardar la secret signature del webhook solo en la variable privada `MP_WEBHOOK_SECRET`. Usar un origen HTTPS público para `MM_PUBLIC_BASE_URL`; `localhost` no sirve como URL de retorno pública. El webhook verifica `x-signature` mediante HMAC-SHA256 y luego consulta `GET /v1/orders/{id}`. El retorno del navegador jamás confirma un pago.
 
-Abrir `http://localhost:8788/comprar/ing1/`, elegir una oferta, seleccionar los adicionales, verificar el correo y pulsar **Continuar al pago**. Con las variables de prueba y D1 configuradas, se redirige al Checkout Pro. Usar un comprador y una operación **de prueba**. La página `.../comprar/ing1/resultado/?ref=<UUID>` consulta D1 y solo muestra accesos después de la entrega. Sin configuración, la tienda y el paso de validación de correo siguen disponibles, y el pago informa que aún no está configurado.
+Abrir `http://localhost:8788/comprar/ing1/`, elegir una oferta, seleccionar los adicionales, verificar el correo y pulsar **Continuar al pago**. Con las variables de prueba y D1 configuradas, se redirige al Checkout Pro. Usar un comprador y una operación **de prueba**. La página `.../comprar/ing1/resultado/?ref=<UUID>` consulta D1 y solo muestra accesos después de la entrega. Si el pago no está disponible, la tienda presenta un error genérico sin revelar configuración interna.
 
 ## Contrato de entrega y límites
 
 Apps Script recibe únicamente `{secret, action:"deliver", email, items:["ING1",...], orderId}` desde el servidor. Debe responder `{ok:true}`. Para mostrar botones individuales en la página de resultado, debe incluir `items` o `links` como arreglo de `{code:"ING1",url:"https://drive.google.com/..."}`. El backend solo conserva enlaces HTTPS de `drive.google.com` o `docs.google.com` para códigos comprados. Si Apps Script devuelve solo `{ok:true}`, la entrega queda marcada como completada, pero no habrá botones de enlace; el acceso compartido en Drive será el mecanismo de entrega. Confirmar el formato real del Apps Script antes de una prueba completa.
 
 El registro D1 `orders` guarda la orden local, snapshot canónico, mapeo MP, estado de pago, estado de entrega, claims e intentos. `webhook_events` evita repetir una notificación completada y permite reintentar fallos. `rate_limits` cuenta ventanas por hash de IP y sal privada. No se guardan secretos. Un fallo de Drive devuelve 503 al webhook y permite un reintento posterior. Los claims de entrega identifican cada intento, pero **Apps Script debe garantizar idempotencia de `deliver` por `orderId`**: su código no está en este repositorio, así que falta verificarlo o implementarlo allí.
+
+## Notificación de entrega por correo (preparación)
+
+No existe un proveedor de email configurado en este repositorio. **Este cambio no envía correos**; la pantalla de resultado solo informa la entrega en Drive. La migración `0003` añade `delivery_email_status` (`not_ready`, `pending`, `sending`, `failed`, `sent`), `delivery_email_claim_token`, `delivery_email_claimed_at` y `delivery_email_sent_at`. Al completar una entrega pagada, D1 marca `pending`; la migración también prepara pedidos ya pagados y entregados. El backend ofrece claims atómicos: solo un intento puede pasar a `sending`, un token anterior no puede confirmar el envío, y `sent` impide nuevos claims. Un fallo libera el intento para retry; un lease de 180 segundos permite recuperar un Worker interrumpido.
+
+Antes de activar el envío hace falta seleccionar y configurar un proveedor de correo transaccional, una identidad de remitente verificada y una integración de servidor. El futuro mensaje deberá usar `order.email` como destinatario, confirmar el pago y los ING entregados, incluir solo enlaces de Drive validados de `delivery_response_json`, y ofrecer el WhatsApp de soporte `https://wa.me/51901174129`. El proveedor deberá aceptar una clave de idempotencia estable derivada de `order.id`: si el proveedor acepta el correo y el Worker cae antes de guardar `sent`, un retry de D1 por sí solo no puede garantizar ausencia de un segundo envío. No guardar secretos ni URLs de entrega en logs.
 
 En Preview/Test, el webhook real de Mercado Pago continúa devolviendo **401** porque su firma no pasa el HMAC estricto; el simulador oficial sí pasa. No se debilitó la validación HMAC. `/api/checkout/status` continúa como reconciliación interactiva, con claim y backoff persistentes, y consulta pedidos entregados para detectar reembolsos sin repetir Drive.
 

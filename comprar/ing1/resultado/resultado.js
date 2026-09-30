@@ -20,7 +20,7 @@ const states = {
 };
 function render(result) {
   const delivered = result.paymentStatus === 'paid' && result.deliveryStatus === 'delivered';
-  const [heading, copy] = delivered ? ['Compra lista', Array.isArray(result.items) && result.items.length ? 'Tu acceso digital está habilitado. Abre los ING incluidos con la cuenta de Google usada en la compra.' : 'El contenido ya se compartió con la cuenta de Google usada en la compra. Revisa tu Google Drive.'] : (states[result.paymentStatus] || states.created);
+  const [heading, copy] = delivered ? ['Compra lista', Array.isArray(result.items) && result.items.length ? 'Tu pago fue confirmado. Tus ING ya están disponibles en tu Google Drive. Ábrelos con la misma cuenta de Google usada en la compra.' : 'Tu pago fue confirmado y tu compra ya fue entregada en Google Drive.'] : (states[result.paymentStatus] || states.created);
   title.textContent = heading;
   description.textContent = copy;
   statusIcon.textContent = delivered ? '✓' : '◌';

@@ -129,7 +129,7 @@ body.checkout-open .mobile-sticky{visibility:hidden}
 #checkout-dialog .dialog-head button{flex:none}
 #checkout-dialog h2{margin:18px 0 14px;font-size:clamp(24px,4vw,28px)}
 #checkout-dialog p{margin:10px 0;color:#53666d;font-size:14px;line-height:1.55}
-.checkout-step[hidden],#email-status[hidden],#email-continue[hidden],#email-try-again[hidden],#verify-email-button[hidden],#payment-status[hidden]{display:none}
+.checkout-step[hidden],#email-status[hidden],#email-try-again[hidden],#verify-email-button[hidden],#payment-status[hidden]{display:none}
 .checkout-breakdown{border:1px solid #e0e9e8;border-radius:12px;background:#f8fbfa;overflow:hidden}
 .checkout-breakdown>div{display:grid;grid-template-columns:90px minmax(0,1fr);gap:12px;align-items:start;padding:12px 14px;border-bottom:1px solid #e4ecea}
 .checkout-breakdown>div:last-child{border-bottom:0}
