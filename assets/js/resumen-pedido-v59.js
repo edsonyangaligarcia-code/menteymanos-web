@@ -43,7 +43,7 @@
 
 
     const PRECIOS_BASE = {
-        ing1: 9.90,
+        ing1: 15.90,
         ing3: 12.90,
         ing7: 12.90
     };
@@ -345,7 +345,7 @@
                 nombre:
                     "VIP Full",
                 precio:
-                    29.90,
+                    window.preciosIng1.importe(3, principal),
                 necesarios:
                     0
             };
@@ -358,7 +358,7 @@
                 nombre:
                     "Combo Pro",
                 precio:
-                    15.90,
+                    window.preciosIng1.importe(2, principal),
                 necesarios:
                     2
             };
@@ -371,7 +371,7 @@
             precio:
                 PRECIOS_BASE[
                     principal
-                ] || 9.90,
+                ] || 15.90,
             necesarios:
                 1
         };

@@ -3,9 +3,9 @@ import { mountViewer } from './visor.js';
 import { fichasIng } from './fichas-ing.js';
 
 const offers = {
-  opcion1: { label: 'Opción 1', price: 9.90, extras: 1 },
-  combo: { label: 'Combo Pro', price: 15.90, extras: 2 },
-  vip: { label: 'VIP Full', price: 29.90, extras: 0 }
+  opcion1: { label: 'Opción 1', price: 15.90, extras: 1 },
+  combo: { label: 'Combo Pro', price: 24.90, extras: 2 },
+  vip: { label: 'VIP Full', price: 39.90, extras: 0 }
 };
 const products = [
   ['ING 2', 'Expedientes, Licencias y Costos'],

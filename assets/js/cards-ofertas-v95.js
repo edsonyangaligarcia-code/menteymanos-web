@@ -3,12 +3,12 @@
 
     const PRECIOS = {
         1: { nombre: "OPCIÓN 1", normal: "S/ 74.90" },
-        2: { nombre: "COMBO PRO", normal: "S/ 99.90", oferta: "S/ 15.90" },
-        3: { nombre: "VIP FULL", normal: "S/ 179.90", oferta: "S/ 29.90" }
+        2: { nombre: "COMBO PRO", normal: "S/ 99.90" },
+        3: { nombre: "VIP FULL", normal: "S/ 179.90" }
     };
 
     const PRODUCTOS = {
-        ing1: { codigo: "ING 1", nombre: "Planos y Expedientes", precio: "S/ 9.90" },
+        ing1: { codigo: "ING 1", nombre: "Planos y Expedientes", precio: "S/ 15.90" },
         ing3: { codigo: "ING 3", nombre: "BIM y Revit", precio: "S/ 12.90" },
         ing7: { codigo: "ING 7", nombre: "Cálculo Estructural PRO", precio: "S/ 12.90" }
     };
@@ -23,7 +23,7 @@
 
     function precioOferta(plan) {
         if (plan === 1) return PRODUCTOS[productoActual()].precio;
-        return PRECIOS[plan].oferta;
+        return window.preciosIng1.texto(plan, productoActual());
     }
 
     function limpiarResiduos(card) {

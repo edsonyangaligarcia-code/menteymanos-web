@@ -1,5 +1,5 @@
-const CACHE="mym-panel-v1";
-const ASSETS=["./","./index.html","./assets/panel.css?v=1","./assets/panel.js?v=1","./data/historico.json","./manifest.webmanifest"];
+const CACHE="mym-panel-v2";
+const ASSETS=["./","./index.html","./assets/panel.css?v=1","./assets/panel.js?v=2","./data/historico.json","./manifest.webmanifest"];
 self.addEventListener("install",e=>e.waitUntil(caches.open(CACHE).then(c=>c.addAll(ASSETS)).then(()=>self.skipWaiting())));
 self.addEventListener("activate",e=>e.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim())));
 self.addEventListener("fetch",e=>{

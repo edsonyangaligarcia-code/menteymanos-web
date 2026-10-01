@@ -2,7 +2,7 @@
     "use strict";
 
     const PRECIOS = {
-        ing1: "S/ 9.90",
+        ing1: "S/ 15.90",
         ing3: "S/ 12.90",
         ing7: "S/ 12.90"
     };
@@ -260,7 +260,7 @@
                     "COMBO PRO",
 
                 precio:
-                    "S/ 15.90",
+                    window.preciosIng1.texto(2, key),
 
                 titulo:
                     codigo +
@@ -284,7 +284,7 @@
                     "VIP FULL",
 
                 precio:
-                    "S/ 29.90",
+                    window.preciosIng1.texto(3, key),
 
                 titulo:
                     "Los 7 ING completos",

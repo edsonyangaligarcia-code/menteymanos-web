@@ -174,7 +174,7 @@
         const vip =
             encontrarTarjeta(
                 "VIP FULL",
-                "S/ 29.90"
+                window.preciosIng1.texto(3)
             );
 
 
@@ -251,7 +251,7 @@
                 </strong>
 
                 <span>
-                    Aprox. S/ 4.27 por ING
+                    Aprox. S/ ${(window.preciosIng1.importe(3) / 7).toFixed(2)} por ING
                 </span>
             `;
 
@@ -322,7 +322,7 @@
         const combo =
             encontrarTarjeta(
                 "COMBO PRO",
-                "S/ 15.90"
+                window.preciosIng1.texto(2)
             );
 
 

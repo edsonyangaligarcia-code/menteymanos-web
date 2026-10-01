@@ -69,11 +69,11 @@ test.after(() => { globalThis.fetch = originalFetch; });
 
 test('canonical OP1, COMBO, VIP prices and contents', () => {
   assert.deepEqual(buildIng1Order('opcion1', ['ING 3'])?.items, ['ING 1', 'ING 3']);
-  assert.equal(buildIng1Order('opcion1', ['ING 3'])?.priceCents, 990);
+  assert.equal(buildIng1Order('opcion1', ['ING 3'])?.priceCents, 1590);
   assert.deepEqual(buildIng1Order('combo', ['ING 2', 'ING 6'])?.items, ['ING 1', 'ING 2', 'ING 6']);
-  assert.equal(buildIng1Order('combo', ['ING 2', 'ING 6'])?.priceCents, 1590);
+  assert.equal(buildIng1Order('combo', ['ING 2', 'ING 6'])?.priceCents, 2490);
   assert.equal(buildIng1Order('vip')?.items.length, 7);
-  assert.equal(buildIng1Order('vip')?.priceCents, 2990);
+  assert.equal(buildIng1Order('vip')?.priceCents, 3990);
 });
 test('money conversion and MP item sum use integer cents', () => {
   for (const offer of [buildIng1Order('opcion1', ['ING 3']), buildIng1Order('combo', ['ING 2', 'ING 6']), buildIng1Order('vip')]) {
@@ -90,7 +90,7 @@ test('client price and arbitrary final items cannot change order', async () => {
   const env = environment(); const calls = mockFetch(env);
   const valid = await createOrder({ request: createRequest({ requestId: REQUEST_ID, offer: 'VIP', additionalItems: [], email: 'buyer@gmail.com', price: 1, total: '0.01', currency: 'USD' }), env });
   assert.equal(valid.status, 200);
-  assert.equal(localOrder(env).amount_cents, 2990);
+  assert.equal(localOrder(env).amount_cents, 3990);
   assert.equal(localOrder(env).currency, 'PEN');
   const invalid = await createOrder({ request: createRequest({ requestId: REQUEST_ID, offer: 'VIP', additionalItems: [], email: 'buyer@gmail.com', items: ['ING 8'] }), env });
   assert.equal(invalid.status, 400);
@@ -316,8 +316,8 @@ test('create-order rate limit is 5 per window', async () => {
 });
 
 for (const [label, paid, accepted] of [
-  ['absent', undefined, false], ['null', null, false], ['invalid', '29.901', false],
-  ['lower', '29.89', false], ['higher', '29.91', false], ['exact', '29.90', true]
+  ['absent', undefined, false], ['null', null, false], ['invalid', '39.901', false],
+  ['lower', '39.89', false], ['higher', '39.91', false], ['exact', '39.90', true]
 ]) test(`accredited total_paid_amount ${label} ${accepted ? 'delivers' : 'does not deliver'}`, async () => {
   const env = environment();
   const calls = mockFetch(env, { mpOverrides: { total_paid_amount: paid } });

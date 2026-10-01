@@ -47,7 +47,7 @@
 
 
     const PRECIOS_BASE = {
-        ing1: 9.90,
+        ing1: 15.90,
         ing3: 12.90,
         ing7: 12.90
     };
@@ -259,7 +259,7 @@
                 nombrePlan:
                     "VIP Full",
                 precio:
-                    29.90,
+                    window.preciosIng1.importe(3, principal),
                 principal,
                 claves:
                     Object.keys(
@@ -307,11 +307,11 @@
                     : "Opción 1",
             precio:
                 plan === 2
-                    ? 15.90
+                    ? window.preciosIng1.importe(2, principal)
                     : (
                         PRECIOS_BASE[
                             principal
-                        ] || 9.90
+                        ] || 15.90
                     ),
             principal,
             claves:

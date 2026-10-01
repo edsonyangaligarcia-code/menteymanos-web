@@ -66,7 +66,7 @@ test('server-side ING 1 catalog enforces each offer and allowed items', () => {
   assert.deepEqual(buildIng1Order('opcion1', ['ING 3'])?.items, ['ING 1', 'ING 3']);
   assert.deepEqual(buildIng1Order('combo', ['ING 2', 'ING 7'])?.items, ['ING 1', 'ING 2', 'ING 7']);
   assert.deepEqual(buildIng1Order('vip')?.items, ['ING 1', 'ING 2', 'ING 3', 'ING 4', 'ING 5', 'ING 6', 'ING 7']);
-  assert.equal(buildIng1Order('vip')?.priceCents, 2990);
+  assert.equal(buildIng1Order('vip')?.priceCents, 3990);
   assert.equal(buildIng1Order('combo', ['ING 2', 'ING 2']), null);
   assert.equal(buildIng1Order('opcion1', ['ING 8']), null);
   assert.equal(buildIng1Order('vip', ['ING 2']), null);

@@ -160,7 +160,7 @@ function fillProductSelect(){
   state.products.filter(x=>x.active!==false).forEach(p=>{
     const o=document.createElement("option");
     o.value=p.code;o.textContent=`${p.code} — ${p.name}`;
-    o.dataset.price=p.price ?? "";
+    o.dataset.price=productPrice(p.code);
     sel.appendChild(o);
   });
   // Producto histórico combinado.
@@ -340,6 +340,7 @@ function offerLabel(v){
 }
 
 function productPrice(code){
+  if(code === "ING 1") return 15.90;
   if(code==="ING 3 y 4") return 11.9;
   const p=state.products.find(x=>x.code===code);
   return Number(p?.price||0);
@@ -348,8 +349,8 @@ function productPrice(code){
 function currentOfferPrice(){
   const offer=$("saleOffer").value, campaign=$("saleCampaign").value, product=$("saleProduct").value;
   const base=productPrice(product||campaign);
-  if(offer==="COMBO") return 15.90;
-  if(offer==="VIP") return 29.90;
+  if(offer==="COMBO") return (product||campaign)==="ING 1" ? 24.90 : 15.90;
+  if(offer==="VIP") return (product||campaign)==="ING 1" ? 39.90 : 29.90;
   return base;
 }
 
@@ -429,13 +430,13 @@ function parseWhatsapp(){
   let campaign=refMatch?mapRef[refMatch[2].toUpperCase()]:null;
   let offer=refMatch?mapOffer[refMatch[3].toUpperCase()]:null;
   if(!offer && planMatch) offer=planMatch[1].toLowerCase().includes("combo")?"COMBO":planMatch[1].toLowerCase().includes("vip")?"VIP":"OP1";
-  const price=planMatch?Number(planMatch[2].replace(",",".")):currentOfferPrice();
   const items=itemMatches.map(m=>m[1].replace(/\s+/g," ").trim());
   const product=items[0]||campaign||"ING 1";
   if(campaign) $("saleCampaign").value=campaign;
   if([...$("saleProduct").options].some(o=>o.value===product)) $("saleProduct").value=product;
   $("saleOffer").value=offer||"OTRA";
-  $("saleCanonicalPrice").value=price.toFixed(2);$("saleSoldPrice").value=price.toFixed(2);
+  const price=planMatch?Number(planMatch[2].replace(",",".")):currentOfferPrice();
+  $("saleCanonicalPrice").value=(product === "ING 1" ? currentOfferPrice() : price).toFixed(2);$("saleSoldPrice").value=price.toFixed(2);
   $("saleRef").value=refMatch?refMatch[1].toUpperCase():"";
   $("saleItems").value=items.join(", ");
   $("saleDate").value=todayIso();$("saleTime").value=nowTime();

@@ -5,7 +5,7 @@ const productos = {
         codigo: "ING 1",
         nombre: "Colección Maestra de Planos y Expedientes",
         descripcion: "Referencias reales para dejar de empezar cada proyecto desde cero.",
-        precio: 9.90,
+        precio: 15.90,
         recomendado: "ing6",
         beneficios: [
             "Viviendas de diferentes medidas",
@@ -738,10 +738,10 @@ function actualizarResumen() {
     let productosPedido;
 
     if (planActual === 3) {
-        precio = 29.90;
+        precio = window.preciosIng1.importe(3, productoActual);
         productosPedido = Object.keys(lineaING);
     } else {
-        precio = planActual === 1 ? productos[productoActual].precio : 15.90;
+        precio = planActual === 1 ? productos[productoActual].precio : window.preciosIng1.importe(2, productoActual);
         productosPedido = [productoActual, ...adicionales];
     }
 

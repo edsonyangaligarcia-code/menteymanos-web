@@ -6,7 +6,7 @@
 
         ing1: {
             codigo: "ING 1",
-            precioBase: 9.90
+            precioBase: 15.90
         },
 
         ing3: {
